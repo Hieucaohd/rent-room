@@ -1,0 +1,5 @@
+node_modules/
+src/images/*
+coverage/
+package-lock.json
+.env
