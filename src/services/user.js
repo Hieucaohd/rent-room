@@ -1,6 +1,5 @@
 import { compare, hash } from "bcryptjs";
 import { User } from "../models";
-import { uploadFile } from "../helpers";
 
 export const createNewUser = async (newUser) => {
     let user = new User(newUser);
