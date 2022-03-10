@@ -11,7 +11,7 @@ export const issueToken = async (user) => {
 
 export const serializerUser = (user) => {
     return pick(user, [
-        "id",
+        "_id",
         "email",
         "fullname",
         "numberPhone",

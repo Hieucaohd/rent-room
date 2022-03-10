@@ -6,6 +6,7 @@ const RoomSchema = new Schema(
         home: {
             type: Schema.Types.ObjectId,
             ref: "homes",
+            autopopulate: true,
         },
         price: {
             type: Number,
@@ -22,13 +23,17 @@ const RoomSchema = new Schema(
         },
         images: {
             type: [String],
-        }
+        },
     },
     {
         timestamps: true,
     }
 );
 
+// plugin for autopopulate
+RoomSchema.plugin(require("mongoose-autopopulate"));
+
+// plugin for pagination
 RoomSchema.plugin(mongoosePaginate);
 
 const Room = model("rooms", RoomSchema);

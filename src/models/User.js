@@ -30,11 +30,19 @@ const UserSchema = new Schema(
         avatar: {
             type: String,
         },
+        defaultHome: {
+            type: Schema.Types.ObjectId,
+            ref: "homes",
+            autopopulate: true,
+        },
     },
     {
         timestamps: true,
     }
 );
+
+// plugin for autopopulate
+UserSchema.plugin(require("mongoose-autopopulate"));
 
 const User = model("users", UserSchema);
 export default User;

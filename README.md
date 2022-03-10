@@ -1,1 +1,1 @@
-link document: https://docs.google.com/document/d/1MBaUlIeD9YGr1ljr0Xe4dXwLipaTAx9wcxsu8a3ahqU/edit
+# Link document: [apollo-server-documents](https://studio.apollographql.com/graph/rent-room-app/home?variant=current)

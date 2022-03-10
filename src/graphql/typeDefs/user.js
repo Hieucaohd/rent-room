@@ -20,17 +20,20 @@ export default gql`
 		avatar: String
     }
 
-    type User {
-        id: ID
+    type User implements Timestamps{
+        _id: ID
+
         email: String
         fullname: String
         numberPhone: String
         province: Int
         district: Int
         ward: Int
+		avatar: String
+        defaultHome: Home
+
         createdAt: String
         updatedAt: String
-		avatar: String
     }
 
     type AuthResponse {

@@ -6,6 +6,7 @@ const HomeSchema = new Schema(
         owner: {
             type: Schema.Types.ObjectId,
             ref: "users",
+            autopopulate: true,
         },
         province: {
             type: Number,
@@ -28,12 +29,19 @@ const HomeSchema = new Schema(
         images: {
             type: [String],
         },
+        totalRooms: {
+            type: Number,
+        },
     },
     {
         timestamps: true,
     }
 );
 
+// plugin for autopopulate
+HomeSchema.plugin(require("mongoose-autopopulate"));
+
+// plugin for pagination
 HomeSchema.plugin(mongoosePaginate);
 
 const Home = model("homes", HomeSchema);
