@@ -1,4 +1,3 @@
-import { TestWatcher } from "jest";
 import { createOptions } from "../createOptionsPaginator";
 
 test("test create option for paginate", () => {

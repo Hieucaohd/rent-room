@@ -37,4 +37,9 @@ export default gql`
         docs: [Result]
         paginator: Paginator
     }
+
+    type AfterDelete {
+        id: ID!
+        success: Boolean
+    }
 `;

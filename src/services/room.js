@@ -1,11 +1,28 @@
-import mongoose from "mongoose";
 import { Room } from "../models";
 import { createOptions } from "../helpers";
 
-export const createRoom = async (newRoom, home_id) => {
-    home_id = mongoose.Types.ObjectId(home_id);
-    const room = new Room({ ...newRoom, home: home_id });
-    return await room.save();
+export const createRoom = async (newRoom) => {
+    const room = await Room.create(newRoom);
+
+    return await Room.findById(room._id);
+};
+
+export const updateExistRoom = async (updatedRoom, id) => {
+    const room = await Room.findOneAndUpdate(
+        {
+            _id: id,
+        },
+        { ...updatedRoom },
+        {
+            returnDocument: "after",
+        }
+    );
+    return room;
+};
+
+export const deleteExistRoom = async (id) => {
+    const room = await Room.findByIdAndDelete(id);
+    return room._id;
 };
 
 export const getAllRooms = async (page, limit) => {

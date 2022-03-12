@@ -1,9 +1,24 @@
-import { createRoom, getAllRooms } from "../../services";
+import mongoose from "mongoose";
+import {
+    createRoom,
+    getAllRooms,
+    updateExistRoom,
+    deleteExistRoom,
+} from "../../services";
 
 export default {
     Mutation: {
-        createNewRoom: async (_, { newRoom, home_id }, { user }) => {
-            return await createRoom(newRoom, home_id);
+        createNewRoom: async (_, { newRoom, homeId }) => {
+            newRoom.home = homeId;
+            return await createRoom(newRoom);
+        },
+
+        updateRoom: async (_, { updatedRoom, id }) => {
+            return await updateExistRoom(updatedRoom, id);
+        },
+
+        deleteRoom: async (_, { id }) => {
+            return await deleteExistRoom(id);
         },
     },
 

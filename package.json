@@ -37,8 +37,10 @@
   "devDependencies": {
     "@babel/plugin-transform-runtime": "^7.17.0",
     "@babel/preset-env": "^7.16.11",
+    "@shelf/jest-mongodb": "^2.2.1",
     "babel-jest": "^27.5.1",
     "jest": "^27.5.1",
+    "mongodb": "^4.4.1",
     "promise-fs": "^2.1.1"
   }
 }

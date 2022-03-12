@@ -1,10 +1,6 @@
 import { compare, hash } from "bcryptjs";
 import { User } from "../models";
 
-const getUser = async (document) => {
-    return await document.populate("defaultHome");
-}
-
 export const createNewUser = async (newUser) => {
     let user = new User(newUser);
     user.password = await hash(user.password, 10);

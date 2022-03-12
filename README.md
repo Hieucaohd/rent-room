@@ -2,7 +2,7 @@
 
 Welcome to the **rent-room-app** API! 🎉 Get familiar with available objects in the [Schema Reference](https://studio.apollographql.com/graph/rent-room-app/schema/reference?variant=current), or try querying this graph using [Explorer](https://studio.apollographql.com/graph/rent-room-app/explorer?variant=current).
 
-We recommend you read documents at apollo-studio-documents at [here](https://studio.apollographql.com/graph/rent-room-app/home?variant=current).
+***We recommend you read documents at [apollo-studio-documents](https://studio.apollographql.com/graph/rent-room-app/home?variant=current) because this docs is not usually updated. To read, let create an account and contact to admin via [hieucao-email](mailto:hieucaohd@gmail.com) or [hieucao-messenger](https://www.messenger.com/t/100057157604437/) to add you to project members.***
 
 ## What this graph is all about
 

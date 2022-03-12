@@ -1,5 +1,8 @@
 import { Schema, model } from "mongoose";
 
+const ROLE = ["ADMIN", "VIEWER"];
+const USER_TYPE = ["HOST", "TENANT"];
+
 const UserSchema = new Schema(
     {
         email: {
@@ -35,11 +38,24 @@ const UserSchema = new Schema(
             ref: "homes",
             autopopulate: true,
         },
+        role: {
+            type: [String],
+            enum: ROLE,
+        },
+        userType: {
+            type: String,
+            enum: USER_TYPE,
+            default: "TENANT",
+        },
     },
     {
         timestamps: true,
     }
 );
+
+UserSchema.methods.hasRole = function (role) {
+    return this.role.includes(role);
+};
 
 // plugin for autopopulate
 UserSchema.plugin(require("mongoose-autopopulate"));

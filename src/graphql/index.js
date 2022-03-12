@@ -3,6 +3,7 @@ import typeDefs from "./typeDefs";
 import {
     authRequireDirectiveTransformer,
     getListRelateDirectiveTransformer,
+    isOwnerDirectiveTransformer,
 } from "./directives";
 
 import { makeExecutableSchema } from "@graphql-tools/schema";
@@ -13,6 +14,7 @@ let schema = makeExecutableSchema({
     resolvers,
 });
 
+schema = isOwnerDirectiveTransformer(schema, "isOwner");
 schema = authRequireDirectiveTransformer(schema, "authRequire");
 schema = getListRelateDirectiveTransformer(schema, "getListRelate");
 

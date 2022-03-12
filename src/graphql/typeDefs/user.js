@@ -5,9 +5,9 @@ export default gql`
         register(newUser: UserInput!): AuthResponse!
     }
 
-	extend type Query {
-		login(email: String!, password: String!): AuthResponse!
-	}
+    extend type Query {
+        login(email: String!, password: String!): AuthResponse!
+    }
 
     input UserInput {
         email: String!
@@ -17,10 +17,11 @@ export default gql`
         province: Int
         district: Int
         ward: Int
-		avatar: String
+        avatar: String
+        userType: UserType
     }
 
-    type User implements Timestamps{
+    type User implements Timestamps {
         _id: ID
 
         email: String
@@ -29,8 +30,10 @@ export default gql`
         province: Int
         district: Int
         ward: Int
-		avatar: String
+        avatar: String
         defaultHome: Home
+        userType: String
+        role: [String]
 
         createdAt: String
         updatedAt: String
@@ -39,5 +42,15 @@ export default gql`
     type AuthResponse {
         user: User
         token: String
+    }
+
+    enum Role {
+        ADMIN
+        VIEWER
+    }
+
+    enum UserType {
+        TENANT
+        HOST
     }
 `;

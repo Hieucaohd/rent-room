@@ -6,7 +6,11 @@ export default gql`
     }
 
     extend type Mutation {
-        createNewRoom(newRoom: RoomInput!, home_id: ID!): Room @authRequire
+        createNewRoom(newRoom: RoomInput!, homeId: ID!): Room!
+
+        updateRoom(updatedRoom: RoomInput!, id: ID!): Room!
+
+        deleteRoom(id: ID!): ID!
     }
 
     input RoomInput {
@@ -32,7 +36,7 @@ export default gql`
         updatedAt: String
     }
 
-    type RoomPaginator implements PaginatorResult{
+    type RoomPaginator implements PaginatorResult {
         docs: [Room]
         paginator: Paginator
     }

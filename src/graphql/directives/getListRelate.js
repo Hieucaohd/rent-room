@@ -1,23 +1,6 @@
 import { mapSchema, getDirective, MapperKind } from "@graphql-tools/utils";
-import * as AppModels from "../../models";
 import { createOptions } from "../../helpers";
-
-export const convertToQuery = (fieldName, objectID) => {
-    let queryString = `{"${fieldName}": "null"}`;
-    let query = JSON.parse(queryString);
-    query[fieldName] = objectID;
-    return query;
-};
-
-export const getCollection = (collectionName) => {
-    for (const modelName in AppModels) {
-        if (AppModels[modelName].collection.name === collectionName) {
-            return AppModels[modelName];
-        }
-    }
-
-    throw new Error("collection is not defined");
-};
+import { convertToQuery, getModel } from "../../helpers";
 
 export const getListRelateDirectiveTransformer = (schema, directiveName) => {
     return mapSchema(schema, {
@@ -42,7 +25,7 @@ export const getListRelateDirectiveTransformer = (schema, directiveName) => {
                         let query = convertToQuery(fieldName, source._id);
                         let collectionName =
                             getListRelateDirective["collection"];
-                        let model = getCollection(collectionName);
+                        let model = getModel(collectionName);
 
                         let options = createOptions(args.page, args.limit);
 

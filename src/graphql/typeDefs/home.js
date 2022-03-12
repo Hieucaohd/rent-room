@@ -7,6 +7,10 @@ export default gql`
 
     extend type Mutation {
         createNewHome(newHome: HomeInput!): Home @authRequire
+
+        updateHome(updatedHome: HomeInput!, id: ID!): Home!
+
+        deleteHome(id: ID!): ID!
     }
 
     input HomeInput {
@@ -20,7 +24,7 @@ export default gql`
         totalRooms: Int
     }
 
-    type Home implements Timestamps{
+    type Home implements Timestamps {
         _id: ID!
 
         owner: User
@@ -39,7 +43,7 @@ export default gql`
         updatedAt: String
     }
 
-    type HomePaginator implements PaginatorResult{
+    type HomePaginator implements PaginatorResult {
         docs: [Home]
         paginator: Paginator
     }
