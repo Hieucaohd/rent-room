@@ -20,11 +20,12 @@ schema = getListRelateDirectiveTransformer(schema, "getListRelate");
 
 const server = new ApolloServer({
     schema,
-    context: ({ req }) => {
+    context: ({ req, res }) => {
         let { user, isAuth } = req;
 
         return {
             req,
+            res,
             user,
             isAuth,
         };

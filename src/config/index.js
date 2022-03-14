@@ -11,5 +11,6 @@ export const {
     BASE_URL,
     URL = MODE === "production" ? `${BASE_URL}` : `${BASE_URL}:${PORT}`,
     SECRET,
+    SECRET_REFRESH,
     FOLDER_SAVE_FILE = "images",
 } = parsed;

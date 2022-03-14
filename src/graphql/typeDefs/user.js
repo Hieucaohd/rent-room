@@ -41,7 +41,8 @@ export default gql`
 
     type AuthResponse {
         user: User
-        token: String
+        # token: String
+        # refreshToken: String
     }
 
     enum Role {
