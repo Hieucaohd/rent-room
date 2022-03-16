@@ -43,8 +43,11 @@ export default {
             }
         },
 
-        profile: async (_, args, { user }) => {
-            return user;
+        profile: async (_, args, { user, isAuth }) => {
+            return {
+                user,
+                isAuth,
+            };
         },
     },
 };

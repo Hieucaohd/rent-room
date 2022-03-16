@@ -7,7 +7,7 @@ export default gql`
 
     extend type Query {
         login(email: String!, password: String!): AuthResponse!
-        profile: User
+        profile: Profile
     }
 
     input UserInput {
@@ -54,5 +54,10 @@ export default gql`
     enum UserType {
         TENANT
         HOST
+    }
+
+    type Profile {
+        user: User
+        isAuth: Boolean
     }
 `;
