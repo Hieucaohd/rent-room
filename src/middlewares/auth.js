@@ -5,9 +5,9 @@ import {
     UnknownUserError,
     ParseTokenError,
     NoCookieInReqError,
-    NoTokenInCookieError,
+    NoTokensInCookieError,
     EmailNotRegisterError,
-    LoginAgainError,
+    RefreshTokenExpired,
 } from "../errors";
 import { serializerUser } from "../helpers";
 import { setAccessTokenInCookie } from "../helpers";
@@ -34,7 +34,7 @@ export class AuthMiddleware {
         let { token, refreshToken } = this.req.cookies;
 
         if (!token || !refreshToken) {
-            throw new NoTokenInCookieError();
+            throw new NoTokensInCookieError();
         }
 
         token = this.parseToken(token);
@@ -73,7 +73,7 @@ export class AuthMiddleware {
             return user;
         } catch (error) {
             if (error instanceof TokenExpiredError) {
-                throw new ApolloError("You must login again");
+                throw new RefreshTokenExpired();
             } else if (error instanceof JsonWebTokenError) {
                 throw new UnknownUserError();
             }
@@ -86,7 +86,10 @@ export class AuthMiddleware {
         try {
             return await this.decodedTokenToGetUser(token, SECRET);
         } catch (error) {
-            if (!(error instanceof TokenExpiredError) && error instanceof JsonWebTokenError) {
+            if (
+                !(error instanceof TokenExpiredError) &&
+                error instanceof JsonWebTokenError
+            ) {
                 // because TokenExpiredError is subclass of JsonWebTokenError
                 // this prevent TokenExpiredError is catched in this function
                 throw new UnknownUserError();
@@ -124,13 +127,14 @@ export class AuthMiddleware {
                 error instanceof UnknownUserError ||
                 error instanceof ParseTokenError ||
                 error instanceof NoCookieInReqError ||
-                error instanceof NoTokenInCookieError ||
-                error instanceof EmailNotRegisterError
+                error instanceof NoTokensInCookieError ||
+                error instanceof EmailNotRegisterError ||
+                error instanceof RefreshTokenExpired
             ) {
                 this.req.isAuth = false;
                 return this.next();
             }
-            
+
             throw error;
         }
     }

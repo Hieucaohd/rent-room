@@ -31,7 +31,7 @@ export class NoCookieInReqError extends Error {
     }
 }
 
-export class NoTokenInCookieError extends Error {
+export class NoTokensInCookieError extends Error {
     constructor(message) {
         if (!message) {
             message = "No token in cookie!";
@@ -49,9 +49,9 @@ export class EmailNotRegisterError extends Error {
     }
 }
 
-export class LoginAgainError extends Error {
+export class RefreshTokenExpired extends Error {
     constructor(message) {
         super(message);
-        this.name = "LoginAgainError";
+        this.name = "RefreshTokenExpired";
     }
 }
