@@ -11,6 +11,7 @@ import {
 } from "../errors";
 import { serializerUser } from "../helpers";
 import { setAccessTokenInCookie } from "../helpers";
+import { ApolloError } from "apollo-server-express";
 
 export class AuthMiddleware {
     constructor() {}
@@ -72,7 +73,7 @@ export class AuthMiddleware {
             return user;
         } catch (error) {
             if (error instanceof TokenExpiredError) {
-                throw new LoginAgainError("You must login again");
+                throw new ApolloError("You must login again");
             } else if (error instanceof JsonWebTokenError) {
                 throw new UnknownUserError();
             }

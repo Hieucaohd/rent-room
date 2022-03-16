@@ -7,6 +7,7 @@ export default gql`
 
     extend type Query {
         login(email: String!, password: String!): AuthResponse!
+        profile: User
     }
 
     input UserInput {

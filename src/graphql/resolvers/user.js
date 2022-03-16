@@ -42,5 +42,9 @@ export default {
                 throw new ApolloError(error.message);
             }
         },
+
+        profile: async (_, args, { user }) => {
+            return user;
+        },
     },
 };
