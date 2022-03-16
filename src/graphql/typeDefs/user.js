@@ -3,6 +3,7 @@ import { gql } from "apollo-server-express";
 export default gql`
     extend type Mutation {
         register(newUser: UserInput!): AuthResponse!
+        logout: LogoutStatus!
     }
 
     extend type Query {
@@ -59,5 +60,9 @@ export default gql`
     type Profile {
         user: User
         isAuth: Boolean
+    }
+
+    type LogoutStatus {
+        status: Boolean!
     }
 `;

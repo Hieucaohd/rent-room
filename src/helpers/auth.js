@@ -41,6 +41,19 @@ export const setAccessTokenInCookie = async (res, user) => {
     res.cookie("token", token, options);
 };
 
+export const clearAccessTokenInCookie = (res) => {
+    res.clearCookie("token");
+}
+
+export const clearRefreshTokenInCookie = (res) => {
+    res.clearCookie("refreshToken");
+}
+
+export const clearTokensInCookie = (res) => {
+    clearAccessTokenInCookie(res);
+    clearRefreshTokenInCookie(res);
+}
+
 
 export const setRefreshTokenInCookie = async (res, user) => {
     let refreshToken = await issueRefreshToken(user);

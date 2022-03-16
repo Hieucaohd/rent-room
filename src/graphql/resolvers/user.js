@@ -1,5 +1,6 @@
 import { ApolloError } from "apollo-server-express";
 import {
+    clearTokensInCookie,
     serializerUser,
     setAccessTokenInCookie,
     setRefreshTokenInCookie,
@@ -25,6 +26,14 @@ export default {
             } catch (error) {
                 throw new ApolloError(error.message);
             }
+        },
+
+        logout: async (_, args, {res, isAuth}) => {
+            let status = isAuth;
+            clearTokensInCookie(res);
+            return {
+                status
+            }; 
         },
     },
 
