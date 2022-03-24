@@ -21,7 +21,7 @@ export default gql`
         images: [String]
     }
 
-    type Room implements Timestamps {
+    type Room implements Node & Timestamps {
         _id: ID
 
         home: Home

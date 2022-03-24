@@ -23,7 +23,7 @@ export default gql`
         userType: UserType
     }
 
-    type User implements Timestamps {
+    type User implements Node & Timestamps {
         _id: ID
 
         email: String
@@ -43,8 +43,6 @@ export default gql`
 
     type AuthResponse {
         user: User
-        # token: String
-        # refreshToken: String
     }
 
     enum Role {

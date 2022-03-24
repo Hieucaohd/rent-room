@@ -24,7 +24,7 @@ export default gql`
         totalRooms: Int
     }
 
-    type Home implements Timestamps {
+    type Home implements Node & Timestamps {
         _id: ID!
 
         owner: User

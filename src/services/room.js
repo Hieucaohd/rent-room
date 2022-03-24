@@ -1,31 +1,31 @@
 import { Room } from "../models";
 import { createOptions } from "../helpers";
 
-export const createRoom = async (newRoom) => {
+export const createRoomInDatabase = async (newRoom) => {
     const room = await Room.create(newRoom);
 
     return await Room.findById(room._id);
 };
 
-export const updateExistRoom = async (updatedRoom, id) => {
-    const room = await Room.findOneAndUpdate(
+export const updateRoomInDatabase = async (updateInfo, roomID) => {
+    const updatedRoom = await Room.findOneAndUpdate(
         {
-            _id: id,
+            _id: roomID,
         },
-        { ...updatedRoom },
+        { ...updateInfo },
         {
             returnDocument: "after",
         }
     );
-    return room;
+    return updatedRoom;
 };
 
-export const deleteExistRoom = async (id) => {
-    const room = await Room.findByIdAndDelete(id);
-    return room._id;
+export const deleteRoomInDatabase = async (roomID) => {
+    const deletedRoom = await Room.findByIdAndDelete(roomID);
+    return deletedRoom._id;
 };
 
-export const getAllRooms = async (page, limit) => {
+export const getAllRoomsFromDatabase = async (page, limit) => {
     let options = createOptions(page, limit);
     options.sort = {
         createdAt: -1,

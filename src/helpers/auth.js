@@ -3,28 +3,63 @@ import { pick } from "lodash";
 import { SECRET, SECRET_REFRESH } from "../config";
 import dayjs from "dayjs";
 
-// for test
-// const timeExpiredAccessToken = 1;
-// const timeExpiredRefreshToken = 5;
+const TIME_ACCESS_TOKEN_EXPIRED = 60 * 60 * 24 * 7; // second
+const TIME_REFRESH_TOKEN_EXPIRED = 60 * 60 * 24 * 365; // second
 
-const timeExpiredAccessToken = 60 * 60 * 24 * 7;
-const timeExpiredRefreshToken = 60 * 60 * 24 * 365;
-const timeExpiredCookieAccessToken = dayjs().add(7, "days").toDate();
-const timeExpiredCookieRefreshToken = dayjs().add(365, "days").toDate();
+const TIME_COOKIE_OF_ACCESS_TOKEN_EXPIRED = dayjs().add(7, "days").toDate();
+const TIME_COOKIE_OF_REFRESH_TOKEN_EXPIRED = dayjs().add(365, "days").toDate();
 
-export const issueAccessToken = async (user) => {
+export const setAccessAndRefreshTokenInCookie = async (res, user) => {
+    await setAccessTokenInCookie(res, user);
+    await setRefreshTokenInCookie(res, user);
+};
+
+export const setAccessTokenInCookie = async (res, user) => {
+    let token = await generateAccessToken(user);
+    let options = {
+        secure: process.env.NODE_ENV === "production",
+        httpOnly: true,
+        expires: TIME_COOKIE_OF_ACCESS_TOKEN_EXPIRED,
+    };
+    res.cookie("token", token, options);
+};
+
+export const generateAccessToken = async (user) => {
     let token = await sign(user, SECRET, {
-        expiresIn: timeExpiredAccessToken,
+        expiresIn: TIME_ACCESS_TOKEN_EXPIRED,
     });
     return `Bearer ${token}`;
 };
 
-export const issueRefreshToken = async (user) => {
+export const setRefreshTokenInCookie = async (res, user) => {
+    let refreshToken = await generateRefreshToken(user);
+    let options = {
+        secure: process.env.NODE_ENV === "production",
+        httpOnly: true,
+        expires: TIME_COOKIE_OF_REFRESH_TOKEN_EXPIRED,
+    };
+    res.cookie("refreshToken", refreshToken, options);
+};
+
+export const generateRefreshToken = async (user) => {
     let refreshToken = await sign(user, SECRET_REFRESH, {
-        expiresIn: timeExpiredRefreshToken,
+        expiresIn: TIME_REFRESH_TOKEN_EXPIRED,
     });
 
     return `Bearer ${refreshToken}`;
+};
+
+export const clearAccessAndRefreshTokenInCookie = (res) => {
+    clearAccessTokenInCookie(res);
+    clearRefreshTokenInCookie(res);
+};
+
+export const clearAccessTokenInCookie = (res) => {
+    res.clearCookie("token");
+};
+
+export const clearRefreshTokenInCookie = (res) => {
+    res.clearCookie("refreshToken");
 };
 
 export const serializerUser = (user) => {
@@ -38,37 +73,4 @@ export const serializerUser = (user) => {
         "ward",
         "avatar",
     ]);
-};
-
-export const setAccessTokenInCookie = async (res, user) => {
-    let token = await issueAccessToken(user);
-    let options = {
-        secure: process.env.NODE_ENV === "production",
-        httpOnly: true,
-        expires: timeExpiredCookieAccessToken,
-    };
-    res.cookie("token", token, options);
-};
-
-export const setRefreshTokenInCookie = async (res, user) => {
-    let refreshToken = await issueRefreshToken(user);
-    let options = {
-        secure: process.env.NODE_ENV === "production",
-        httpOnly: true,
-        expires: timeExpiredCookieRefreshToken,
-    };
-    res.cookie("refreshToken", refreshToken, options);
-};
-
-export const clearAccessTokenInCookie = (res) => {
-    res.clearCookie("token");
-};
-
-export const clearRefreshTokenInCookie = (res) => {
-    res.clearCookie("refreshToken");
-};
-
-export const clearTokensInCookie = (res) => {
-    clearAccessTokenInCookie(res);
-    clearRefreshTokenInCookie(res);
 };

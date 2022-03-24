@@ -19,6 +19,10 @@ export default gql`
         updatedAt: String
     }
 
+    interface Node {
+        _id: ID
+    }
+
     type Paginator {
         totalDocs: Int
         limit: Int
@@ -31,10 +35,8 @@ export default gql`
         hasNextPage: Boolean
     }
 
-    union Result = Home | Room
-
     interface PaginatorResult {
-        docs: [Result]
+        docs: [Node]
         paginator: Paginator
     }
 

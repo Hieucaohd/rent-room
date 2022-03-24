@@ -11,8 +11,7 @@ export default async (app) => {
     // middlewares for static file: images
     app.use(express.static(join(__dirname, `./${FOLDER_SAVE_FILE}`)));
 
-    let authMiddleware = new AuthMiddleware();
-
     // middlewares for parse authorization token
+    let authMiddleware = new AuthMiddleware();
     app.use(authMiddleware.auth.bind(authMiddleware));
 };

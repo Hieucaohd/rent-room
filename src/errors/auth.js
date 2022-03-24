@@ -1,4 +1,4 @@
-export class UnknownUserError extends Error {
+export class InvalidTokenError extends Error {
     constructor(message) {
         if (!message) {
             message = "This is public user";
@@ -31,7 +31,7 @@ export class NoCookieInReqError extends Error {
     }
 }
 
-export class NoTokensInCookieError extends Error {
+export class NoTokenInCookieError extends Error {
     constructor(message) {
         if (!message) {
             message = "No token in cookie!";

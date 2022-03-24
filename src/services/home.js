@@ -1,7 +1,7 @@
 import { Home } from "../models";
 import { createOptions } from "../helpers";
 
-export const getAllHomes = async (page, limit) => {
+export const getAllHomesFromDatabase = async (page, limit) => {
     let options = createOptions(page, limit);
     options.sort = {
         createdAt: -1,
@@ -10,12 +10,12 @@ export const getAllHomes = async (page, limit) => {
     return await Home.paginate({}, options);
 };
 
-export const updateExistHome = async (updatedHome, id) => {
+export const updateHomeInDatabase = async (updateInfo, homeID) => {
     const home = await Home.findOneAndUpdate(
         {
-            _id: id,
+            _id: homeID,
         },
-        { ...updatedHome },
+        { ...updateInfo },
         {
             returnDocument: "after",
         }
@@ -27,9 +27,9 @@ export const updateExistHome = async (updatedHome, id) => {
     return home;
 };
 
-export const deleteExistHome = async (id) => {
+export const deleteHomeInDatabase = async (homeID) => {
     const home = await Home.findOneAndDelete({
-        _id: id,
+        _id: homeID,
     });
 
     if (!home) {
@@ -39,7 +39,7 @@ export const deleteExistHome = async (id) => {
     return home._id;
 };
 
-export const createHome = async (newHome) => {
+export const createHomeInDatabase = async (newHome) => {
     // we need to use findById after create and don't take the result of create
     // because findById function auto populate 'owner' field but create function does not.
     const home = await Home.create(newHome);

@@ -1,24 +1,18 @@
 import { ApolloError } from "apollo-server-express";
 import {
-    clearTokensInCookie,
+    clearAccessAndRefreshTokenInCookie,
     serializerUser,
-    setAccessTokenInCookie,
-    setRefreshTokenInCookie,
+    setAccessAndRefreshTokenInCookie,
 } from "../../helpers";
-import { createNewUser, loginByEmailAndPassword } from "../../services";
-
-const setTokensInCookie = async (res, user) => {
-    await setAccessTokenInCookie(res, user);
-    await setRefreshTokenInCookie(res, user);
-};
+import { createUserInDatabase, loginByEmailAndPassword } from "../../services";
 
 export default {
     Mutation: {
         register: async (_, { newUser }, { res }) => {
             try {
-                let user = await createNewUser(newUser);
+                let user = await createUserInDatabase(newUser);
                 user = serializerUser(user.toObject());
-                await setTokensInCookie(res, user);
+                await setAccessAndRefreshTokenInCookie(res, user);
 
                 return {
                     user,
@@ -28,12 +22,12 @@ export default {
             }
         },
 
-        logout: async (_, args, {res, isAuth}) => {
+        logout: async (_, args, { res, isAuth }) => {
             let status = isAuth;
-            clearTokensInCookie(res);
+            clearAccessAndRefreshTokenInCookie(res);
             return {
-                status
-            }; 
+                status,
+            };
         },
     },
 
@@ -42,7 +36,7 @@ export default {
             try {
                 let user = await loginByEmailAndPassword(email, password);
                 user = serializerUser(user.toObject());
-                await setTokensInCookie(res, user);
+                await setAccessAndRefreshTokenInCookie(res, user);
 
                 return {
                     user,

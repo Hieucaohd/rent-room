@@ -1,32 +1,54 @@
 import { verify, JsonWebTokenError, TokenExpiredError } from "jsonwebtoken";
 import { SECRET, SECRET_REFRESH } from "../config";
-import { findUserByEmail } from "../services";
+import { findUserByEmail, findUserByEmailAndID } from "../services";
 import {
-    UnknownUserError,
+    InvalidTokenError,
     ParseTokenError,
     NoCookieInReqError,
-    NoTokensInCookieError,
+    NoTokenInCookieError,
     EmailNotRegisterError,
     RefreshTokenExpired,
 } from "../errors";
 import { serializerUser } from "../helpers";
 import { setAccessTokenInCookie } from "../helpers";
-import { ApolloError } from "apollo-server-express";
 
 export class AuthMiddleware {
-    constructor() {}
+    async auth(req, res, next) {
+        this.req = req;
+        this.res = res;
+        this.next = next;
 
-    parseToken(token) {
-        let [prefix, authToken] = token.split(" ");
+        try {
+            let { token, refreshToken } =
+                this.getAccessAndRefreshTokenFromRequest();
 
-        if (prefix !== "Bearer" || !authToken || authToken === " ") {
-            throw new ParseTokenError();
+            let user = await this.getUserFromAccessAndRefreshToken(
+                token,
+                refreshToken
+            );
+
+            this.req.isAuth = true;
+            this.req.user = user;
+            return this.next();
+
+        } catch (error) {
+            if (
+                error instanceof InvalidTokenError ||
+                error instanceof ParseTokenError ||
+                error instanceof NoCookieInReqError ||
+                error instanceof NoTokenInCookieError ||
+                error instanceof EmailNotRegisterError ||
+                error instanceof RefreshTokenExpired
+            ) {
+                this.req.isAuth = false;
+                return this.next();
+            }
+
+            throw error;
         }
-
-        return authToken;
     }
 
-    getTokens() {
+    getAccessAndRefreshTokenFromRequest() {
         if (!this.req.cookies) {
             throw new NoCookieInReqError();
         }
@@ -34,7 +56,7 @@ export class AuthMiddleware {
         let { token, refreshToken } = this.req.cookies;
 
         if (!token || !refreshToken) {
-            throw new NoTokensInCookieError();
+            throw new NoTokenInCookieError();
         }
 
         token = this.parseToken(token);
@@ -46,20 +68,53 @@ export class AuthMiddleware {
         };
     }
 
-    async decodedTokenToGetUser(token, secret) {
-        let decodedToken = verify(token, secret);
-        let user = await findUserByEmail(decodedToken.email);
+    parseToken(token) {
+        let [prefix, authToken] = token.split(" ");
 
-        if (!user) {
-            throw new EmailNotRegisterError();
+        if (prefix !== "Bearer" || !authToken || authToken === " ") {
+            throw new ParseTokenError();
+        }
+
+        return authToken;
+    }
+
+    async getUserFromAccessAndRefreshToken(token, refreshToken) {
+        let user;
+        try {
+            user = await this.getUserFromAccessToken(token);
+        } catch (error) {
+            if (error instanceof TokenExpiredError) {
+                user = await this.getUserFromRefreshTokenAndSetNewAccessToken(
+                    refreshToken
+                );
+            }
+
+            throw error;
         }
 
         return user;
     }
 
-    async getUserFromRefreshToken(refreshToken) {
+    async getUserFromAccessToken(token) {
         try {
-            let user = await this.decodedTokenToGetUser(
+            return await this.getUserFromDecodedToken(token, SECRET);
+        } catch (error) {
+            if (
+                !(error instanceof TokenExpiredError) &&
+                error instanceof JsonWebTokenError
+            ) {
+                // because TokenExpiredError is subclass of JsonWebTokenError
+                // this prevent TokenExpiredError is catched in this function
+                throw new InvalidTokenError();
+            }
+
+            throw error;
+        }
+    }
+
+    async getUserFromRefreshTokenAndSetNewAccessToken(refreshToken) {
+        try {
+            let user = await this.getUserFromDecodedToken(
                 refreshToken,
                 SECRET_REFRESH
             );
@@ -75,67 +130,26 @@ export class AuthMiddleware {
             if (error instanceof TokenExpiredError) {
                 throw new RefreshTokenExpired();
             } else if (error instanceof JsonWebTokenError) {
-                throw new UnknownUserError();
+                throw new InvalidTokenError();
             }
 
             throw error;
         }
     }
 
-    async getUserFromAccessToken(token) {
-        try {
-            return await this.decodedTokenToGetUser(token, SECRET);
-        } catch (error) {
-            if (
-                !(error instanceof TokenExpiredError) &&
-                error instanceof JsonWebTokenError
-            ) {
-                // because TokenExpiredError is subclass of JsonWebTokenError
-                // this prevent TokenExpiredError is catched in this function
-                throw new UnknownUserError();
-            }
+    async getUserFromDecodedToken(token, secret) {
+        let decodedToken = verify(token, secret);
 
-            throw error;
+        // this is for secure but it prevent performance.
+        let user = await findUserByEmailAndID(
+            decodedToken.email,
+            decodedToken._id
+        );
+
+        if (!user) {
+            throw new EmailNotRegisterError();
         }
-    }
 
-    async getUserFromTokens(token, refreshToken) {
-        try {
-            return await this.getUserFromAccessToken(token);
-        } catch (error) {
-            if (error instanceof TokenExpiredError) {
-                return await this.getUserFromRefreshToken(refreshToken);
-            }
-
-            throw error;
-        }
-    }
-
-    async auth(req, res, next) {
-        this.req = req;
-        this.res = res;
-        this.next = next;
-
-        try {
-            let { token, refreshToken } = this.getTokens();
-            let user = await this.getUserFromTokens(token, refreshToken);
-            this.req.isAuth = true;
-            this.req.user = user;
-            return this.next();
-        } catch (error) {
-            if (
-                error instanceof UnknownUserError ||
-                error instanceof ParseTokenError ||
-                error instanceof NoCookieInReqError ||
-                error instanceof NoTokensInCookieError ||
-                error instanceof EmailNotRegisterError ||
-                error instanceof RefreshTokenExpired
-            ) {
-                this.req.isAuth = false;
-                return this.next();
-            }
-
-            throw error;
-        }
+        return user;
     }
 }

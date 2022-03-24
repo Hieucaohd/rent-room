@@ -1,7 +1,8 @@
+import { async } from "@firebase/util";
 import { compare, hash } from "bcryptjs";
 import { User } from "../models";
 
-export const createNewUser = async (newUser) => {
+export const createUserInDatabase = async (newUser) => {
     let user = new User(newUser);
     user.password = await hash(user.password, 10);
 
@@ -25,4 +26,8 @@ export const loginByEmailAndPassword = async (email, password) => {
 
 export const findUserByEmail = async (email) => {
     return await User.findOne({ email });
+};
+
+export const findUserByEmailAndID = async (email, id) => {
+    return await User.findOne({ _id: id, email: email });
 };
