@@ -25,7 +25,7 @@ export const authRequireDirectiveTransformer = (schema, directiveName) => {
                         info
                     ) {
                         if (!context.isAuth) {
-                            throw new ApolloError("Authorization required!");
+                            throw new ApolloError("Authorization required!", 403);
                         }
                         return await resolve(source, args, context, info);
                     };

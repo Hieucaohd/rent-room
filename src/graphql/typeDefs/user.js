@@ -3,17 +3,29 @@ import { gql } from "apollo-server-express";
 export default gql`
     extend type Mutation {
         register(newUser: UserInput!): AuthResponse!
-        logout: LogoutStatus!
+        logout: LogoutStatus! @authRequire
+        updateUser(updateInfo: UpdateUserInput!): User! @authRequire
     }
 
     extend type Query {
         login(email: String!, password: String!): AuthResponse!
-        profile: Profile
+        profile: Profile @authRequire
     }
 
     input UserInput {
         email: String!
         password: String!
+        fullname: String!
+        numberPhone: String
+        province: Int
+        district: Int
+        ward: Int
+        avatar: String
+        userType: UserType
+    }
+
+    input UpdateUserInput {
+        email: String!
         fullname: String!
         numberPhone: String
         province: Int

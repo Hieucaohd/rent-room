@@ -6,11 +6,11 @@ export default gql`
     }
 
     extend type Mutation {
-        createNewHome(newHome: HomeInput!): Home 
+        createNewHome(newHome: HomeInput!): Home @authRequire
 
-        updateHome(updatedHome: HomeInput!, id: ID!): Home!
+        updateHome(updatedHome: HomeInput!, id: ID!): Home! @authRequire
 
-        deleteHome(id: ID!): ID!
+        deleteHome(id: ID!): ID! @authRequire
     }
 
     input HomeInput {

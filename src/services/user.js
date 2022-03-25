@@ -9,6 +9,26 @@ export const createUserInDatabase = async (newUser) => {
     return await user.save();
 };
 
+export const updateUserInDatabase = async (updateInfo, user) => {
+    const user = await User.findOneAndUpdate(
+        {
+            _id: user._id,
+        },
+        {
+            ...updateInfo,
+        },
+        {
+            returnDocument: "after",
+        }
+    );
+
+    if (!user) {
+        throw new Error("User item does not exist!");
+    }
+
+    return user;
+};
+
 export const loginByEmailAndPassword = async (email, password) => {
     let user = await findUserByEmail(email);
     if (!user) {

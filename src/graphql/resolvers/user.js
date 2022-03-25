@@ -4,7 +4,11 @@ import {
     serializerUser,
     setAccessAndRefreshTokenInCookie,
 } from "../../helpers";
-import { createUserInDatabase, loginByEmailAndPassword } from "../../services";
+import {
+    createUserInDatabase,
+    loginByEmailAndPassword,
+    updateUserInDatabase,
+} from "../../services";
 
 export default {
     Mutation: {
@@ -28,6 +32,13 @@ export default {
             return {
                 status,
             };
+        },
+
+        updateUser: async (_, args, { updateInfo }, { user }) => {
+            let user = await updateUserInDatabase(updateInfo, user);
+            user = serializerUser(user.toObject());
+
+            return user;
         },
     },
 
