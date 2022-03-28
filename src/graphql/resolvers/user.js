@@ -35,10 +35,10 @@ export default {
         },
 
         updateUser: async (_, args, { updateInfo }, { user }) => {
-            let user = await updateUserInDatabase(updateInfo, user);
-            user = serializerUser(user.toObject());
+            let userUpdated = await updateUserInDatabase(updateInfo, user);
+            userUpdated = serializerUser(user.toObject());
 
-            return user;
+            return userUpdated;
         },
     },
 
