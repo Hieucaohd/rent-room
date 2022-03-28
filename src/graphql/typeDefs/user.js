@@ -49,6 +49,9 @@ export default gql`
         userType: String
         role: [String]
 
+        listHomes(page: Int, limit: Int): HomePaginator
+            @getListRelate(field: "owner", collection: "homes")
+
         createdAt: String
         updatedAt: String
     }
