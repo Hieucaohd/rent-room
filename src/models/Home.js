@@ -32,6 +32,20 @@ const HomeSchema = new Schema(
         totalRooms: {
             type: Number,
         },
+        position: {
+            x: {
+                type: String,
+            },
+            y: {
+                type: String,
+            },
+            lng: {
+                type: String,
+            },
+            lat: {
+                type: String,
+            }
+        },
     },
     {
         timestamps: true,

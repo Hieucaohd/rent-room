@@ -15,6 +15,13 @@ export default gql`
         deleteHome(id: ID!): ID! @authRequire
     }
 
+    input PositionInput {
+        x: String!
+        y: String!
+        lng: String
+        lat: String
+    }
+
     input HomeInput {
         province: Int
         district: Int
@@ -24,6 +31,14 @@ export default gql`
         waterPrice: Int
         images: [String]
         totalRooms: Int
+        position: PositionInput
+    }
+
+    type Position {
+        x: String
+        y: String
+        lng: String
+        lat: String
     }
 
     type Home implements Node & Timestamps {
@@ -40,6 +55,8 @@ export default gql`
         totalRooms: Int
         listRooms(page: Int, limit: Int): RoomPaginator
             @getListRelate(field: "home", collection: "rooms")
+        
+        position: Position
 
         createdAt: String
         updatedAt: String
