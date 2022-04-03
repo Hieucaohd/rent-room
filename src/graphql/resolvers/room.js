@@ -4,6 +4,7 @@ import {
     getAllRoomsFromDatabase,
     updateRoomInDatabase,
     deleteRoomInDatabase,
+    getRoomByIdFromDatabase
 } from "../../services";
 
 export default {
@@ -26,5 +27,9 @@ export default {
         allRooms: async (_, { page, limit }) => {
             return await getAllRoomsFromDatabase(page, limit);
         },
+
+        getRoomById: async (_, {roomId}) => {
+            return await getRoomByIdFromDatabase(roomId);
+        }
     },
 };

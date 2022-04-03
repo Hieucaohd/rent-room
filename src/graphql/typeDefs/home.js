@@ -3,6 +3,8 @@ import { gql } from "apollo-server-express";
 export default gql`
     extend type Query {
         allHomes(page: Int, limit: Int): HomePaginator
+
+        getHomeById(homeId: ID!): Home
     }
 
     extend type Mutation {

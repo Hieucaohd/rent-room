@@ -33,3 +33,7 @@ export const getAllRoomsFromDatabase = async (page, limit) => {
 
     return await Room.paginate({}, options);
 };
+
+export const getRoomByIdFromDatabase = async (roomId) => {
+    return await Room.findById(roomId);
+}

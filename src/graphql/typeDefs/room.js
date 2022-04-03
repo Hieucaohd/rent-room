@@ -3,6 +3,8 @@ import { gql } from "apollo-server-express";
 export default gql`
     extend type Query {
         allRooms(page: Int, limit: Int): RoomPaginator
+
+        getRoomById(roomId: ID!): Room
     }
 
     extend type Mutation {

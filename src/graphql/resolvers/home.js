@@ -3,6 +3,7 @@ import {
     createHomeInDatabase,
     updateHomeInDatabase,
     deleteHomeInDatabase,
+    getHomeByIdFromDatabase
 } from "../../services";
 
 export default {
@@ -10,6 +11,10 @@ export default {
         allHomes: async (_, { page, limit }) => {
             return await getAllHomesFromDatabase(page, limit);
         },
+
+        getHomeById: async (_, {homeId}) => {
+            return await getHomeByIdFromDatabase(homeId);
+        }
     },
 
     Mutation: {
