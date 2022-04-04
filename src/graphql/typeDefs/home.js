@@ -16,10 +16,10 @@ export default gql`
     }
 
     input PositionInput {
-        x: String!
-        y: String!
-        lng: String
-        lat: String
+        x: Float!
+        y: Float!
+        lng: Float
+        lat: Float
     }
 
     input HomeInput {
@@ -35,10 +35,10 @@ export default gql`
     }
 
     type Position {
-        x: String
-        y: String
-        lng: String
-        lat: String
+        x: Float
+        y: Float
+        lng: Float
+        lat: Float
     }
 
     type Home implements Node & Timestamps {

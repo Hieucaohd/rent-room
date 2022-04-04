@@ -34,16 +34,16 @@ const HomeSchema = new Schema(
         },
         position: {
             x: {
-                type: String,
+                type: Number,
             },
             y: {
-                type: String,
+                type: Number,
             },
             lng: {
-                type: String,
+                type: Number,
             },
             lat: {
-                type: String,
+                type: Number,
             }
         },
     },
