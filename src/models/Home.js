@@ -26,6 +26,12 @@ const HomeSchema = new Schema(
         waterPrice: {
             type: Number,
         },
+        internetPrice: {
+            type: Number,
+        },
+        cleaningPrice: {
+            type: Number,
+        },
         images: {
             type: [String],
         },
@@ -45,6 +51,9 @@ const HomeSchema = new Schema(
             lat: {
                 type: Number,
             }
+        },
+        description: {
+            type: String,
         },
     },
     {

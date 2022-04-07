@@ -29,9 +29,12 @@ export default gql`
         liveWithOwner: Boolean
         electricityPrice: Int
         waterPrice: Int
+        internetPrice: Int
+        cleaningPrice: Int
         images: [String]
         totalRooms: Int
         position: PositionInput
+        description: String
     }
 
     type Position {
@@ -51,12 +54,15 @@ export default gql`
         liveWithOwner: Boolean
         electricityPrice: Int
         waterPrice: Int
+        internetPrice: Int
+        cleaningPrice: Int
         images: [String]
         totalRooms: Int
         listRooms(page: Int, limit: Int): RoomPaginator
             @getListRelate(field: "home", collection: "rooms")
         
         position: Position
+        description: String
 
         createdAt: String
         updatedAt: String

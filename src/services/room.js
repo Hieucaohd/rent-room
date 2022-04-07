@@ -28,7 +28,7 @@ export const deleteRoomInDatabase = async (roomID) => {
 export const getAllRoomsFromDatabase = async (page, limit) => {
     let options = createOptions(page, limit);
     options.sort = {
-        createdAt: -1,
+        createdAt: 1,
     };
 
     return await Room.paginate({}, options);

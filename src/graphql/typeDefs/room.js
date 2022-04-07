@@ -21,6 +21,7 @@ export default gql`
         isRented: Boolean
         floor: Int
         images: [String]
+        description: String
     }
 
     type Room implements Node & Timestamps {
@@ -33,6 +34,7 @@ export default gql`
         isRented: Boolean
         floor: Int
         images: [String]
+        description: String
 
         createdAt: String
         updatedAt: String

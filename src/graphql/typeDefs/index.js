@@ -3,6 +3,7 @@ import home from "./home";
 import room from "./room";
 import user from "./user";
 import file from "./file";
-import directive from "./directiveDefs"
+import search from "./search";
+import directive from "./directiveDefs";
 
-export default [baseDefs, home, room, user, file, directive];
+export default [baseDefs, home, room, user, file, directive, search];
