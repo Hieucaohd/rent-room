@@ -3,3 +3,4 @@ src/images/*
 coverage/
 package-lock.json
 .env
+home-datas.json

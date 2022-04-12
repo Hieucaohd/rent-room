@@ -1,6 +1,5 @@
 import { Home } from "../models";
 import { createOptions } from "../helpers";
-import { async } from "@firebase/util";
 
 export const getAllHomesFromDatabase = async (page, limit) => {
     let options = createOptions(page, limit);

@@ -57,7 +57,7 @@ export default gql`
         internetPrice: Int
         cleaningPrice: Int
         images: [String]
-        totalRooms: Int
+        totalRooms: Int @countRoom
         listRooms(page: Int, limit: Int): RoomPaginator
             @getListRelate(field: "home", collection: "rooms")
         

@@ -11,4 +11,6 @@ export default gql`
     directive @isOwner(
         collectionName: String!
     ) on FIELD_DEFINITION
+
+    directive @countRoom on FIELD_DEFINITION
 `;
