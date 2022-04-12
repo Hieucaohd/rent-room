@@ -27,6 +27,9 @@ const RoomSchema = new Schema(
         description: {
             type: String,
         },
+        roomNumber: {
+            type: Number,
+        },
     },
     {
         timestamps: true,
