@@ -32,8 +32,10 @@
     "lodash": "^4.17.21",
     "mockingoose": "^2.15.2",
     "mongoose": "^6.2.3",
+    "mongoose-aggregate-paginate-v2": "^1.0.6",
     "mongoose-autopopulate": "^0.16.0",
     "mongoose-paginate-v2": "^1.6.2",
+    "nodemon": "^2.0.15",
     "uuid": "^8.3.2",
     "yup": "^0.32.11"
   },

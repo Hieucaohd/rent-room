@@ -18,7 +18,6 @@ export default gql`
     input PriceConditionInput {
         arrange: ArrangeType
         scope: Scope
-        value: Float
     }
 
     input SquareConditionInput {
