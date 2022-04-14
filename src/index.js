@@ -9,10 +9,6 @@ import mongoose from "mongoose";
 const app = express();
 const port = process.env.PORT || PORT;
 
-app.get("/wakeUpServer", (req, res) => {
-    res.send("wake up successfully!");
-})
-
 /* start app */
 const startApp = async () => {
     try {
