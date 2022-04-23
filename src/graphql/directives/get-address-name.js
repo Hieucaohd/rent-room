@@ -19,7 +19,7 @@ const wards = JSON.parse(readFileSync(pathToWardsFile, 'utf8'));
  */
 function getAddressNameByCode(code, unit) {
     try {
-        return unit[code - 1].name;
+        return unit.find((item) => item.code === code).name;
     } catch (err) {
         return null;
     }
