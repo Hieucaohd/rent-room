@@ -5,6 +5,7 @@ import {
     getListRelateDirectiveTransformer,
     isOwnerDirectiveTransformer,
     countRoomDirectiveTransformer,
+    getAddressNameDirectiveTransformer,
 } from "./directives";
 
 import { makeExecutableSchema } from "@graphql-tools/schema";
@@ -19,6 +20,7 @@ schema = isOwnerDirectiveTransformer(schema, "isOwner");
 schema = authRequireDirectiveTransformer(schema, "authRequire");
 schema = getListRelateDirectiveTransformer(schema, "getListRelate");
 schema = countRoomDirectiveTransformer(schema, "countRoom");
+schema = getAddressNameDirectiveTransformer(schema, "getAddressName");
 
 const server = new ApolloServer({
     schema,

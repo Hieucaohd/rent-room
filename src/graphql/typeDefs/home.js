@@ -53,6 +53,9 @@ export default gql`
         province: Int
         district: Int
         ward: Int
+        provinceName: String @getAddressName(field: "province")
+        districtName: String @getAddressName(field: "district")
+        wardName: String @getAddressName(field: "ward")
         liveWithOwner: Boolean
         electricityPrice: Int
         waterPrice: Int
