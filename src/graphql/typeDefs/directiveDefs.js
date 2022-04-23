@@ -1,6 +1,10 @@
 import { gql } from "apollo-server-express";
 
 export default gql`
+    directive @getAddressName(
+        field: String!
+    ) on FIELD_DEFINITION
+
     directive @authRequire on FIELD_DEFINITION
 
     directive @getListRelate(
