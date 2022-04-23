@@ -31,6 +31,9 @@ const RoomSchema = new Schema(
         roomNumber: {
             type: Number,
         },
+        title: {
+            type: String,
+        },
     },
     {
         timestamps: true,

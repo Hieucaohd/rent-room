@@ -38,6 +38,9 @@ const HomeSchema = new Schema(
         totalRooms: {
             type: Number,
         },
+        detailAddress: {
+            type: String,
+        },
         position: {
             x: {
                 type: Number,
@@ -53,6 +56,9 @@ const HomeSchema = new Schema(
             }
         },
         description: {
+            type: String,
+        },
+        title: {
             type: String,
         },
     },
