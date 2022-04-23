@@ -23,6 +23,7 @@ export default gql`
         images: [String]
         description: String
         roomNumber: Int
+        title: String
     }
 
     type Room implements Node & Timestamps {
@@ -37,6 +38,7 @@ export default gql`
         images: [String]
         description: String
         roomNumber: Int
+        title: String
 
         createdAt: String
         updatedAt: String

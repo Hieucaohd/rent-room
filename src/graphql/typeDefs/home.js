@@ -34,7 +34,9 @@ export default gql`
         images: [String]
         totalRooms: Int
         position: PositionInput
+        detailAddress: String
         description: String
+        title: String
     }
 
     type Position {
@@ -63,6 +65,8 @@ export default gql`
         
         position: Position
         description: String
+        detailAddress: String
+        title: String
 
         createdAt: String
         updatedAt: String
