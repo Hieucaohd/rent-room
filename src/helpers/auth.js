@@ -2,6 +2,8 @@ import { sign } from "jsonwebtoken";
 import { pick } from "lodash";
 import { SECRET, SECRET_REFRESH } from "../config";
 import dayjs from "dayjs";
+import { User } from "../models";
+
 
 const TIME_ACCESS_TOKEN_EXPIRED = 60 * 60 * 24 * 7; // second
 const TIME_REFRESH_TOKEN_EXPIRED = 60 * 60 * 24 * 365; // second
@@ -62,6 +64,17 @@ export const clearRefreshTokenInCookie = (res) => {
     res.clearCookie("refreshToken");
 };
 
+/**
+ * Show the user info to client. This function hide some 
+ * sensitive info of user like password, ...
+ * @example
+ * ```Javascript
+ * const userInfo = serializerUser(user.toObject());
+ * ``` 
+ * 
+ * @param {object} - user.toObject().
+ * @returns {object}
+ */
 export const serializerUser = (user) => {
     return pick(user, [
         "_id",
