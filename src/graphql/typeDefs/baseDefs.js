@@ -1,6 +1,9 @@
 import { gql } from "apollo-server-express";
 
 export default gql`
+    scalar Upload
+    scalar Date
+
     type Query {
         _: String
     }
@@ -15,8 +18,8 @@ export default gql`
 
     # all type must implement this interface
     interface Timestamps {
-        createdAt: String
-        updatedAt: String
+        createdAt: Date
+        updatedAt: Date
     }
 
     interface Node {

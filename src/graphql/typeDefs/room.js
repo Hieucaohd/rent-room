@@ -40,8 +40,8 @@ export default gql`
         roomNumber: Int
         title: String
 
-        createdAt: String
-        updatedAt: String
+        createdAt: Date
+        updatedAt: Date
     }
 
     type RoomPaginator implements PaginatorResult {

@@ -71,8 +71,8 @@ export default gql`
         detailAddress: String
         title: String
 
-        createdAt: String
-        updatedAt: String
+        createdAt: Date
+        updatedAt: Date
     }
 
     type HomePaginator implements PaginatorResult {

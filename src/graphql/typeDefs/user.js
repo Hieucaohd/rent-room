@@ -52,8 +52,8 @@ export default gql`
         listHomes(page: Int, limit: Int): HomePaginator
             @getListRelate(field: "owner", collection: "homes")
 
-        createdAt: String
-        updatedAt: String
+        createdAt: Date
+        updatedAt: Date
     }
 
     type AuthResponse {
