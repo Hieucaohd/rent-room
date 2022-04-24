@@ -1,7 +1,7 @@
 import home from "./home";
 import room from "./room";
 import user from "./user";
-import file from "./file";
 import search from "./search";
+import customTypes from "./custom-types";
 
-export default [home, room, user, file, search];
+export default [home, room, user, search, customTypes];

@@ -35,5 +35,6 @@ export const getAllRoomsFromDatabase = async (page, limit) => {
 };
 
 export const getRoomByIdFromDatabase = async (roomId) => {
-    return await Room.findById(roomId);
+    const room = await Room.findById(roomId);
+    return room;
 }
