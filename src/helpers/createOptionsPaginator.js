@@ -14,7 +14,7 @@ export const createSearchOptions = (conditions, page, limit) => {
     const customLabels = {
         meta: 'paginator',
     };
-    const {price, square, livingExpenses} = conditions;
+    const {price, square, livingExpenses, createdAt} = conditions;
     return {
         page: page || 1,
         limit: limit || 10,
@@ -25,7 +25,7 @@ export const createSearchOptions = (conditions, page, limit) => {
                 ...livingExpenses.waterCondition && livingExpenses.waterCondition.arrange && {'home.electricityPrice': livingExpenses.waterCondition.arrange === 'ASC' ? 1 : -1},
             },
             ...square && square.arrange && {square: square.arrange === 'ASC' ? 1 : -1}, 
-            createAt: -1,
+            ...createdAt && {createdAt: createdAt === 'ASC' ? -1 : 1}
         },
         customLabels,
     };

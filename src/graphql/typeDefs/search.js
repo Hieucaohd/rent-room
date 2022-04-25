@@ -70,5 +70,6 @@ export default gql`
         floor: FloorConditionInput
         liveWithOwner: Boolean
         livingExpenses: LivingExpensesConditionInput
+        createdAt: ArrangeType
     }
 `;
