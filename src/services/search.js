@@ -18,6 +18,17 @@ export const filterRoom = async (conditions, page, limit) => {
             $unwind: '$home',
         },
         {
+            $lookup: {
+                from: 'users',
+                localField: 'home.owner',
+                foreignField: '_id',
+                as: 'home.owner',
+            },
+        },
+        {
+            $unwind: '$home.owner',
+        },
+        {
             $match: match,
         },
     ]);
