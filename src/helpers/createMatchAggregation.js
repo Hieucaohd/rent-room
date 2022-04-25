@@ -1,5 +1,5 @@
 export const createMatchAggregation = (conditions) => {
-    const { price, square, address, floor, liveWithOwner, livingExpenses } = conditions;
+    const { price, square, address, floor, liveWithOwner, livingExpenses, createdAt } = conditions;
     return {
         ...(address && {
             ...(address.province && { 'home.province': address.province }),
@@ -43,6 +43,6 @@ export const createMatchAggregation = (conditions) => {
                     $lte: floor.scope.max,
                 },
             }),
-        ...(liveWithOwner && { 'home.liveWithOwner': liveWithOwner }),
+        ...(liveWithOwner && { 'home.liveWithOwner': liveWithOwner })
     };
 };
