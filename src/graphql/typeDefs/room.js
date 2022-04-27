@@ -1,4 +1,4 @@
-import { gql } from "apollo-server-express";
+import { gql } from 'apollo-server-express';
 
 export default gql`
     extend type Query {
@@ -10,7 +10,7 @@ export default gql`
     extend type Mutation {
         createNewRoom(newRoom: RoomInput!, homeId: ID!): Room! @authRequire
 
-        updateRoom(updatedRoom: RoomInput!, id: ID!): Room! @authRequire
+        updateRoom(updatedRoom: RoomUpdateInput!, id: ID!): Room! @authRequire
 
         deleteRoom(id: ID!): ID! @authRequire
     }
@@ -24,6 +24,19 @@ export default gql`
         description: String
         roomNumber: Int
         title: String
+        amenities: [AmenitiesInput]
+    }
+
+    input RoomUpdateInput {
+        price: Int
+        square: Float
+        isRented: Boolean
+        floor: Int
+        images: [String]
+        description: String
+        roomNumber: Int
+        title: String
+        amenities: [AmenitiesInput]
     }
 
     type Room implements Node & Timestamps {
@@ -39,9 +52,20 @@ export default gql`
         description: String
         roomNumber: Int
         title: String
+        amenities: [Amenities]
 
         createdAt: Date
         updatedAt: Date
+    }
+
+    type Amenities {
+        title: String
+        description: String
+    }
+
+    input AmenitiesInput {
+        title: String
+        description: String
     }
 
     type RoomPaginator implements PaginatorResult {

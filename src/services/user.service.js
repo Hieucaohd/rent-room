@@ -15,7 +15,7 @@ export const createUserInDatabase = async (newUser) => {
 };
 
 /**
- * @param {UserInput} updateInfo
+ * @param {UserUpdateInput} updateInfo
  * @param {UserModel} user
  * @returns {Promise<UserModel>}
  * @throws {Error}

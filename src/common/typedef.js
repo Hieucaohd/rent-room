@@ -14,10 +14,12 @@
  * @typedef { import('./graphql-types').Room } RoomResult
  * @typedef { import('./model-types').RoomModel } RoomModel
  * @typedef { import('./graphql-types').RoomInput } RoomInput
+ * @typedef { import('./graphql-types').RoomUpdateInput } RoomUpdateInput
  * @typedef { import('./graphql-types').FilterRoomInput } FilterRoomInput
  * @typedef { import('./graphql-types').RoomPaginator } RoomPaginator
  *
  * @typedef { import('./graphql-types').User } UserResult
  * @typedef { import('./graphql-types').UserInput } UserInput
+ * @typedef { import('./graphql-types').UserUpdateInput } UserUpdateInput
  * @typedef { import('./model-types').UserModel } UserModel
  */

@@ -1,12 +1,12 @@
-import { Schema, model } from "mongoose";
-import mongoosePaginate from "mongoose-paginate-v2";
-import aggregatePaginate from "mongoose-aggregate-paginate-v2";
+import { Schema, model } from 'mongoose';
+import mongoosePaginate from 'mongoose-paginate-v2';
+import aggregatePaginate from 'mongoose-aggregate-paginate-v2';
 
 const RoomSchema = new Schema(
     {
         home: {
             type: Schema.Types.ObjectId,
-            ref: "homes",
+            ref: 'homes',
             autopopulate: true,
         },
         price: {
@@ -34,6 +34,7 @@ const RoomSchema = new Schema(
         title: {
             type: String,
         },
+        amenities: [{ title: String, description: String }],
     },
     {
         timestamps: true,
@@ -41,11 +42,11 @@ const RoomSchema = new Schema(
 );
 
 // plugin for autopopulate
-RoomSchema.plugin(require("mongoose-autopopulate"));
+RoomSchema.plugin(require('mongoose-autopopulate'));
 
 // plugin for pagination
 RoomSchema.plugin(mongoosePaginate);
 RoomSchema.plugin(aggregatePaginate);
 
-const Room = model("rooms", RoomSchema);
+const Room = model('rooms', RoomSchema);
 export default Room;
