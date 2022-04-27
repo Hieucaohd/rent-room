@@ -1,5 +1,6 @@
 import { ObjectId } from "mongodb"
 import { Document } from "mongoose"
+import { Amenities } from "./graphql-types"
 
 export type User = {
 	_id: ObjectId,
@@ -56,6 +57,7 @@ export type Room = {
 	images: Array<String>,
 	description: String,
 	roomNumber: Number,
+	amenities: Array<Amenities>,
 	title: String,
 	createdAt: Date,
 	updatedAt: Date,

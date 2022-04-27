@@ -28,6 +28,17 @@ export type AfterDelete = {
   success?: Maybe<Scalars['Boolean']>;
 };
 
+export type Amenities = {
+  __typename?: 'Amenities';
+  description?: Maybe<Scalars['String']>;
+  title?: Maybe<Scalars['String']>;
+};
+
+export type AmenitiesInput = {
+  description?: InputMaybe<Scalars['String']>;
+  title?: InputMaybe<Scalars['String']>;
+};
+
 export enum ArrangeType {
   Asc = 'ASC',
   Desc = 'DESC'
@@ -50,6 +61,7 @@ export type ElectricityPriceConditionInput = {
 
 export type FilterRoomInput = {
   address?: InputMaybe<AddressConditionInput>;
+  createdAt?: InputMaybe<ArrangeType>;
   floor?: InputMaybe<FloorConditionInput>;
   homeId?: InputMaybe<Scalars['ID']>;
   liveWithOwner?: InputMaybe<Scalars['Boolean']>;
@@ -200,12 +212,12 @@ export type MutationUpdateHomeArgs = {
 
 export type MutationUpdateRoomArgs = {
   id: Scalars['ID'];
-  updatedRoom: RoomInput;
+  updatedRoom: RoomUpdateInput;
 };
 
 
 export type MutationUpdateUserArgs = {
-  updateInfo: UpdateUserInput;
+  updateInfo: UserUpdateInput;
 };
 
 export type Node = {
@@ -311,6 +323,7 @@ export enum Role {
 export type Room = Node & Timestamps & {
   __typename?: 'Room';
   _id?: Maybe<Scalars['ID']>;
+  amenities?: Maybe<Array<Maybe<Amenities>>>;
   createdAt?: Maybe<Scalars['Date']>;
   description?: Maybe<Scalars['String']>;
   floor?: Maybe<Scalars['Int']>;
@@ -325,6 +338,7 @@ export type Room = Node & Timestamps & {
 };
 
 export type RoomInput = {
+  amenities?: InputMaybe<Array<InputMaybe<AmenitiesInput>>>;
   description?: InputMaybe<Scalars['String']>;
   floor?: InputMaybe<Scalars['Int']>;
   images?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
@@ -339,6 +353,18 @@ export type RoomPaginator = PaginatorResult & {
   __typename?: 'RoomPaginator';
   docs?: Maybe<Array<Maybe<Room>>>;
   paginator?: Maybe<Paginator>;
+};
+
+export type RoomUpdateInput = {
+  amenities?: InputMaybe<Array<InputMaybe<AmenitiesInput>>>;
+  description?: InputMaybe<Scalars['String']>;
+  floor?: InputMaybe<Scalars['Int']>;
+  images?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  isRented?: InputMaybe<Scalars['Boolean']>;
+  price?: InputMaybe<Scalars['Int']>;
+  roomNumber?: InputMaybe<Scalars['Int']>;
+  square?: InputMaybe<Scalars['Float']>;
+  title?: InputMaybe<Scalars['String']>;
 };
 
 export type Scope = {
@@ -359,17 +385,6 @@ export type Subscription = {
 export type Timestamps = {
   createdAt?: Maybe<Scalars['Date']>;
   updatedAt?: Maybe<Scalars['Date']>;
-};
-
-export type UpdateUserInput = {
-  avatar?: InputMaybe<Scalars['String']>;
-  district?: InputMaybe<Scalars['Int']>;
-  email?: InputMaybe<Scalars['String']>;
-  fullname?: InputMaybe<Scalars['String']>;
-  numberPhone?: InputMaybe<Scalars['String']>;
-  province?: InputMaybe<Scalars['Int']>;
-  userType?: InputMaybe<UserType>;
-  ward?: InputMaybe<Scalars['Int']>;
 };
 
 export type User = Node & Timestamps & {
@@ -415,6 +430,17 @@ export enum UserType {
   Host = 'HOST',
   Tenant = 'TENANT'
 }
+
+export type UserUpdateInput = {
+  avatar?: InputMaybe<Scalars['String']>;
+  district?: InputMaybe<Scalars['Int']>;
+  email?: InputMaybe<Scalars['String']>;
+  fullname?: InputMaybe<Scalars['String']>;
+  numberPhone?: InputMaybe<Scalars['String']>;
+  province?: InputMaybe<Scalars['Int']>;
+  userType?: InputMaybe<UserType>;
+  ward?: InputMaybe<Scalars['Int']>;
+};
 
 export type WaterPriceConditionInput = {
   arrange?: InputMaybe<ArrangeType>;

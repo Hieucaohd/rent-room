@@ -15,7 +15,7 @@ export const createRoomInDatabase = async (newRoom) => {
 };
 
 /**
- * @param {RoomInput} updateInfo
+ * @param {RoomUpdateInput} updateInfo
  * @param {Scalars['ID']} roomID
  * @returns {Promise<RoomModel>}
  */
