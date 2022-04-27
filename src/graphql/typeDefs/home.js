@@ -1,4 +1,4 @@
-import { gql } from "apollo-server-express";
+import { gql } from 'apollo-server-express';
 
 export default gql`
     extend type Query {
@@ -10,7 +10,7 @@ export default gql`
     extend type Mutation {
         createNewHome(newHome: HomeInput!): Home @authRequire
 
-        updateHome(updatedHome: HomeInput!, id: ID!): Home! @authRequire
+        updateHome(updatedHome: HomeUpdateInput!, id: ID!): Home! @authRequire
 
         deleteHome(id: ID!): ID! @authRequire
     }
@@ -23,6 +23,23 @@ export default gql`
     }
 
     input HomeInput {
+        province: Int
+        district: Int
+        ward: Int
+        liveWithOwner: Boolean
+        electricityPrice: Int
+        waterPrice: Int
+        internetPrice: Int
+        cleaningPrice: Int
+        images: [String]
+        totalRooms: Int
+        position: PositionInput
+        detailAddress: String
+        description: String
+        title: String
+    }
+
+    input HomeUpdateInput {
         province: Int
         district: Int
         ward: Int
@@ -53,19 +70,18 @@ export default gql`
         province: Int
         district: Int
         ward: Int
-        provinceName: String @getAddressName(field: "province")
-        districtName: String @getAddressName(field: "district")
-        wardName: String @getAddressName(field: "ward")
+        provinceName: String
+        districtName: String
+        wardName: String
         liveWithOwner: Boolean
         electricityPrice: Int
         waterPrice: Int
         internetPrice: Int
         cleaningPrice: Int
         images: [String]
-        totalRooms: Int @countRoom
+        totalRooms: Int
         listRooms(page: Int, limit: Int): RoomPaginator
-            @getListRelate(field: "home", collection: "rooms")
-        
+
         position: Position
         description: String
         detailAddress: String

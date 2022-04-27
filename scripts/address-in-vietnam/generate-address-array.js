@@ -5,9 +5,9 @@ import _ from 'lodash';
 /**
  * Compare two province, two district or two ward
  * the one have code bigger is bigger.
- * @param {int} a
- * @param {int} b
- * @returns {int} - if result < 0 then a < b, else result > 0 then a > 0, other result = 0 then a = b
+ * @param {Number} a
+ * @param {Number} b
+ * @returns {Number} - if result < 0 then a < b, else result > 0 then a > 0, other result = 0 then a = b
  */
 function compare(a, b) {
     return a.code - b.code;
@@ -15,8 +15,8 @@ function compare(a, b) {
 
 /**
  * Get the list of provinces in vietnam with only two fields: name and code.
- * @param {array} addressData - array of provinces.
- * @returns {array} - array of provinces is sorted by code in ascending.
+ * @param {Array} addressData - array of provinces.
+ * @returns {Array} - array of provinces is sorted by code in ascending.
  */
 function getProvinces(addressData) {
     let provinces = [];
@@ -30,8 +30,8 @@ function getProvinces(addressData) {
 
 /**
  * Get the list of districts in vietnam with only two fields: name and code.
- * @param {array} addressData - array of provinces.
- * @returns {array} - array of districts is sorted by code in ascending.
+ * @param {Array} addressData - array of provinces.
+ * @returns {Array} - array of districts is sorted by code in ascending.
  */
 function getDistricts(addressData) {
     let districts = [];
@@ -49,8 +49,8 @@ function getDistricts(addressData) {
 
 /**
  * Get the list of wards with only two fields: name and code.
- * @param {array} addressData - array of provinces.
- * @returns {array} - array of wards is sorted by code in ascending.
+ * @param {Array} addressData - array of provinces.
+ * @returns {Array} - array of wards is sorted by code in ascending.
  */
 function getWards(addressData) {
     let wards = [];
@@ -70,7 +70,7 @@ function getWards(addressData) {
 
 /**
  * Write data to file.
- * @param {string} pathToFile - path to file needed to write data to.
+ * @param {String} pathToFile - path to file needed to write data to.
  * @param {any} data - data to write to file.
  */
 function generateUnitAddressFile(pathToFile, data) {

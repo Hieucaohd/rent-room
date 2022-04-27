@@ -1,7 +1,13 @@
-import { createSearchOptions } from "../helpers";
-import { createMatchAggregation } from "../helpers/createMatchAggregation";
+import { createSearchOptions } from "../helpers/paginator.service";
+import { createMatchAggregation } from "../helpers/create-match-aggregation";
 import { Room } from "../models";
 
+/**
+ * @param {FilterRoomInput} conditions 
+ * @param {Number} page 
+ * @param {Number} limit 
+ * @returns {Promise<RoomPaginator>}
+ */
 export const filterRoom = async (conditions, page, limit) => {
     const match = createMatchAggregation(conditions);
 

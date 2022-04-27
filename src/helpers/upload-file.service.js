@@ -1,6 +1,6 @@
 import { createWriteStream } from "fs";
 import { parse, join } from "path";
-import { FOLDER_SAVE_FILE, URL } from "../config";
+import { FOLDER_SAVE_STATIC_FILE, STATIC_FILE_URL } from "../config";
 import { v4 as uuidv4 } from "uuid";
 
 import { storage } from "../firebase";
@@ -28,7 +28,7 @@ export const uploadFile = async (file) => {
     // generate name for file to save
     // this use uuid for avoid override exist file in image folder
     filename = generateFilename(filename);
-    let serverFile = join(__dirname, `../${FOLDER_SAVE_FILE}/${filename}`);
+    let serverFile = join(__dirname, `../${FOLDER_SAVE_STATIC_FILE}/${filename}`);
 
     // for testing: it has no uuid in name
     // let serverFile = join(__dirname, `../${SAVE_FILE_FOLDER}/${name}${ext}`);
@@ -46,8 +46,8 @@ export const uploadFile = async (file) => {
     }
 
     // generate url for saving to database by removing 'images' and '\\' folder in path of file
-    let getFileName = serverFile.split(FOLDER_SAVE_FILE)[1].replace("\\", "");
-    filename = `${URL}/${getFileName}`;
+    let getFileName = serverFile.split(FOLDER_SAVE_STATIC_FILE)[1].replace("\\", "");
+    filename = `${STATIC_FILE_URL}/${getFileName}`;
 
     return { filename, mimetype, encoding };
 };

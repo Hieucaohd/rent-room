@@ -2,14 +2,7 @@ import { gql } from "apollo-server-express";
 
 export default gql`
     extend type Mutation {
-        register(newUser: UserInput!): AuthResponse!
-        logout: LogoutStatus! @authRequire
         updateUser(updateInfo: UpdateUserInput!): User! @authRequire
-    }
-
-    extend type Query {
-        login(email: String!, password: String!): AuthResponse!
-        profile: Profile @authRequire
     }
 
     input UserInput {
@@ -25,8 +18,8 @@ export default gql`
     }
 
     input UpdateUserInput {
-        email: String!
-        fullname: String!
+        email: String
+        fullname: String
         numberPhone: String
         province: Int
         district: Int
@@ -44,13 +37,15 @@ export default gql`
         province: Int
         district: Int
         ward: Int
+        provinceName: String
+        districtName: String
+        wardName: String
         avatar: String
         defaultHome: Home
         userType: String
         role: [String]
 
         listHomes(page: Int, limit: Int): HomePaginator
-            @getListRelate(field: "owner", collection: "homes")
 
         createdAt: Date
         updatedAt: Date

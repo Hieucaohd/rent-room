@@ -1,4 +1,4 @@
-import GraphQLUpload from "graphql-upload/public/GraphQLUpload";
+import GraphQLUpload from "graphql-upload";
 import { dateScalar } from "../custom-fields/date-scalar";
 
 export default {

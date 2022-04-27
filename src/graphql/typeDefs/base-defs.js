@@ -22,6 +22,7 @@ export default gql`
         updatedAt: Date
     }
 
+    # all type must implement this interface
     interface Node {
         _id: ID
     }

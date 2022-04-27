@@ -1,11 +1,10 @@
-import mongoose from "mongoose";
 import {
     createRoomInDatabase,
     getAllRoomsFromDatabase,
     updateRoomInDatabase,
     deleteRoomInDatabase,
     getRoomByIdFromDatabase
-} from "../../services";
+} from "../../services/room.service";
 
 export default {
     Mutation: {
