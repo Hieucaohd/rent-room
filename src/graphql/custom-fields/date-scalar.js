@@ -15,7 +15,7 @@ export const dateScalar = new GraphQLScalarType({
 	serialize(value) {
 		let hour = value.getHours();
 		// convert utc's hour to vietnam's hour
-		hour += 7;
+		hour += 6;
 		value.setHours(hour);
 		return value.toISOString();
 	}

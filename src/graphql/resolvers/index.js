@@ -1,7 +1,8 @@
-import home from "./home";
-import room from "./room";
-import user from "./user";
-import search from "./search";
-import customTypes from "./custom-types";
+import home from './home.resolver';
+import room from './room.resolver';
+import user from './user.resolver';
+import search from './search.resolver';
+import customTypes from './custom-types.resolver';
+import auth from './auth.resolver';
 
-export default [home, room, user, search, customTypes];
+export default [home, room, user, search, customTypes, auth];

@@ -6,7 +6,8 @@
   "scripts": {
     "test": "jest",
     "start": "node -r esm .",
-    "dev": "nodemon -r esm"
+    "dev": "nodemon -r esm",
+    "codegen": "node -r esm .\\scripts\\codegen\\generate-graphql-types.js"
   },
   "keywords": [],
   "author": "",
@@ -42,6 +43,11 @@
   "devDependencies": {
     "@babel/plugin-transform-runtime": "^7.17.0",
     "@babel/preset-env": "^7.16.11",
+    "@graphql-codegen/add": "^3.1.1",
+    "@graphql-codegen/cli": "^2.6.2",
+    "@graphql-codegen/typescript": "^2.4.8",
+    "@graphql-codegen/typescript-compatibility": "^2.1.5",
+    "@graphql-codegen/typescript-operations": "^2.3.5",
     "@shelf/jest-mongodb": "^2.2.1",
     "babel-jest": "^27.5.1",
     "jest": "^27.5.1",
