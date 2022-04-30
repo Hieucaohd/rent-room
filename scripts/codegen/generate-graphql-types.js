@@ -33,7 +33,7 @@ downloadIntrospectionSchema(API_PATH, OUTPUT_FILE_SCHEMA)
         return generate({
             overwrite: true,
             generates: {
-                [path.join(__dirname, '../../src/common/graphql-types.ts')]: {
+                [path.join(__dirname, '../../src/common/types/graphql-types.ts')]: {
                     schema: [OUTPUT_FILE_SCHEMA],
                     plugins: commonPlugin,
                     config: config,

@@ -10,7 +10,7 @@ export default gql`
     extend type Mutation {
         createNewHome(newHome: HomeInput!): Home @authRequire
 
-        updateHome(updatedHome: HomeUpdateInput!, id: ID!): Home! @authRequire
+        updateHome(updatedHome: HomeUpdateInput!, id: ID!): Home @authRequire
 
         deleteHome(id: ID!): ID! @authRequire
     }
@@ -64,7 +64,7 @@ export default gql`
     }
 
     type Home implements Node & Timestamps {
-        _id: ID!
+        _id: ID
 
         owner: User
         province: Int
