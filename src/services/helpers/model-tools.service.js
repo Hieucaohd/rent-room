@@ -1,4 +1,4 @@
-import * as AppModels from "../models";
+import * as AppModels from "../../models";
 
 export const getModel = (collectionName) => {
     for (const modelName in AppModels) {

@@ -1,10 +1,7 @@
 import { createWriteStream } from "fs";
 import { parse, join } from "path";
-import { FOLDER_SAVE_STATIC_FILE, STATIC_FILE_URL } from "../config";
+import { FOLDER_SAVE_STATIC_FILE, STATIC_FILE_URL } from "../../config";
 import { v4 as uuidv4 } from "uuid";
-
-import { storage } from "../firebase";
-import { uploadBytes, ref } from "firebase/storage";
 
 export const generateFilename = (filename) => {
     // generate filename for save that the name of file is not override

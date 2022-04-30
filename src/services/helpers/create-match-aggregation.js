@@ -1,4 +1,4 @@
-import '../common/typedef';
+import '../../common/types/typedef';
 
 /**
  * @param {FilterRoomInput} conditions

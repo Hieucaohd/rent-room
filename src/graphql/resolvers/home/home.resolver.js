@@ -1,44 +1,23 @@
+import { HomeCreate, HomeDelete, HomeUpdate } from './home.mutation';
+import { ListHome, HomeById } from './home.query';
 import {
     getDistrictNameByCode,
     getProvinceNameByCode,
     getWardNameByCode,
-} from '../../helpers/address.service';
-import {
-    getAllHomesFromDatabase,
-    createHomeInDatabase,
-    updateHomeInDatabase,
-    deleteHomeInDatabase,
-    getHomeByIdFromDatabase,
-} from '../../services/home.service';
-import { countRoomInHome, getRoomsInHome } from '../../services/room.service';
-import '../../common/typedef';
+} from '../../../services/helpers/address.service';
+import { countRoomInHome, getRoomsInHome } from '../../../services/model-services/room.service';
+import '../../../common/types/typedef';
 
 export default {
-    Query: {
-        allHomes: async (_, { page, limit }) => {
-            return await getAllHomesFromDatabase(page, limit);
-        },
-
-        getHomeById: async (_, { homeId }) => {
-            return await getHomeByIdFromDatabase(homeId);
-        },
-    },
-
     Mutation: {
-        createNewHome: async (_, { newHome }, { user }) => {
-            newHome.owner = user._id;
-            return await createHomeInDatabase(newHome);
-        },
-
-        updateHome: async (_, { updatedHome, id }) => {
-            return await updateHomeInDatabase(updatedHome, id);
-        },
-
-        deleteHome: async (_, { id }) => {
-            return await deleteHomeInDatabase(id);
-        },
+        createNewHome: HomeCreate.mutate.bind(HomeCreate),
+        updateHome: HomeUpdate.mutate.bind(HomeUpdate),
+        deleteHome: HomeDelete.mutate.bind(HomeDelete),
     },
-
+    Query: {
+        allHomes: ListHome.query.bind(ListHome),
+        getHomeById: HomeById.query.bind(HomeById),
+    },
     Home: {
         /**
          * @param {HomeResult} source

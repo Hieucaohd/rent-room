@@ -1,12 +1,12 @@
-import { serializerUser } from '../../helpers/auth.service';
-import { updateUserInDatabase } from '../../services/user.service';
-import { getHomesCreatedByUser } from '../../services/home.service';
-import '../../common/typedef';
+import { serializerUser } from '../../../services/helpers/auth.service';
+import { updateUserInDatabase } from '../../../services/model-services/user.service';
+import { getHomesCreatedByUser } from '../../../services/model-services/home.service';
+import '../../../common/types/typedef';
 import {
     getDistrictNameByCode,
     getProvinceNameByCode,
     getWardNameByCode,
-} from '../../helpers/address.service';
+} from '../../../services/helpers/address.service';
 
 export default {
     Mutation: {

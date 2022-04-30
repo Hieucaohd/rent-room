@@ -9,12 +9,29 @@ import {
     TIME_REFRESH_TOKEN_EXPIRED,
     TIME_COOKIE_OF_ACCESS_TOKEN_EXPIRED,
     TIME_COOKIE_OF_REFRESH_TOKEN_EXPIRED,
-} from '../config';
+} from '../../config';
 import { Request, Response } from 'express';
-import '../common/typedef';
-import { findUserByEmailAndID } from '../services/user.service';
-import { EmailNotRegisterError, NoCookieInReqError, NoTokenInCookieError } from '../errors/auth-error';
+import '../../common/types/typedef';
+import { findUserByEmailAndID } from '../model-services/user.service';
+import {
+    EmailNotRegisterError,
+    NoCookieInReqError,
+    NoTokenInCookieError,
+} from '../../common/errors/auth-error';
 import { TokenExpiredError, JsonWebTokenError } from 'jsonwebtoken';
+
+/**
+ * Use to asign new access token and refresh token to cookie,
+ * serializer user to return to client.
+ *
+ * @param {UserModel | UserResult} user
+ * @param {Response} res
+ */
+export function authenticateUser(user, res) {
+    const responseService = new ResponseService(res);
+    responseService.setAccessTokenInCookie(user);
+    responseService.setRefreshTokenInCookie(user);
+}
 
 /**
  * @description
@@ -30,18 +47,22 @@ import { TokenExpiredError, JsonWebTokenError } from 'jsonwebtoken';
  * @returns {UserResult}
  */
 export function serializerUser(user) {
-    return pick(user.toObject(), [
-        '_id',
-        'email',
-        'fullname',
-        'numberPhone',
-        'province',
-        'district',
-        'ward',
-        'avatar',
-        'createdAt',
-        'updatedAt',
-    ]);
+    try {
+        return pick(user.toObject(), [
+            '_id',
+            'email',
+            'fullname',
+            'numberPhone',
+            'province',
+            'district',
+            'ward',
+            'avatar',
+            'createdAt',
+            'updatedAt',
+        ]);
+    } catch (err) {
+        return user;
+    }
 }
 
 /**
@@ -124,11 +145,15 @@ export class ResponseService {
     /**
      * @description
      * Generate new access token and asign it to Cookie.
-     * 
+     *
      * @param {UserModel} user
      */
     setAccessTokenInCookie(user) {
-        let accessToken = JSONWebTokenService.generateTokenForUser(user, ACCESS_TOKEN_SECRET_KEY, TIME_ACCESS_TOKEN_EXPIRED);
+        let accessToken = JSONWebTokenService.generateTokenForUser(
+            user,
+            ACCESS_TOKEN_SECRET_KEY,
+            TIME_ACCESS_TOKEN_EXPIRED
+        );
         this.setTokenInCookie(
             ACCESS_TOKEN_COOKIE_KEY,
             accessToken,
@@ -139,11 +164,15 @@ export class ResponseService {
     /**
      * @description
      * Generate new refresh token and asign it to cookie.
-     * 
+     *
      * @param {UserModel} user
      */
     setRefreshTokenInCookie(user) {
-        let refreshToken = JSONWebTokenService.generateTokenForUser(user, REFRESH_TOKEN_SECRET_KEY, TIME_REFRESH_TOKEN_EXPIRED);
+        let refreshToken = JSONWebTokenService.generateTokenForUser(
+            user,
+            REFRESH_TOKEN_SECRET_KEY,
+            TIME_REFRESH_TOKEN_EXPIRED
+        );
         this.setTokenInCookie(
             REFRESH_TOKEN_COOKIE_KEY,
             refreshToken,
@@ -179,7 +208,7 @@ export class ResponseService {
     /**
      * @description
      * Clear cookie by key.
-     * 
+     *
      * @param {String} key the key of cookie
      */
     clearCookie(key) {
@@ -195,7 +224,7 @@ export class JSONWebTokenService {
     /**
      * @description
      * Generate token base on secret.
-     * 
+     *
      * @param {UserModel} user
      * @param {String} secretKey secret key to generate token.
      * @param {Date} timeExpired time that token expired.

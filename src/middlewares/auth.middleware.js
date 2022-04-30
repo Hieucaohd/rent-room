@@ -6,10 +6,11 @@ import {
     NoTokenInCookieError,
     EmailNotRegisterError,
     RefreshTokenExpired,
-} from '../errors/auth-error';
+} from '../common/errors/auth-error';
 import { Request, Response, NextFunction } from 'express';
-import '../common/typedef';
-import { JSONWebTokenService, RequestService, ResponseService } from '../helpers/auth.service';
+import '../common/types/typedef';
+import { JSONWebTokenService, RequestService, ResponseService } from '../services/helpers/auth.service';
+import { PublicUser } from '../common/public-user';
 
 export class AuthMiddleware {
     /**
@@ -18,7 +19,7 @@ export class AuthMiddleware {
      * from cookie then extract user from these cookie,
      * if successfully then asign user and isAuth = true to req object.
      *
-     * If there any error then asign isAuth = false to req object.
+     * If there any error then asign {@link PublicUser} and isAuth = false to req object.
      *
      * @param {Request} req
      * @param {Response} res
@@ -50,6 +51,7 @@ export class AuthMiddleware {
                 error instanceof RefreshTokenExpired
             ) {
                 this.req.isAuth = false;
+                this.req.user = new PublicUser();
                 return this.next();
             }
 

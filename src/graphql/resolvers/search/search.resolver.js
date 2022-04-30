@@ -1,4 +1,4 @@
-import { filterRoom } from "../../services/search.service";
+import { filterRoom } from "../../../services/model-services/search.service";
 
 export default {
     Query: {

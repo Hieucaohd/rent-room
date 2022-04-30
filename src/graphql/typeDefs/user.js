@@ -18,14 +18,12 @@ export default gql`
     }
 
     input UserUpdateInput {
-        email: String
         fullname: String
         numberPhone: String
         province: Int
         district: Int
         ward: Int
         avatar: String
-        userType: UserType
     }
 
     type User implements Node & Timestamps {

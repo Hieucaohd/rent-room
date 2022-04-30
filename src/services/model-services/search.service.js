@@ -1,6 +1,6 @@
 import { createSearchOptions } from "../helpers/paginator.service";
 import { createMatchAggregation } from "../helpers/create-match-aggregation";
-import { Room } from "../models";
+import { Room } from "../../models";
 
 /**
  * @param {FilterRoomInput} conditions 

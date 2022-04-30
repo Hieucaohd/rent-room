@@ -22,4 +22,15 @@
  * @typedef { import('./graphql-types').UserInput } UserInput
  * @typedef { import('./graphql-types').UserUpdateInput } UserUpdateInput
  * @typedef { import('./model-types').UserModel } UserModel
+ * 
+ * @typedef { import('./graphql-types').AuthResponse } AuthResponse
+ * 
+ * @typedef { import('./common-types').ResolverParams } ResolverParams
+ * @typedef { import('./common-types').MetaBaseMutation } MetaBaseMutation
+ * @typedef { import('./common-types').MetaInstanceMutation } MetaInstanceMutation
+ * @typedef { import('./common-types').MetaDeleteMutation } MetaDeleteMutation
+ * @typedef { import('./common-types').MetaBaseQuery } MetaBaseQuery
+ * @typedef { import('./common-types').MetaInstanceQuery } MetaInstanceQuery
+ * @typedef { import('./common-types').MetaListQuery } MetaListQuery
+ * 
  */

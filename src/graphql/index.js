@@ -7,6 +7,7 @@ import {
 
 import { makeExecutableSchema } from "@graphql-tools/schema";
 import { ApolloServer } from "apollo-server-express";
+import { RequestContext } from "./common/request-context";
 
 let schema = makeExecutableSchema({
     typeDefs,
@@ -14,19 +15,14 @@ let schema = makeExecutableSchema({
 });
 
 schema = isOwnerDirectiveTransformer(schema, "isOwner");
-schema = authRequireDirectiveTransformer(schema, "authRequire");
+schema = authRequireDirectiveTransformer(schema, "authRequire")
 
 const server = new ApolloServer({
     schema,
     context: ({ req, res }) => {
         let { user, isAuth } = req;
 
-        return {
-            req,
-            res,
-            user,
-            isAuth,
-        };
+        return new RequestContext(user, isAuth, req, res);
     },
 });
 
