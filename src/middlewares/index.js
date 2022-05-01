@@ -7,6 +7,7 @@ import { FOLDER_SAVE_STATIC_FILE } from "../config";
 
 export default async (app) => {
     app.use(cookieParser());
+    app.use(express.json())
 
     // middlewares for static file: images
     app.use(express.static(join(__dirname, `./${FOLDER_SAVE_STATIC_FILE}`)));
