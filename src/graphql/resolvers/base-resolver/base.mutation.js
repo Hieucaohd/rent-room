@@ -12,9 +12,20 @@ export class BaseMutation {
     /**
      * Perform mutation in transaction.
      * If there any error, rollback transaction and return error to client.
+     * **Note:** Do not override this method in subclass except you actually
+     * need to do that.
      *
-     * @param {Object} source
-     * @param {Object} args
+     * @example
+     * ```javascript
+     * {
+     *  Mutation: {
+     *   doSomething: MutationClass.mutate.bind(MutationClass),
+     *  }
+     * }
+     * ```
+     *
+     * @param {Object} source the parent type.
+     * @param {Object} args the arguments you defind in typedef.
      * @param {RequestContext} context
      * @param {GraphQLResolveInfo} info
      * @returns {Promise<any>}
@@ -59,9 +70,11 @@ export class BaseMutation {
 
     /**
      * Custom response return to client.
-     * @default response itself.
+     * Default: the response from subclass of {@link InstanceMutation} is instance be created or updated,
+     * the response from subclass of {@link DeleteMutation} is _id of this instance be deleted.
      *
-     * @param {any} response
+     * @param {any} response result of {@link performMutation}
+     * @returns {any} return the {@link response} itself.
      */
     static successResponse(response) {
         return response;
@@ -80,10 +93,9 @@ export class BaseMutation {
     }
 
     /**
-     * Change the {@link err} object.
+     * This method handle error from {@link mutate} method.
      *
-     * @param {Error} err
-     * @returns {any}
+     * @param {Error} err error throws from {@link mutate} method.
      */
     static handleError(err) {}
 
@@ -110,13 +122,21 @@ export class InstanceMutation extends BaseMutation {
     };
 
     /**
-     * This is where main action of mutation: set up data input, connect to service,
-     * clean return instance.
-     *
-     * If data input have {@link idField} then do update action else do create action.
+     * If data input have {@link idField} then do UPDATE action else do CREATE action.
+     * If you want add extra login after mutation, let override this method, but remember
+     * to call super.performMutation to get the return instance.
+     * @example
+     * ```javascript
+     * static async performMutation(resolverParams, session) {
+     *  const instance = await super.performMutation(resolverParams, session);
+     *  extraLogin();
+     *  return instance;
+     * }
+     * ```
      *
      * @param {ResolverParams} resolverParams
-     * @param {ClientSession} session
+     * @param {ClientSession} session pass session to service.
+     * @returns {any} the instance be updated or created.
      */
     static async performMutation(resolverParams, session) {
         let { args, context } = resolverParams;
@@ -131,15 +151,17 @@ export class InstanceMutation extends BaseMutation {
             instance = await this.createInstance(data, context, session);
         }
 
-        instance = await this.cleanInstance(instance);
+        instance = await this.cleanInstance(instance, context);
         return instance;
     }
 
     /**
-     * Choose which data to pass to database here.
+     * Override this method if you want to transform the {@link args} to
+     * the data pass to {@link modelService}.
      *
-     * @param {UserModel} user
-     * @param {any} instance
+     * @param {Object} args the arguments you defined in typedef.
+     * @param {RequestContext} context
+     * @returns {any} the data pass to {@link modelService}. Default return the {@link args} it self.
      */
     static cleanInput(args, context) {
         return args;
@@ -148,10 +170,10 @@ export class InstanceMutation extends BaseMutation {
     /**
      * Create new instance in database.
      *
-     * @param {any} data input data to create instance.
+     * @param {any} data the result from {@link cleanInput}.
      * @param {RequestContext} context
      * @param {ClientSession} session
-     * @returns the instance from database.
+     * @returns the new instance created from database.
      */
     static async createInstance(data, context, session) {
         const instance = await this.modelService.createInstance(data, context, session);
@@ -159,25 +181,32 @@ export class InstanceMutation extends BaseMutation {
     }
 
     /**
-     * Get instance from database to check permission instance for update action.
-     * Default this method find instance by id, if you want to change the way, let override
+     * Get instance from database to check permission instance for UPDATE action.
+     * This method is called before UPDATE action to check the {@link permissionsInstance} of
+     * user to that instance.
+     * Default this method find instance by id, if you want to change the way it find instance, let override
      * it.
      *
-     * @param {any} data input data.
+     * @param {any} data the result from {@link cleanInput}.
      * @param {RequestContext} context
      * @returns the instance from database.
      */
     static async getInstance(data, context) {
         const id = data[this.idField];
         const instance = await this.modelService.getInstanceById(id, context);
+
+        if (!instance) {
+            throw new Error('Instance not found.');
+        }
+
         return instance;
     }
 
     /**
-     * Check user permission of instance.
+     * Check user permission of instance for UPDATE action.
      *
      * @param {UserModel} user
-     * @param {any} instance
+     * @param {any} instance the instance return from {@link getInstance}.
      */
     static async checkPermissionsInstance(user, instance) {
         for (const permission of this.permissionsInstance) {
@@ -187,7 +216,7 @@ export class InstanceMutation extends BaseMutation {
     /**
      * Update instance from database.
      *
-     * @param {any} data data input to update instance.
+     * @param {any} data the result from {@link cleanInput}.
      * @param {RequestContext} context
      * @param {ClientSession} session
      * @returns the updated instance from database.
@@ -198,14 +227,14 @@ export class InstanceMutation extends BaseMutation {
     }
 
     /**
-     * Choose which information to return to client.
-     * Hide some sensitive information from instance before return
+     * If you want to hide some information of instance before return to client
+     * let override thif method. Hide some sensitive information from instance before return
      * to client.
      *
      * @param {any} instance the instance return from database.
      * @returns {any}
      */
-    static cleanInstance(instance) {
+    static cleanInstance(instance, context) {
         return instance;
     }
 
@@ -234,11 +263,16 @@ export class DeleteMutation extends BaseMutation {
      */
     static async performMutation(resolverParams, session) {
         const { context, args } = resolverParams;
-        let data = args;
+        let data = await this.cleanInput(args, context);
         const instance = await this.getInstance(data, context);
         await this.checkPermissionsInstance(context.user, instance);
         const id = data[this.idField];
-        return await this.modelService.deleteInstanceById(id, context, session);
+        const idDeletedInstance = await this.modelService.deleteInstanceById(id, context, session);
+        return idDeletedInstance;
+    }
+
+    static cleanInput(args, context) {
+        return args;
     }
 
     static checkPermissionsInstance(user, instance) {}

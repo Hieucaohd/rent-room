@@ -1,5 +1,5 @@
 import { RoomService } from "../../../services/model-services/room.service";
-import { InstanceQuery, ListQuery } from "../base-resolver/base-query";
+import { InstanceQuery, ListQuery } from "../base-resolver/base.query";
 
 export class RoomById extends InstanceQuery {
 	/** @type {MetaInstanceQuery} */

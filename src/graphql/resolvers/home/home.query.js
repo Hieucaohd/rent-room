@@ -1,6 +1,6 @@
 import { HomeService } from "../../../services/model-services/home.service";
 import '../../../common/types/typedef'
-import { InstanceQuery, ListQuery } from "../base-resolver/base-query";
+import { InstanceQuery, ListQuery } from "../base-resolver/base.query";
 
 let metaHomeQuery = {
 	modelService: HomeService

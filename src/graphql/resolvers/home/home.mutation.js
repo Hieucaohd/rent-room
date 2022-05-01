@@ -1,5 +1,5 @@
 import { HomeService } from '../../../services/model-services/home.service';
-import { DeleteMutation, InstanceMutation } from '../base-resolver/base-mutation';
+import { DeleteMutation, InstanceMutation } from '../base-resolver/base.mutation';
 
 let metaHomeMutation = {
     modelService: HomeService,

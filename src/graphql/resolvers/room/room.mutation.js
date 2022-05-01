@@ -1,6 +1,6 @@
 import { RoomService } from '../../../services/model-services/room.service';
 import { RequestContext } from '../../common/request-context';
-import { DeleteMutation, InstanceMutation } from '../base-resolver/base-mutation';
+import { DeleteMutation, InstanceMutation } from '../base-resolver/base.mutation';
 
 export class RoomCreate extends InstanceMutation {
     /** @type {MetaInstanceMutation} */

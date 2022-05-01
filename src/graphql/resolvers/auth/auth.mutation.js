@@ -1,4 +1,4 @@
-import { InstanceMutation } from '../base-resolver/base-mutation';
+import { InstanceMutation } from '../base-resolver/base.mutation';
 import '../../../common/types/typedef';
 import { UserService } from '../../../services/model-services/user.service';
 import { serializerUser, authenticateUser } from '../../../services/helpers/auth.service';
