@@ -4,3 +4,4 @@ coverage/
 package-lock.json
 .env
 home-datas.json
+scripts/try-js
