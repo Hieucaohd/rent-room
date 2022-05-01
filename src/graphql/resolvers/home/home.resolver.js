@@ -5,7 +5,11 @@ import {
     getProvinceNameByCode,
     getWardNameByCode,
 } from '../../../services/helpers/address.service';
-import { countRoomInHome, getRoomsInHome } from '../../../services/model-services/room.service';
+import {
+    countRoomInHome,
+    getRoomsInHome,
+    RoomService,
+} from '../../../services/model-services/room.service';
 import '../../../common/types/typedef';
 
 export default {
@@ -64,6 +68,30 @@ export default {
          */
         wardName: (source) => {
             return getWardNameByCode(source.ward);
+        },
+
+        /**
+         * @param {HomeResult} source
+         * @returns {Number}
+         */
+        minPrice: async (source, args, context) => {
+            if (!source.minPrice) {
+                return await RoomService.getMinPriceInHome(source._id, context);
+            }
+
+            return source.minPrice;
+        },
+
+        /**
+         * @param {HomeResult} source
+         * @returns {Number}
+         */
+        maxPrice: async (source) => {
+            if (!source.maxPrice) {
+                return await RoomService.getMaxPriceInHome(source._id, context);
+            }
+
+            return source.maxPrice;
         },
     },
 };

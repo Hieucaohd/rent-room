@@ -1,11 +1,11 @@
-import { Schema, model } from "mongoose";
-import mongoosePaginate from "mongoose-paginate-v2";
+import { Schema, model } from 'mongoose';
+import mongoosePaginate from 'mongoose-paginate-v2';
 
 const HomeSchema = new Schema(
     {
         owner: {
             type: Schema.Types.ObjectId,
-            ref: "users",
+            ref: 'users',
             autopopulate: true,
         },
         province: {
@@ -53,13 +53,19 @@ const HomeSchema = new Schema(
             },
             lat: {
                 type: Number,
-            }
+            },
         },
         description: {
             type: String,
         },
         title: {
             type: String,
+        },
+        minPrice: {
+            type: Number,
+        },
+        maxPrice: {
+            type: Number,
         },
     },
     {
@@ -68,10 +74,10 @@ const HomeSchema = new Schema(
 );
 
 // plugin for autopopulate
-HomeSchema.plugin(require("mongoose-autopopulate"));
+HomeSchema.plugin(require('mongoose-autopopulate'));
 
 // plugin for pagination
 HomeSchema.plugin(mongoosePaginate);
 
-const Home = model("homes", HomeSchema);
+const Home = model('homes', HomeSchema);
 export default Home;

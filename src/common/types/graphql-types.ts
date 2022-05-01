@@ -61,7 +61,6 @@ export type ElectricityPriceConditionInput = {
 
 export type FilterRoomInput = {
   address?: InputMaybe<AddressConditionInput>;
-  createdAt?: InputMaybe<ArrangeType>;
   floor?: InputMaybe<FloorConditionInput>;
   homeId?: InputMaybe<Scalars['ID']>;
   liveWithOwner?: InputMaybe<Scalars['Boolean']>;
@@ -76,7 +75,7 @@ export type FloorConditionInput = {
 
 export type Home = Node & Timestamps & {
   __typename?: 'Home';
-  _id: Scalars['ID'];
+  _id?: Maybe<Scalars['ID']>;
   cleaningPrice?: Maybe<Scalars['Int']>;
   createdAt?: Maybe<Scalars['Date']>;
   description?: Maybe<Scalars['String']>;
@@ -88,6 +87,8 @@ export type Home = Node & Timestamps & {
   internetPrice?: Maybe<Scalars['Int']>;
   listRooms?: Maybe<RoomPaginator>;
   liveWithOwner?: Maybe<Scalars['Boolean']>;
+  maxPrice?: Maybe<Scalars['Int']>;
+  minPrice?: Maybe<Scalars['Int']>;
   owner?: Maybe<User>;
   position?: Maybe<Position>;
   province?: Maybe<Scalars['Int']>;
@@ -115,6 +116,8 @@ export type HomeInput = {
   images?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
   internetPrice?: InputMaybe<Scalars['Int']>;
   liveWithOwner?: InputMaybe<Scalars['Boolean']>;
+  maxPrice?: InputMaybe<Scalars['Int']>;
+  minPrice?: InputMaybe<Scalars['Int']>;
   position?: InputMaybe<PositionInput>;
   province?: InputMaybe<Scalars['Int']>;
   title?: InputMaybe<Scalars['String']>;
@@ -138,6 +141,8 @@ export type HomeUpdateInput = {
   images?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
   internetPrice?: InputMaybe<Scalars['Int']>;
   liveWithOwner?: InputMaybe<Scalars['Boolean']>;
+  maxPrice?: InputMaybe<Scalars['Int']>;
+  minPrice?: InputMaybe<Scalars['Int']>;
   position?: InputMaybe<PositionInput>;
   province?: InputMaybe<Scalars['Int']>;
   title?: InputMaybe<Scalars['String']>;
@@ -172,7 +177,7 @@ export type Mutation = {
   deleteRoom: Scalars['ID'];
   logout: LogoutStatus;
   register: AuthResponse;
-  updateHome: Home;
+  updateHome?: Maybe<Home>;
   updateRoom: Room;
   updateUser: User;
 };
@@ -434,11 +439,9 @@ export enum UserType {
 export type UserUpdateInput = {
   avatar?: InputMaybe<Scalars['String']>;
   district?: InputMaybe<Scalars['Int']>;
-  email?: InputMaybe<Scalars['String']>;
   fullname?: InputMaybe<Scalars['String']>;
   numberPhone?: InputMaybe<Scalars['String']>;
   province?: InputMaybe<Scalars['Int']>;
-  userType?: InputMaybe<UserType>;
   ward?: InputMaybe<Scalars['Int']>;
 };
 

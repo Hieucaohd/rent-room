@@ -37,6 +37,8 @@ export default gql`
         detailAddress: String
         description: String
         title: String
+        minPrice: Int
+        maxPrice: Int
     }
 
     input HomeUpdateInput {
@@ -54,6 +56,8 @@ export default gql`
         detailAddress: String
         description: String
         title: String
+        minPrice: Int
+        maxPrice: Int
     }
 
     type Position {
@@ -86,6 +90,8 @@ export default gql`
         description: String
         detailAddress: String
         title: String
+        minPrice: Int
+        maxPrice: Int
 
         createdAt: Date
         updatedAt: Date
