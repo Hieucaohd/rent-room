@@ -1,5 +1,9 @@
 import '../../../common/types/typedef';
 
+/**
+ * This class use template method pattern to control
+ * the query action. Every query class must be extend {@link BaseQuery}.
+ */
 export class BaseQuery {
     /** @type {MetaBaseQuery} */
     static meta;
@@ -45,6 +49,9 @@ export class BaseQuery {
     }
 }
 
+/**
+ * Extend this class to query one instance from database.
+ */
 export class InstanceQuery extends BaseQuery {
     /** @type {MetaInstanceQuery} */
     static meta;
@@ -90,6 +97,9 @@ export class InstanceQuery extends BaseQuery {
     }
 }
 
+/**
+ * Extend this class to query list of instances from database.
+ */
 export class ListQuery extends BaseQuery {
     /** @type {MetaListQuery} */
     static meta;

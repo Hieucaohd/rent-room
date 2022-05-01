@@ -1,15 +1,12 @@
 import { HomeService } from '../../../services/model-services/home.service';
-import { DeleteMutation, InstanceMutation } from '../base-resolver/base-mutation';
-
-let metaHomeMutation = {
-    modelService: HomeService,
-};
+import { DeleteMutation, InstanceMutation } from '../base-resolver/base.mutation';
 
 export class HomeCreate extends InstanceMutation {
+    /** @type {MetaInstanceMutation} */
     static meta = {
+        modelService: HomeService,
         permissions: [],
         permissionsInstance: [],
-        ...metaHomeMutation,
     };
 
     static cleanInput(args, context) {
@@ -20,10 +17,11 @@ export class HomeCreate extends InstanceMutation {
 }
 
 export class HomeUpdate extends InstanceMutation {
+    /** @type {MetaInstanceMutation} */
     static meta = {
+        modelService: HomeService,
         permissions: [],
         permissionsInstance: [],
-        ...metaHomeMutation,
         idField: 'id',
     };
 
@@ -38,9 +36,10 @@ export class HomeUpdate extends InstanceMutation {
 }
 
 export class HomeDelete extends DeleteMutation {
+    /** @type {MetaDeleteMutation} */
     static meta = {
-        ...metaHomeMutation,
-        idField: 'id',
+        modelService: HomeService,
         permissions: [],
+        idField: 'id',
     };
 }

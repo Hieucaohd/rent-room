@@ -1,4 +1,4 @@
-import { InstanceQuery } from '../base-resolver/base-query';
+import { InstanceQuery } from '../base-resolver/base.query';
 import '../../../common/types/typedef';
 import { UserService } from '../../../services/model-services/user.service';
 import { serializerUser, authenticateUser } from '../../../services/helpers/auth.service';

@@ -1,4 +1,4 @@
-import { InstanceMutation } from '../base-resolver/base-mutation';
+import { InstanceMutation } from '../base-resolver/base.mutation';
 import '../../../common/types/typedef';
 import { UserService } from '../../../services/model-services/user.service';
 import { serializerUser, authenticateUser } from '../../../services/helpers/auth.service';
@@ -13,7 +13,6 @@ export class Register extends InstanceMutation {
     };
 
     /**
-     * 
      * @param {import('../../../common/types/graphql-types').MutationRegisterArgs} args 
      * @param {RequestContext} context 
      * @returns 
@@ -27,6 +26,10 @@ export class Register extends InstanceMutation {
         return serializerUser(user);
     }
 
+    /**
+     * @param {UserModel} user 
+     * @returns {AuthResponse}
+     */
     static successResponse(user) {
         return { user };
     }
