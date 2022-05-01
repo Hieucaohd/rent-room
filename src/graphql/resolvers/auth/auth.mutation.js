@@ -13,7 +13,6 @@ export class Register extends InstanceMutation {
     };
 
     /**
-     * 
      * @param {import('../../../common/types/graphql-types').MutationRegisterArgs} args 
      * @param {RequestContext} context 
      * @returns 
@@ -27,6 +26,10 @@ export class Register extends InstanceMutation {
         return serializerUser(user);
     }
 
+    /**
+     * @param {UserModel} user 
+     * @returns {AuthResponse}
+     */
     static successResponse(user) {
         return { user };
     }

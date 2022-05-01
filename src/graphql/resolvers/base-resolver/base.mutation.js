@@ -3,8 +3,12 @@ import mongoose from 'mongoose';
 import { GraphQLResolveInfo } from 'graphql';
 import { RequestContext } from '../../common/request-context';
 import { ClientSession } from 'mongoose';
-import { BaseService } from '../../../services/model-services/base.service';
 
+/**
+ * This class use template method pattern to control the
+ * mutation action. Every Mutation class must be extend 
+ * {@link BaseMutation}.
+ */
 export class BaseMutation {
     /** @type {MetaBaseMutation} */
     static meta;
@@ -115,6 +119,9 @@ export class BaseMutation {
     }
 }
 
+/**
+ * This class perform the mutation (update or create) of one instance in database.
+ */
 export class InstanceMutation extends BaseMutation {
     /** @type {MetaInstanceMutation} */
     static meta = {
@@ -123,13 +130,13 @@ export class InstanceMutation extends BaseMutation {
 
     /**
      * If data input have {@link idField} then do UPDATE action else do CREATE action.
-     * If you want add extra login after mutation, let override this method, but remember
+     * If you want add extra logic after mutation, let override this method, but remember
      * to call super.performMutation to get the return instance.
      * @example
      * ```javascript
      * static async performMutation(resolverParams, session) {
      *  const instance = await super.performMutation(resolverParams, session);
-     *  extraLogin();
+     *  extraLogic();
      *  return instance;
      * }
      * ```
@@ -251,6 +258,9 @@ export class InstanceMutation extends BaseMutation {
     }
 }
 
+/**
+ * This class perform delete of one instance in database.
+ */
 export class DeleteMutation extends BaseMutation {
     /** @type {MetaDeleteMutation} */
     static meta = {

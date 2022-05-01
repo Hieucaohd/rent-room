@@ -22,8 +22,8 @@ export type MetaBaseMutation = {
 }
 
 export type MetaInstanceMutation = MetaBaseMutation & {
-	permissionsInstance: Array<any>,
 	modelService: BaseService,
+	permissionsInstance: Array<any>,
 	fieldsInput: Array<String>,
 	fieldsReturn: Array<String>,
 	idField: String,
@@ -31,8 +31,8 @@ export type MetaInstanceMutation = MetaBaseMutation & {
 
 export type MetaDeleteMutation = MetaBaseMutation & {
 	modelService: BaseService,
-	idField: String,
 	permissionsInstance: Array<any>,
+	idField: String,
 }
 
 export type MetaBaseQuery = {
@@ -40,8 +40,8 @@ export type MetaBaseQuery = {
 }
 
 export type MetaInstanceQuery = MetaBaseQuery & {
-	permissionsInstance: Array<any>,
 	modelService: BaseService,
+	permissionsInstance: Array<any>,
 	fieldsReturn: Array<String>,
 	idField: String,
 }
