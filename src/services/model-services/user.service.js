@@ -101,7 +101,7 @@ export class UserService extends BaseService {
             throw new Error('This email is not registed');
         }
 
-        let isMatch = compare(password, user.password);
+        let isMatch = await compare(password, user.password);
 
         if (!isMatch) {
             throw new Error('Password is incorrect');
