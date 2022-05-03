@@ -33,7 +33,9 @@ export class BaseQuery {
         return response;
     }
 
-    static handleError(err) {}
+    static handleError(err) {
+        throw err;
+    }
 
     static errorResponse(err) {
         console.log(err);
