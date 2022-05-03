@@ -7,7 +7,7 @@ import User from "../../models/User";
 
 export const sendResetPasswordMail = async (hostName, email) => {
     const user = await findUserByEmail(email);
-    if(!user) throw new error("Tài khoản này không tồn tại");
+    if(!user) throw new Error("Tài khoản này không tồn tại");
 
     const verifyToken = await jwt.sign(
         {
