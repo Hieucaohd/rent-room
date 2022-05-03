@@ -101,7 +101,9 @@ export class BaseMutation {
      *
      * @param {Error} err error throws from {@link mutate} method.
      */
-    static handleError(err) {}
+    static handleError(err) {
+        throw err;
+    }
 
     /**
      * Implement login of mutation here.
