@@ -43,9 +43,9 @@ const UserSchema = new Schema(
             enum: ROLE,
         },
         userType: {
-            type: String,
+            type: [String],
             enum: USER_TYPE,
-            default: "TENANT",
+            default: ["TENANT"],
         },
     },
     {
