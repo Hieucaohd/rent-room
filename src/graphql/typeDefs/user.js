@@ -14,7 +14,7 @@ export default gql`
         district: Int
         ward: Int
         avatar: String
-        userType: [UserType]
+        userType: UserType
     }
 
     input UserUpdateInput {
@@ -24,7 +24,7 @@ export default gql`
         district: Int
         ward: Int
         avatar: String
-        userType: [UserType]
+        userType: UserType
     }
 
     type User implements Node & Timestamps {
@@ -41,7 +41,7 @@ export default gql`
         wardName: String
         avatar: String
         defaultHome: Home
-        userType: [UserType]
+        userType: UserType
         role: [String]
 
         listHomes(page: Int, limit: Int): HomePaginator

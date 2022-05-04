@@ -61,6 +61,7 @@ export type ElectricityPriceConditionInput = {
 
 export type FilterRoomInput = {
   address?: InputMaybe<AddressConditionInput>;
+  createdAt?: InputMaybe<ArrangeType>;
   floor?: InputMaybe<FloorConditionInput>;
   homeId?: InputMaybe<Scalars['ID']>;
   liveWithOwner?: InputMaybe<Scalars['Boolean']>;
@@ -173,6 +174,7 @@ export type Mutation = {
   _?: Maybe<Scalars['String']>;
   createNewHome?: Maybe<Home>;
   createNewRoom: Room;
+  createNewRoomWithHome: Room;
   deleteHome: Scalars['ID'];
   deleteRoom: Scalars['ID'];
   logout: LogoutStatus;
@@ -190,6 +192,12 @@ export type MutationCreateNewHomeArgs = {
 
 export type MutationCreateNewRoomArgs = {
   homeId: Scalars['ID'];
+  newRoom: RoomInput;
+};
+
+
+export type MutationCreateNewRoomWithHomeArgs = {
+  newHome: HomeInput;
   newRoom: RoomInput;
 };
 
@@ -408,7 +416,7 @@ export type User = Node & Timestamps & {
   provinceName?: Maybe<Scalars['String']>;
   role?: Maybe<Array<Maybe<Scalars['String']>>>;
   updatedAt?: Maybe<Scalars['Date']>;
-  userType?: Maybe<Scalars['String']>;
+  userType?: Maybe<UserType>;
   ward?: Maybe<Scalars['Int']>;
   wardName?: Maybe<Scalars['String']>;
 };
@@ -442,6 +450,7 @@ export type UserUpdateInput = {
   fullname?: InputMaybe<Scalars['String']>;
   numberPhone?: InputMaybe<Scalars['String']>;
   province?: InputMaybe<Scalars['Int']>;
+  userType?: InputMaybe<UserType>;
   ward?: InputMaybe<Scalars['Int']>;
 };
 

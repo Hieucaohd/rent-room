@@ -5,10 +5,14 @@ export default gql`
         allRooms(page: Int, limit: Int): RoomPaginator
 
         getRoomById(roomId: ID!): Room
+
+        getListRoomByIds(listIds: [ID!]!, page: Int, limit: Int): RoomPaginator
     }
 
     extend type Mutation {
         createNewRoom(newRoom: RoomInput!, homeId: ID!): Room! @authRequire
+
+        createNewRoomWithHome(newRoom: RoomInput!, newHome: HomeInput!): Room!
 
         updateRoom(updatedRoom: RoomUpdateInput!, id: ID!): Room! @authRequire
 
