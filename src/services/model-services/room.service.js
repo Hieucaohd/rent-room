@@ -141,7 +141,8 @@ export class RoomService extends BaseService {
      * @returns {Promise<Number>}
      */
     static async getMinPriceInHome(homeId, context) {
-        const room = await Room.find({ home: homeId }).sort({ price: 1 }).limit(1);
+        let room = await Room.find({ home: homeId }).sort({ price: 1 }).limit(1);
+        room = room[0]
         return room.price;
     }
 
@@ -151,7 +152,8 @@ export class RoomService extends BaseService {
      * @returns {Promise<Number>}
      */
     static async getMaxPriceInHome(homeId, context) {
-        const room = await Room.find({ home: homeId }).sort({ price: -1 }).limit(1);
+        let room = await Room.find({ home: homeId }).sort({ price: -1 }).limit(1);
+        room = room[0];
         return room.price;
     }
 
@@ -183,5 +185,14 @@ export class RoomService extends BaseService {
 
     static async deleteInstanceById(id, context, session) {
         return await this.deleteRoom(id, context, session);
+    }
+
+    static async getListRoomById(page, limit, listIds, context) {
+        let options = createOptions(page, limit);
+        options.sort = {
+            createdAt: -1,
+        };
+
+        return await Room.paginate({ _id: { $in: listIds } }, options);
     }
 }
