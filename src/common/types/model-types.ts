@@ -63,7 +63,7 @@ export type Room = {
 	updatedAt: Date,
 }
 
-export type RoomModel = Room & Document
+export type RoomModel = Room & Document;
 
 export type HomeCommentModel = HomeComment & Document & {
 	_id: ObjectId
