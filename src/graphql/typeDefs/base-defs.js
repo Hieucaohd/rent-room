@@ -1,4 +1,4 @@
-import { gql } from "apollo-server-express";
+import { gql } from 'apollo-server-express';
 
 export default gql`
     scalar Upload
@@ -47,5 +47,24 @@ export default gql`
     type AfterDelete {
         id: ID!
         success: Boolean
+    }
+
+    interface ErrorResult {
+        message: String
+    }
+
+    type InstanceNotExistError implements ErrorResult {
+        errorCode: ErrorCode!
+        message: String
+    }
+
+    type PermissionDeninedError implements ErrorResult {
+        errorCode: ErrorCode!
+        message: String!
+    }
+
+    enum ErrorCode {
+        PERMISSION_DENINED
+        INSTANCE_NOT_EXIST
     }
 `;

@@ -24,7 +24,7 @@ export default gql`
         description: String
         roomNumber: Int
         title: String
-        amenities: [AmenitiesInput]
+        amenities: [Int]
     }
 
     input RoomUpdateInput {
@@ -36,7 +36,7 @@ export default gql`
         description: String
         roomNumber: Int
         title: String
-        amenities: [AmenitiesInput]
+        amenities: [Int]
     }
 
     type Room implements Node & Timestamps {
@@ -52,20 +52,10 @@ export default gql`
         description: String
         roomNumber: Int
         title: String
-        amenities: [Amenities]
+        amenities: [Int]
 
         createdAt: Date
         updatedAt: Date
-    }
-
-    type Amenities {
-        title: String
-        description: String
-    }
-
-    input AmenitiesInput {
-        title: String
-        description: String
     }
 
     type RoomPaginator implements PaginatorResult {

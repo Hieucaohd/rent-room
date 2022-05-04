@@ -1,6 +1,6 @@
 import { ObjectId } from "mongodb"
 import { Document } from "mongoose"
-import { Amenities } from "./graphql-types"
+import { Amenities, HomeComment } from "./graphql-types"
 
 export type User = {
 	_id: ObjectId,
@@ -64,3 +64,7 @@ export type Room = {
 }
 
 export type RoomModel = Room & Document
+
+export type HomeCommentModel = HomeComment & Document & {
+	_id: ObjectId
+}

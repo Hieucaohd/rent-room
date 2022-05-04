@@ -34,7 +34,7 @@ const RoomSchema = new Schema(
         title: {
             type: String,
         },
-        amenities: [{ title: String, description: String }],
+        amenities: [Number],
     },
     {
         timestamps: true,

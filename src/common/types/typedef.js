@@ -10,6 +10,9 @@
  * @typedef { import('./graphql-types').Home } HomeResult
  * @typedef { import('./graphql-types').HomeInput } HomeInput
  * @typedef { import('./graphql-types').HomeUpdateInput } HomeUpdateInput
+ * 
+ * @typedef { import('./graphql-types').HomeComment } HomeCommentResult
+ * @typedef { import('./model-types').HomeCommentModel } HomeCommentModel
  *
  * @typedef { import('./graphql-types').Room } RoomResult
  * @typedef { import('./model-types').RoomModel } RoomModel
