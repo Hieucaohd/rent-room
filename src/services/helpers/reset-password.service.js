@@ -2,11 +2,12 @@ import { TIME_VERIFIED_TOKEN_EXPIRED, VERIFIED_PASSWORD_SECRET_KEY } from "../..
 import jwt from "jsonwebtoken";
 import emailService from "./mail.service";
 import { findUserByEmail } from "../model-services/user.service";
+import { hash } from 'bcryptjs';
+import User from "../../models/User";
 
 export const sendResetPasswordMail = async (hostName, email) => {
     const user = await findUserByEmail(email);
-
-    if(!user) throw new error("Tài khoản này không tồn tại");
+    if(!user) throw new Error("Tài khoản này không tồn tại");
 
     const verifyToken = await jwt.sign(
         {
@@ -15,7 +16,7 @@ export const sendResetPasswordMail = async (hostName, email) => {
         VERIFIED_PASSWORD_SECRET_KEY,
         { expiresIn: TIME_VERIFIED_TOKEN_EXPIRED }
     );
-    const resetPasswordLink = hostName + '/forgot/' + verifyToken;
+    const resetPasswordLink = hostName + 'forgot/' + verifyToken;
 
     await emailService.send({
         to: email,
@@ -29,7 +30,8 @@ export const sendResetPasswordMail = async (hostName, email) => {
 
 export const verifyResetPasswordMail = async (email, newPassword) => {
     const hashPassword = await hash(newPassword, 10)
-    return await User.findOneAndUpdate({ email }, {
+    const user = await User.findOneAndUpdate({ email }, {
         password: hashPassword
     });
+    return user;
 };
