@@ -15,38 +15,38 @@ export const createMatchAggregation = (conditions) => {
         ...(price &&
             price.scope && {
                 price: {
-                    $gte: price.scope.min,
-                    $lte: price.scope.max,
+                    ...price.scope.min && {$gte: price.scope.min},
+                    ...price.scope.max && {$lte: price.scope.max},
                 },
             }),
         ...(livingExpenses && {
             ...(livingExpenses.electricityCondition &&
                 livingExpenses.electricityCondition.scope && {
                     'home.electricityPrice': {
-                        $gte: livingExpenses.electricityCondition.scope.min,
-                        $lte: livingExpenses.electricityCondition.scope.max,
+                        ...livingExpenses.electricityCondition.scope.min && {$gte: livingExpenses.electricityCondition.scope.min},
+                        ...livingExpenses.electricityCondition.scope.max && {$lte: livingExpenses.electricityCondition.scope.max},
                     },
                 }),
             ...(livingExpenses.waterCondition &&
                 livingExpenses.waterCondition.scope && {
                     'home.waterPrice': {
-                        $gte: livingExpenses.waterCondition.scope.min,
-                        $lte: livingExpenses.waterCondition.scope.max,
+                        ...livingExpenses.waterCondition.scope.min && {$gte: livingExpenses.waterCondition.scope.min},
+                        ...livingExpenses.waterCondition.scope.max && {$lte: livingExpenses.waterCondition.scope.max},
                     },
                 }),
         }),
         ...(square &&
             square.scope && {
                 square: {
-                    $gte: square.scope.min,
-                    $lte: square.scope.max,
+                    ...square.scope.min && {$gte: square.scope.min},
+                    ...square.scope.max && {$lte: square.scope.max},
                 },
             }),
         ...(floor &&
             floor.scope && {
                 floor: {
-                    $gte: floor.scope.min,
-                    $lte: floor.scope.max,
+                    ...floor.scope.min && {$gte: floor.scope.min},
+                    ...floor.scope.max && {$lte: floor.scope.max},
                 },
             }),
         ...(liveWithOwner && { 'home.liveWithOwner': liveWithOwner }),
