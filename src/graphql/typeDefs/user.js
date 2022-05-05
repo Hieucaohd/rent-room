@@ -24,6 +24,7 @@ export default gql`
         district: Int
         ward: Int
         avatar: String
+        userType: UserType
     }
 
     type User implements Node & Timestamps {
@@ -40,7 +41,7 @@ export default gql`
         wardName: String
         avatar: String
         defaultHome: Home
-        userType: String
+        userType: UserType
         role: [String]
 
         listHomes(page: Int, limit: Int): HomePaginator
