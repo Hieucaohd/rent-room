@@ -11,8 +11,8 @@ export default gql`
     }
 
     input Scope {
-        min: Float!
-        max: Float!
+        min: Float
+        max: Float
     }
 
     input PriceConditionInput {
@@ -70,6 +70,7 @@ export default gql`
         floor: FloorConditionInput
         liveWithOwner: Boolean
         livingExpenses: LivingExpensesConditionInput
+        amenities: [String]
         createdAt: ArrangeType
     }
 `;
