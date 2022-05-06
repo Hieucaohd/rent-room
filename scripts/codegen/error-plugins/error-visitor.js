@@ -31,7 +31,7 @@ export const errorsVisitor = {
             `export class ${ERROR_INTERFACE_NAME} {`,
             `  __typename`,
             `  errorCode`,
-            ...node.fields.filter((f) => !f.includes('errorCode:')).map((f) => `${f};`),
+            ...node.fields.filter((f) => !f.includes('errorCode')).map((f) => `  ${f};`),
             `}`,
         ].join('\n');
     },

@@ -11,6 +11,7 @@ export type Scalars = {
   Boolean: boolean;
   Int: number;
   Float: number;
+  /** Date custom scalar type */
   Date: any;
   Upload: any;
 };
@@ -63,7 +64,15 @@ export type EmailIncorrectError = ErrorResult & {
 };
 
 export enum ErrorCode {
-  UnknownError = 'UNKNOWN_ERROR'
+  EmailDuplicateError = 'EMAIL_DUPLICATE_ERROR',
+  EmailIncorrectError = 'EMAIL_INCORRECT_ERROR',
+  InstanceNotExistError = 'INSTANCE_NOT_EXIST_ERROR',
+  PasswordIncorrectError = 'PASSWORD_INCORRECT_ERROR',
+  PasswordInvalidError = 'PASSWORD_INVALID_ERROR',
+  PermissionDeninedError = 'PERMISSION_DENINED_ERROR',
+  UnknownError = 'UNKNOWN_ERROR',
+  UserNotAuthenticatedError = 'USER_NOT_AUTHENTICATED_ERROR',
+  UserNotRentedHomeError = 'USER_NOT_RENTED_HOME_ERROR'
 }
 
 export type ErrorResult = {

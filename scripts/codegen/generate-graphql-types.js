@@ -29,7 +29,7 @@ downloadIntrospectionSchema(API_PATH, OUTPUT_FILE_SCHEMA)
         };
 
         const commonPlugin = [disableTsLinkPlugin, 'typescript'];
-        const graphQLErrorsPlugin = path.join(__dirname, './plugins/graphql-errors-plugin.js');
+        const graphQLErrorsPlugin = path.join(__dirname, './error-plugins/graphql-errors-plugin.js');
 
         return generate({
             overwrite: true,
