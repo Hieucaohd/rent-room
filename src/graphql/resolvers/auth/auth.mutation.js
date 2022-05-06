@@ -3,6 +3,7 @@ import '../../../common/types/typedef';
 import { UserService } from '../../../services/model-services/user.service';
 import { serializerUser, authenticateUser } from '../../../services/helpers/auth.service';
 import { RequestContext } from '../../common/request-context';
+import { EmailDuplicateError } from '../../../common/errors/graphql-errors';
 
 export class Register extends InstanceMutation {
     /** @type {MetaInstanceMutation} */
