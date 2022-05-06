@@ -1,7 +1,7 @@
-import Home from '../../models/Home.js';
+import Home from '../../models/Home';
 import { ObjectId } from 'mongodb';
-import '../../common/types/typedef.js';
-import { BaseService } from './base.service.js';
+import '../../common/types/typedef';
+import { BaseService } from './base.service';
 
 export class HomeService extends BaseService {
     /** @type {import('../../common/types/common-types').MetaBaseService} */

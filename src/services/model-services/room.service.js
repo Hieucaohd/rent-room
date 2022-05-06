@@ -1,8 +1,8 @@
-import  Room  from '../../models/Room.js';
+import  Room  from '../../models/Room';
 import { ObjectId } from 'mongodb';
-import '../../common/types/typedef.js';
-import { BaseService } from './base.service.js';
-import { RequestContext } from '../../graphql/common/request-context.js';
+import '../../common/types/typedef';
+import { BaseService } from './base.service';
+import { RequestContext } from '../../graphql/common/request-context';
 
 export class RoomService extends BaseService {
     /** @type {import('../../common/types/common-types').MetaBaseService} */
