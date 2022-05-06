@@ -1,5 +1,5 @@
 import { isObjectTypeDefinition, isInheritsFromErrorResult } from './utils';
-import { ERROR_INTERFACE_NAME } from './constant';
+import { ERROR_INTERFACE_NAME } from '../../../src/graphql/common/constant';
 
 export function generateIsErrorFunction(schema) {
     const errorNodes = Object.values(schema.getTypeMap())

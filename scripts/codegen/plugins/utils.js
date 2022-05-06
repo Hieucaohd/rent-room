@@ -1,6 +1,6 @@
 import { buildScalars } from '@graphql-codegen/visitor-plugin-common';
 import { isNamedType, isObjectType, Kind } from 'graphql';
-import { ERROR_INTERFACE_NAME } from './constant';
+import { ERROR_INTERFACE_NAME } from '../../../src/graphql/common/constant';
 
 export function isScalar(type) {
     return ['ID', 'String', 'Boolean', 'Int', 'Float', 'JSON', 'DateTime', 'Upload'].includes(type);

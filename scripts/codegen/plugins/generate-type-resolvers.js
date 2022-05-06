@@ -1,6 +1,6 @@
 import { unwrapType, isInheritsFromErrorResult, isUnionOfResultAndErrors } from './utils';
 import { Kind } from 'graphql';
-import { ERROR_RESOLVER_NAME } from './constant';
+import { ERROR_RESOLVER_NAME } from '../../../src/graphql/common/constant';
 
 export function generateTypeResolvers(schema) {
     const mutations = getOperationsThatReturnErrorUnions(

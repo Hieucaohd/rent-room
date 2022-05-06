@@ -1,6 +1,6 @@
 import { Kind } from 'graphql';
 import { isScalar, camelToUpperSnakeCase, isInheritsFromErrorResult } from './utils';
-import { ERROR_INTERFACE_NAME } from './constant';
+import { ERROR_INTERFACE_NAME } from '../../../src/graphql/common/constant';
 
 const empty = () => '';
 

@@ -1,6 +1,9 @@
 import { buildSchema, extendSchema, GraphQLSchema, parse, Kind } from 'graphql';
-import { ERROR_INTERFACE_NAME } from '../../../scripts/codegen/plugins/constant.js';
-import { camelToUpperSnakeCase } from '../../../scripts/codegen/plugins/utils.js';
+import { ERROR_INTERFACE_NAME } from '../common/constant';
+
+export function camelToUpperSnakeCase(input) {
+    return input.replace(/([a-z])([A-Z])/g, '$1_$2').toUpperCase();
+}
 
 /**
  * Generates the members of the `ErrorCode` enum dynamically, by getting the names of
