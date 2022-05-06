@@ -92,15 +92,15 @@ async function main() {
     const wards = getWards(addressData);
 
     generateUnitAddressFile(
-        path.join(__dirname, '../src/address-json/provinces-in-vietnam.json'),
+        path.join(__dirname, '../../address-json/provinces-in-vietnam.json'),
         provinces
     );
     generateUnitAddressFile(
-        path.join(__dirname, '../src/address-json/districts-in-vietnam.json'),
+        path.join(__dirname, '../../address-json/districts-in-vietnam.json'),
         districts
     );
     generateUnitAddressFile(
-        path.join(__dirname, '../src/address-json/wards-in-vietnam.json'),
+        path.join(__dirname, '../../address-json/wards-in-vietnam.json'),
         wards
     );
 }

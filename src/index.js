@@ -5,7 +5,7 @@ import apolloServer from "./graphql";
 import { success, error } from "consola";
 import applyMiddleware from "./middlewares";
 import mongoose from "mongoose";
-import resetPasswordRouter from "../routes/reset-password.route";
+import resetPasswordRouter from "./routes/reset-password.route";
 
 const app = express();
 const port = process.env.PORT || PORT;

@@ -5,9 +5,10 @@
   "main": "index.js",
   "scripts": {
     "test": "jest",
-    "start": "node -r esm .",
-    "dev": "nodemon -r esm",
-    "codegen": "node -r esm .\\scripts\\codegen\\generate-graphql-types.js"
+    "start": "babel ./src --out-dir dist && node ./dist/index.js",
+    "dev": "nodemon --exec node_modules/.bin/babel-node index.js",
+    "codegen": "node -r esm .\\scripts\\codegen\\generate-graphql-types.js",
+    "build": "babel ./src --out-dir dist"
   },
   "keywords": [],
   "author": "",
@@ -42,8 +43,11 @@
     "yup": "^0.32.11"
   },
   "devDependencies": {
-    "@babel/plugin-transform-runtime": "^7.17.0",
-    "@babel/preset-env": "^7.16.11",
+    "@babel/cli": "^7.17.10",
+    "@babel/core": "^7.17.10",
+    "@babel/node": "^7.17.10",
+    "@babel/plugin-transform-runtime": "^7.17.10",
+    "@babel/preset-env": "^7.17.10",
     "@graphql-codegen/add": "^3.1.1",
     "@graphql-codegen/cli": "^2.6.2",
     "@graphql-codegen/plugin-helpers": "^2.4.2",

@@ -38,8 +38,7 @@ export class BaseQuery {
     }
 
     static errorResponse(err) {
-        console.log(err);
-        return null;
+        return err;
     }
 
     static async performQuery(resolverParams) {
