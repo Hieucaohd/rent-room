@@ -5,3 +5,5 @@ package-lock.json
 .env
 home-datas.json
 scripts/try-js
+jspm_packages
+jspm.json
