@@ -11,7 +11,6 @@ export type Scalars = {
   Boolean: boolean;
   Int: number;
   Float: number;
-  /** Date custom scalar type */
   Date: any;
   Upload: any;
 };
@@ -28,26 +27,14 @@ export type AfterDelete = {
   success?: Maybe<Scalars['Boolean']>;
 };
 
-export type Amenities = {
-  __typename?: 'Amenities';
-  description?: Maybe<Scalars['String']>;
-  title?: Maybe<Scalars['String']>;
-};
-
-export type AmenitiesInput = {
-  description?: InputMaybe<Scalars['String']>;
-  title?: InputMaybe<Scalars['String']>;
+export type AllHomeCommentsInHomeQuery = {
+  home: Scalars['ID'];
 };
 
 export enum ArrangeType {
   Asc = 'ASC',
   Desc = 'DESC'
 }
-
-export type AuthResponse = {
-  __typename?: 'AuthResponse';
-  user?: Maybe<User>;
-};
 
 export type CleaningPriceConditionInput = {
   arrange?: InputMaybe<ArrangeType>;
@@ -63,13 +50,25 @@ export type ElectricityPriceConditionInput = {
   scope?: InputMaybe<Scope>;
 };
 
+export type EmailDuplicateError = ErrorResult & {
+  __typename?: 'EmailDuplicateError';
+  errorCode: ErrorCode;
+  message: Scalars['String'];
+};
+
+export type EmailIncorrectError = ErrorResult & {
+  __typename?: 'EmailIncorrectError';
+  errorCode: ErrorCode;
+  message: Scalars['String'];
+};
+
 export enum ErrorCode {
-  InstanceNotExist = 'INSTANCE_NOT_EXIST',
-  PermissionDenined = 'PERMISSION_DENINED'
+  UnknownError = 'UNKNOWN_ERROR'
 }
 
 export type ErrorResult = {
-  message?: Maybe<Scalars['String']>;
+  errorCode: ErrorCode;
+  message: Scalars['String'];
 };
 
 export type FilterRoomInput = {
@@ -117,8 +116,7 @@ export type Home = Node & Timestamps & {
 
 
 export type HomeListRoomsArgs = {
-  limit?: InputMaybe<Scalars['Int']>;
-  page?: InputMaybe<Scalars['Int']>;
+  paginatorOptions?: InputMaybe<PaginatorOptionsInput>;
 };
 
 export type HomeComment = Node & Timestamps & {
@@ -153,7 +151,7 @@ export type HomeCommentUpdateInput = {
   rateStar?: InputMaybe<Scalars['Int']>;
 };
 
-export type HomeInput = {
+export type HomeCreateInput = {
   cleaningPrice?: InputMaybe<Scalars['Int']>;
   description?: InputMaybe<Scalars['String']>;
   detailAddress?: InputMaybe<Scalars['String']>;
@@ -171,6 +169,10 @@ export type HomeInput = {
   ward?: InputMaybe<Scalars['Int']>;
   waterPrice?: InputMaybe<Scalars['Int']>;
 };
+
+export type HomeCreateResult = Home | PermissionDeninedError;
+
+export type HomeDeleteResult = AfterDelete | InstanceNotExistError | PermissionDeninedError;
 
 export type HomePaginator = PaginatorResult & {
   __typename?: 'HomePaginator';
@@ -184,6 +186,7 @@ export type HomeUpdateInput = {
   detailAddress?: InputMaybe<Scalars['String']>;
   district?: InputMaybe<Scalars['Int']>;
   electricityPrice?: InputMaybe<Scalars['Int']>;
+  id: Scalars['ID'];
   images?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
   internetPrice?: InputMaybe<Scalars['Int']>;
   liveWithOwner?: InputMaybe<Scalars['Boolean']>;
@@ -197,10 +200,12 @@ export type HomeUpdateInput = {
   waterPrice?: InputMaybe<Scalars['Int']>;
 };
 
+export type HomeUpdateResult = Home | InstanceNotExistError | PermissionDeninedError;
+
 export type InstanceNotExistError = ErrorResult & {
   __typename?: 'InstanceNotExistError';
   errorCode: ErrorCode;
-  message?: Maybe<Scalars['String']>;
+  message: Scalars['String'];
 };
 
 export type InternetPriceConditionInput = {
@@ -215,26 +220,33 @@ export type LivingExpensesConditionInput = {
   waterCondition?: InputMaybe<WaterPriceConditionInput>;
 };
 
+export type LogoutResponse = LogoutStatus | UserNotAuthenticatedError;
+
 export type LogoutStatus = {
   __typename?: 'LogoutStatus';
-  status: Scalars['Boolean'];
+  success: Scalars['Boolean'];
 };
 
 export type Mutation = {
   __typename?: 'Mutation';
   _?: Maybe<Scalars['String']>;
+  createHome: HomeCreateResult;
   createHomeComment: CreateHomeCommentResult;
-  createNewHome?: Maybe<Home>;
-  createNewRoom: Room;
-  deleteHome: Scalars['ID'];
+  createRoom: RoomCreateResult;
+  deleteHome: HomeDeleteResult;
   deleteHomeComment: DeleteHomeCommentResult;
-  deleteRoom: Scalars['ID'];
-  logout: LogoutStatus;
-  register: AuthResponse;
-  updateHome?: Maybe<Home>;
+  deleteRoom: RoomDeleteResult;
+  logout: LogoutResponse;
+  register: NativeRegisterResponse;
+  updateHome: HomeUpdateResult;
   updateHomeComment: UpdateHomeCommentResult;
-  updateRoom: Room;
-  updateUser: User;
+  updateRoom: RoomUpdateResult;
+  updateUser: UserUpdateResult;
+};
+
+
+export type MutationCreateHomeArgs = {
+  input: HomeCreateInput;
 };
 
 
@@ -243,14 +255,8 @@ export type MutationCreateHomeCommentArgs = {
 };
 
 
-export type MutationCreateNewHomeArgs = {
-  newHome: HomeInput;
-};
-
-
-export type MutationCreateNewRoomArgs = {
-  homeId: Scalars['ID'];
-  newRoom: RoomInput;
+export type MutationCreateRoomArgs = {
+  input: RoomCreateInput;
 };
 
 
@@ -270,13 +276,12 @@ export type MutationDeleteRoomArgs = {
 
 
 export type MutationRegisterArgs = {
-  newUser: UserInput;
+  input: UserCreateInput;
 };
 
 
 export type MutationUpdateHomeArgs = {
-  id: Scalars['ID'];
-  updatedHome: HomeUpdateInput;
+  input: HomeUpdateInput;
 };
 
 
@@ -286,14 +291,17 @@ export type MutationUpdateHomeCommentArgs = {
 
 
 export type MutationUpdateRoomArgs = {
-  id: Scalars['ID'];
-  updatedRoom: RoomUpdateInput;
+  input: RoomUpdateInput;
 };
 
 
 export type MutationUpdateUserArgs = {
-  updateInfo: UserUpdateInput;
+  input: UserUpdateInput;
 };
+
+export type NativeAuthResponse = EmailIncorrectError | PasswordIncorrectError | User;
+
+export type NativeRegisterResponse = EmailDuplicateError | PasswordInvalidError | User;
 
 export type Node = {
   _id?: Maybe<Scalars['ID']>;
@@ -312,9 +320,27 @@ export type Paginator = {
   totalPages?: Maybe<Scalars['Int']>;
 };
 
+export type PaginatorOptionsInput = {
+  limit?: InputMaybe<Scalars['Int']>;
+  page?: InputMaybe<Scalars['Int']>;
+  sort?: InputMaybe<Array<InputMaybe<SortOption>>>;
+};
+
 export type PaginatorResult = {
   docs?: Maybe<Array<Maybe<Node>>>;
   paginator?: Maybe<Paginator>;
+};
+
+export type PasswordIncorrectError = ErrorResult & {
+  __typename?: 'PasswordIncorrectError';
+  errorCode: ErrorCode;
+  message: Scalars['String'];
+};
+
+export type PasswordInvalidError = ErrorResult & {
+  __typename?: 'PasswordInvalidError';
+  errorCode: ErrorCode;
+  message: Scalars['String'];
 };
 
 export type PermissionDeninedError = ErrorResult & {
@@ -352,34 +378,31 @@ export type Profile = {
 export type Query = {
   __typename?: 'Query';
   _?: Maybe<Scalars['String']>;
-  allHomeComments?: Maybe<HomeCommentPaginator>;
+  allHomeCommentsInHome?: Maybe<HomeCommentPaginator>;
   allHomes?: Maybe<HomePaginator>;
   allRooms?: Maybe<RoomPaginator>;
   filterRoom?: Maybe<RoomPaginator>;
   getHomeById?: Maybe<Home>;
+  getHomeCommentById: DeleteHomeCommentResult;
   getRoomById?: Maybe<Room>;
-  homeComment: DeleteHomeCommentResult;
-  login: AuthResponse;
+  login: NativeAuthResponse;
   profile?: Maybe<Profile>;
 };
 
 
-export type QueryAllHomeCommentsArgs = {
-  homeId: Scalars['ID'];
-  limit?: InputMaybe<Scalars['Int']>;
-  page?: InputMaybe<Scalars['Int']>;
+export type QueryAllHomeCommentsInHomeArgs = {
+  paginatorOptions: PaginatorOptionsInput;
+  query: AllHomeCommentsInHomeQuery;
 };
 
 
 export type QueryAllHomesArgs = {
-  limit?: InputMaybe<Scalars['Int']>;
-  page?: InputMaybe<Scalars['Int']>;
+  paginatorOptions?: InputMaybe<PaginatorOptionsInput>;
 };
 
 
 export type QueryAllRoomsArgs = {
-  limit?: InputMaybe<Scalars['Int']>;
-  page?: InputMaybe<Scalars['Int']>;
+  paginatorOptions?: InputMaybe<PaginatorOptionsInput>;
 };
 
 
@@ -391,16 +414,16 @@ export type QueryFilterRoomArgs = {
 
 
 export type QueryGetHomeByIdArgs = {
-  homeId: Scalars['ID'];
+  id: Scalars['ID'];
+};
+
+
+export type QueryGetHomeCommentByIdArgs = {
+  id: Scalars['ID'];
 };
 
 
 export type QueryGetRoomByIdArgs = {
-  roomId: Scalars['ID'];
-};
-
-
-export type QueryHomeCommentArgs = {
   id: Scalars['ID'];
 };
 
@@ -418,7 +441,7 @@ export enum Role {
 export type Room = Node & Timestamps & {
   __typename?: 'Room';
   _id?: Maybe<Scalars['ID']>;
-  amenities?: Maybe<Array<Maybe<Amenities>>>;
+  amenities?: Maybe<Array<Maybe<Scalars['Int']>>>;
   createdAt?: Maybe<Scalars['Date']>;
   description?: Maybe<Scalars['String']>;
   floor?: Maybe<Scalars['Int']>;
@@ -432,10 +455,11 @@ export type Room = Node & Timestamps & {
   updatedAt?: Maybe<Scalars['Date']>;
 };
 
-export type RoomInput = {
-  amenities?: InputMaybe<Array<InputMaybe<AmenitiesInput>>>;
+export type RoomCreateInput = {
+  amenities?: InputMaybe<Array<InputMaybe<Scalars['Int']>>>;
   description?: InputMaybe<Scalars['String']>;
   floor?: InputMaybe<Scalars['Int']>;
+  home: Scalars['ID'];
   images?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
   isRented?: InputMaybe<Scalars['Boolean']>;
   price?: InputMaybe<Scalars['Int']>;
@@ -443,6 +467,10 @@ export type RoomInput = {
   square?: InputMaybe<Scalars['Float']>;
   title?: InputMaybe<Scalars['String']>;
 };
+
+export type RoomCreateResult = PermissionDeninedError | Room;
+
+export type RoomDeleteResult = AfterDelete | InstanceNotExistError | PermissionDeninedError;
 
 export type RoomPaginator = PaginatorResult & {
   __typename?: 'RoomPaginator';
@@ -451,9 +479,10 @@ export type RoomPaginator = PaginatorResult & {
 };
 
 export type RoomUpdateInput = {
-  amenities?: InputMaybe<Array<InputMaybe<AmenitiesInput>>>;
+  amenities?: InputMaybe<Array<InputMaybe<Scalars['Int']>>>;
   description?: InputMaybe<Scalars['String']>;
   floor?: InputMaybe<Scalars['Int']>;
+  id: Scalars['ID'];
   images?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
   isRented?: InputMaybe<Scalars['Boolean']>;
   price?: InputMaybe<Scalars['Int']>;
@@ -462,9 +491,16 @@ export type RoomUpdateInput = {
   title?: InputMaybe<Scalars['String']>;
 };
 
+export type RoomUpdateResult = InstanceNotExistError | PermissionDeninedError | Room;
+
 export type Scope = {
   max: Scalars['Float'];
   min: Scalars['Float'];
+};
+
+export type SortOption = {
+  arrange: ArrangeType;
+  field: Scalars['String'];
 };
 
 export type SquareConditionInput = {
@@ -507,20 +543,25 @@ export type User = Node & Timestamps & {
 
 
 export type UserListHomesArgs = {
-  limit?: InputMaybe<Scalars['Int']>;
-  page?: InputMaybe<Scalars['Int']>;
+  paginatorOptions?: InputMaybe<PaginatorOptionsInput>;
 };
 
-export type UserInput = {
+export type UserCreateInput = {
   avatar?: InputMaybe<Scalars['String']>;
   district?: InputMaybe<Scalars['Int']>;
   email: Scalars['String'];
-  fullname: Scalars['String'];
+  fullname?: InputMaybe<Scalars['String']>;
   numberPhone?: InputMaybe<Scalars['String']>;
   password: Scalars['String'];
   province?: InputMaybe<Scalars['Int']>;
-  userType?: InputMaybe<UserType>;
+  userType: UserType;
   ward?: InputMaybe<Scalars['Int']>;
+};
+
+export type UserNotAuthenticatedError = ErrorResult & {
+  __typename?: 'UserNotAuthenticatedError';
+  errorCode: ErrorCode;
+  message: Scalars['String'];
 };
 
 export type UserNotRentedHomeError = ErrorResult & {
@@ -542,6 +583,8 @@ export type UserUpdateInput = {
   province?: InputMaybe<Scalars['Int']>;
   ward?: InputMaybe<Scalars['Int']>;
 };
+
+export type UserUpdateResult = InstanceNotExistError | PermissionDeninedError | User;
 
 export type WaterPriceConditionInput = {
   arrange?: InputMaybe<ArrangeType>;

@@ -13,25 +13,32 @@ export class Register extends InstanceMutation {
     };
 
     /**
-     * @param {import('../../../common/types/graphql-types').MutationRegisterArgs} args 
-     * @param {RequestContext} context 
-     * @returns 
+     * @param {import('../../../common/types/graphql-types').MutationRegisterArgs} args
+     * @param {RequestContext} context
+     * @returns
      */
-    static cleanInput(args, context) {
-        const { newUser } = args;
-        return newUser;
+    static cleanInput({ input }, context) {
+        return input;
     }
 
     static cleanInstance(user) {
         return serializerUser(user);
     }
 
+    static handleError(err) {
+        // if (err instanceof MongoServerError) {
+        //     return new EmailDuplicateError();
+        // }
+        // return err;
+        return new EmailDuplicateError();
+    }
+
     /**
-     * @param {UserModel} user 
-     * @returns {AuthResponse}
+     * @param {UserModel} user
+     * @returns {import('../../../common/types/graphql-types').User}
      */
     static successResponse(user) {
-        return { user };
+        return user;
     }
 
     static async performMutation(resolverParams, session) {

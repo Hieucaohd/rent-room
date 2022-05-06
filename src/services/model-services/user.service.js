@@ -31,7 +31,6 @@ export const updateUserInDatabase = async (updateInfo, user) => {
     return userUpdated;
 };
 
-
 /**
  * @param {String} email
  * @returns {Promise<UserModel>}
@@ -52,6 +51,11 @@ export const findUserByEmailAndID = async (email, id) => {
 };
 
 export class UserService extends BaseService {
+    /** @type {import('../../common/types/common-types').MetaBaseService} */
+    static meta = {
+        model: User
+    }
+
     /**
      * @param {UserInput} newUser
      * @returns {Promise<UserModel>}
@@ -61,32 +65,6 @@ export class UserService extends BaseService {
         let user = await User.create([{ ...newUser }], { session });
         user = user[0];
         return await User.findById(user._id).session(session);
-    }
-
-    /**
-     * @param {UserUpdateInput} updateInfo
-     * @param {UserModel} user
-     * @returns {Promise<UserModel>}
-     * @throws {Error}
-     */
-    static async updateUser(updateInfo, context, session) {
-        const userUpdated = await User.findOneAndUpdate(
-            {
-                _id: user._id,
-            },
-            {
-                ...updateInfo,
-            },
-            {
-                returnDocument: 'after',
-            }
-        );
-
-        if (!userUpdated) {
-            throw new Error('User item does not exist!');
-        }
-
-        return userUpdated;
     }
 
     /**

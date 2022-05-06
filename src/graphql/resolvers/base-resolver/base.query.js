@@ -22,7 +22,7 @@ export class BaseQuery {
             const response = await this.performQuery(resolverParams);
             return await this.successResponse(response);
         } catch (err) {
-            await this.handleError(err);
+            err = await this.handleError(err);
             return await this.errorResponse(err);
         }
     }
@@ -34,7 +34,7 @@ export class BaseQuery {
     }
 
     static handleError(err) {
-        throw err;
+        return err;
     }
 
     static errorResponse(err) {
@@ -108,14 +108,14 @@ export class ListQuery extends BaseQuery {
 
     static async performQuery(resolverParams) {
         let { args, context } = resolverParams;
-        let data = await this.cleanInput(args, context);
-        let instances = await this.getListInstances(data, context);
+        let { query, paginatorOptions } = await this.cleanInput(args, context);
+        let instances = await this.getListInstances(query, paginatorOptions, context);
         instances = this.cleanListInstances(instances);
         return instances;
     }
 
-    static async getListInstances(data, context) {
-        return await this.modelService.getListInstances(data, context);
+    static async getListInstances(query, { page, limit, sort }, context) {
+        return await this.modelService.getListInstances(query, { page, limit, sort }, context);
     }
 
     static async cleanListInstances(instances) {

@@ -8,8 +8,12 @@ export default gql`
     }
 
     extend type Query {
-        allHomeComments(page: Int, limit: Int, homeId: ID!): HomeCommentPaginator
-        homeComment(id: ID!): DeleteHomeCommentResult!
+        allHomeCommentsInHome(query: AllHomeCommentsInHomeQuery!, paginatorOptions: PaginatorOptionsInput!): HomeCommentPaginator
+        getHomeCommentById(id: ID!): DeleteHomeCommentResult!
+    }
+
+    input AllHomeCommentsInHomeQuery {
+        home: ID!
     }
 
     input HomeCommentCreateInput {

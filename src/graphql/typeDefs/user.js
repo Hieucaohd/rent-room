@@ -2,19 +2,7 @@ import { gql } from "apollo-server-express";
 
 export default gql`
     extend type Mutation {
-        updateUser(updateInfo: UserUpdateInput!): User! @authRequire
-    }
-
-    input UserInput {
-        email: String!
-        password: String!
-        fullname: String!
-        numberPhone: String
-        province: Int
-        district: Int
-        ward: Int
-        avatar: String
-        userType: UserType
+        updateUser(input: UserUpdateInput!): UserUpdateResult!
     }
 
     input UserUpdateInput {
@@ -43,14 +31,10 @@ export default gql`
         userType: String
         role: [String]
 
-        listHomes(page: Int, limit: Int): HomePaginator
+        listHomes(paginatorOptions: PaginatorOptionsInput): HomePaginator
 
         createdAt: Date
         updatedAt: Date
-    }
-
-    type AuthResponse {
-        user: User
     }
 
     enum Role {
@@ -63,12 +47,5 @@ export default gql`
         HOST
     }
 
-    type Profile {
-        user: User
-        isAuth: Boolean
-    }
-
-    type LogoutStatus {
-        status: Boolean!
-    }
+    union UserUpdateResult = User | InstanceNotExistError | PermissionDeninedError
 `;

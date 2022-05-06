@@ -2,20 +2,18 @@ import { gql } from 'apollo-server-express';
 
 export default gql`
     extend type Query {
-        allRooms(page: Int, limit: Int): RoomPaginator
-
-        getRoomById(roomId: ID!): Room
+        allRooms(paginatorOptions: PaginatorOptionsInput): RoomPaginator
+        getRoomById(id: ID!): Room
     }
 
     extend type Mutation {
-        createNewRoom(newRoom: RoomInput!, homeId: ID!): Room! @authRequire
-
-        updateRoom(updatedRoom: RoomUpdateInput!, id: ID!): Room! @authRequire
-
-        deleteRoom(id: ID!): ID! @authRequire
+        createRoom(input: RoomCreateInput!): RoomCreateResult!
+        updateRoom(input: RoomUpdateInput!): RoomUpdateResult!
+        deleteRoom(id: ID!): RoomDeleteResult!
     }
 
-    input RoomInput {
+    input RoomCreateInput {
+        home: ID!
         price: Int
         square: Float
         isRented: Boolean
@@ -28,6 +26,7 @@ export default gql`
     }
 
     input RoomUpdateInput {
+        id: ID!
         price: Int
         square: Float
         isRented: Boolean
@@ -62,4 +61,8 @@ export default gql`
         docs: [Room]
         paginator: Paginator
     }
+
+    union RoomCreateResult = Room | PermissionDeninedError
+    union RoomUpdateResult = Room | InstanceNotExistError | PermissionDeninedError
+    union RoomDeleteResult = AfterDelete | InstanceNotExistError | PermissionDeninedError
 `;

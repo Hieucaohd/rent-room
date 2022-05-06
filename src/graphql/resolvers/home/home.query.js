@@ -8,7 +8,7 @@ export class HomeById extends InstanceQuery {
         modelService: HomeService,
         permissions: [],
         permissionsInstance: [],
-        idField: 'homeId',
+        idField: 'id',
     };
 }
 

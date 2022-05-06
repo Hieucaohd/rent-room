@@ -2,17 +2,14 @@ import { gql } from 'apollo-server-express';
 
 export default gql`
     extend type Query {
-        allHomes(page: Int, limit: Int): HomePaginator
-
-        getHomeById(homeId: ID!): Home
+        allHomes(paginatorOptions: PaginatorOptionsInput): HomePaginator
+        getHomeById(id: ID!): Home
     }
 
     extend type Mutation {
-        createNewHome(newHome: HomeInput!): Home @authRequire
-
-        updateHome(updatedHome: HomeUpdateInput!, id: ID!): Home @authRequire
-
-        deleteHome(id: ID!): ID! @authRequire
+        createHome(input: HomeCreateInput!): HomeCreateResult!
+        updateHome(input: HomeUpdateInput!): HomeUpdateResult!
+        deleteHome(id: ID!): HomeDeleteResult!
     }
 
     input PositionInput {
@@ -22,7 +19,7 @@ export default gql`
         lat: Float
     }
 
-    input HomeInput {
+    input HomeCreateInput {
         province: Int
         district: Int
         ward: Int
@@ -42,6 +39,7 @@ export default gql`
     }
 
     input HomeUpdateInput {
+        id: ID!
         province: Int
         district: Int
         ward: Int
@@ -84,7 +82,7 @@ export default gql`
         cleaningPrice: Int
         images: [String]
         totalRooms: Int
-        listRooms(page: Int, limit: Int): RoomPaginator
+        listRooms(paginatorOptions: PaginatorOptionsInput): RoomPaginator
 
         position: Position
         description: String
@@ -101,4 +99,8 @@ export default gql`
         docs: [Home]
         paginator: Paginator
     }
+
+    union HomeCreateResult = Home | PermissionDeninedError
+    union HomeUpdateResult = Home | InstanceNotExistError | PermissionDeninedError
+    union HomeDeleteResult = AfterDelete | InstanceNotExistError | PermissionDeninedError
 `;

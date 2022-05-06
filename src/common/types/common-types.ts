@@ -1,4 +1,5 @@
 import { GraphQLResolveInfo } from "graphql";
+import { Model } from "mongoose";
 import { RequestContext } from '../../graphql/common/request-context';
 import { BaseService } from "../../services/model-services/base.service";
 
@@ -15,6 +16,10 @@ export type District = {
 export type Ward = {
 	name: String,
 	code: Number,
+}
+
+export type MetaBaseService = {
+	model: Model<any>,
 }
 
 export type MetaBaseMutation = {

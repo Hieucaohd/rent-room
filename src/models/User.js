@@ -16,7 +16,6 @@ const UserSchema = new Schema(
         },
         fullname: {
             type: String,
-            required: true,
         },
         numberPhone: {
             type: String,

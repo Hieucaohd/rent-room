@@ -6,15 +6,13 @@ import {
     getWardNameByCode,
 } from '../../../services/helpers/address.service';
 import {
-    countRoomInHome,
-    getRoomsInHome,
     RoomService,
 } from '../../../services/model-services/room.service';
 import '../../../common/types/typedef';
 
 export default {
     Mutation: {
-        createNewHome: HomeCreate.mutate.bind(HomeCreate),
+        createHome: HomeCreate.mutate.bind(HomeCreate),
         updateHome: HomeUpdate.mutate.bind(HomeUpdate),
         deleteHome: HomeDelete.mutate.bind(HomeDelete),
     },
@@ -28,7 +26,7 @@ export default {
          * @returns {Promise<Number>}
          */
         totalRooms: async (source) => {
-            const roomNumber = await countRoomInHome(source._id);
+            const roomNumber = await RoomService.countRoomInHome(source._id);
             if (roomNumber === 0) {
                 return source.totalRooms;
             }
@@ -37,13 +35,11 @@ export default {
 
         /**
          * @param {HomeResult} source
-         * @param {Object} param1
-         * @param {Number} param1.page
-         * @param {Number} param1.limit
+         * @param {import('../../../common/types/graphql-types').HomeListRoomsArgs} param1
          * @returns {Promise<RoomPaginator>}
          */
-        listRooms: async (source, { page, limit }) => {
-            return await getRoomsInHome(source._id, page, limit);
+        listRooms: async (source, { paginatorOptions }, context) => {
+            return await RoomService.getRoomsInHome(source._id, paginatorOptions, context);
         },
 
         /**

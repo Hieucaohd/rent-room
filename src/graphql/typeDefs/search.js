@@ -5,10 +5,6 @@ export default gql`
         filterRoom(conditions: FilterRoomInput!, page: Int, limit: Int): RoomPaginator
     }
 
-    enum ArrangeType {
-        ASC
-        DESC
-    }
 
     input Scope {
         min: Float!

@@ -1,17 +1,18 @@
 import { serializerUser } from '../../../services/helpers/auth.service';
 import { updateUserInDatabase } from '../../../services/model-services/user.service';
-import { getHomesCreatedByUser } from '../../../services/model-services/home.service';
+import { HomeService } from '../../../services/model-services/home.service';
 import '../../../common/types/typedef';
 import {
     getDistrictNameByCode,
     getProvinceNameByCode,
     getWardNameByCode,
 } from '../../../services/helpers/address.service';
+import { RequestContext } from '../../common/request-context';
 
 export default {
     Mutation: {
-        updateUser: async (_, { updateInfo }, { user }) => {
-            let userUpdated = await updateUserInDatabase(updateInfo, user);
+        updateUser: async (_, { input }, { user }) => {
+            let userUpdated = await updateUserInDatabase(input, user);
             userUpdated = serializerUser(userUpdated);
 
             return userUpdated;
@@ -21,13 +22,12 @@ export default {
     User: {
         /**
          * @param {UserResult} source
-         * @param {Object} param1
-         * @param {Number} param1.page
-         * @param {Number} param1.limit
+         * @param {import('../../../common/types/graphql-types').UserListHomesArgs} param1
+         * @param {RequestContext} context
          * @returns {Promise<HomePaginator>}
          */
-        listHomes: async (source, { page, limit }) => {
-            return await getHomesCreatedByUser(source._id, page, limit);
+        listHomes: async (source, { paginatorOptions }, context) => {
+            return await HomeService.getHomesCreatedByUser(source._id, paginatorOptions, context);
         },
 
         /**

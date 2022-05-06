@@ -4,5 +4,6 @@ import user from './user/user.resolver';
 import search from './search/search.resolver';
 import customTypes from './custom-types.resolver';
 import auth from './auth/auth.resolver';
+import { errorOperationTypeResolvers } from '../../common/errors/graphql-errors';
 
-export default [home, room, user, search, customTypes, auth];
+export default [home, room, user, search, customTypes, auth, errorOperationTypeResolvers];

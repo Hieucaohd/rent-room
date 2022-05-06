@@ -2,12 +2,58 @@ import { gql } from 'apollo-server-express';
 
 export default gql`
     extend type Mutation {
-        register(newUser: UserInput!): AuthResponse!
-        logout: LogoutStatus! @authRequire
+        register(input: UserCreateInput!): NativeRegisterResponse!
+        logout: LogoutResponse!
     }
 
 	extend type Query {
-        login(email: String!, password: String!): AuthResponse!
-        profile: Profile @authRequire
+        login(email: String!, password: String!): NativeAuthResponse!
+        profile: Profile
 	}	
+
+    input UserCreateInput {
+        email: String!
+        password: String!
+        fullname: String
+        numberPhone: String
+        province: Int
+        district: Int
+        ward: Int
+        avatar: String
+        userType: UserType!
+    }
+
+
+    union NativeRegisterResponse = User | EmailDuplicateError | PasswordInvalidError
+    union NativeAuthResponse = User | EmailIncorrectError | PasswordIncorrectError
+    union LogoutResponse = UserNotAuthenticatedError | LogoutStatus
+
+    type EmailDuplicateError implements ErrorResult {
+        errorCode: ErrorCode!
+        message: String!
+    }
+
+    type PasswordInvalidError implements ErrorResult {
+        errorCode: ErrorCode!
+        message: String!
+    }
+
+    type EmailIncorrectError implements ErrorResult {
+        errorCode: ErrorCode!
+        message: String!
+    }
+
+    type PasswordIncorrectError implements ErrorResult {
+        errorCode: ErrorCode!
+        message: String!
+    }
+
+    type LogoutStatus {
+        success: Boolean!
+    }
+
+    type Profile {
+        user: User
+        isAuth: Boolean
+    }
 `;

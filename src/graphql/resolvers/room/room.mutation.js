@@ -14,12 +14,8 @@ export class RoomCreate extends InstanceMutation {
      * @param {import("../../../common/types/graphql-types").MutationCreateNewRoomArgs} args
      * @param {RequestContext} context
      */
-    static cleanInput(args, context) {
-        let data = {
-            ...args.newRoom,
-            home: args.homeId,
-        };
-        return data;
+    static cleanInput({ input }, context) {
+        return input;
     }
 }
 
@@ -31,6 +27,10 @@ export class RoomUpdate extends InstanceMutation {
         permissionsInstance: [],
         idField: 'id',
     };
+
+    static cleanInput({ input }, context) {
+        return input;
+    }
 }
 
 export class RoomDelete extends DeleteMutation {

@@ -39,6 +39,22 @@ export default gql`
         hasNextPage: Boolean
     }
 
+    enum ArrangeType {
+        ASC
+        DESC
+    }
+
+    input PaginatorOptionsInput {
+        page: Int
+        limit: Int
+        sort: [SortOption]
+    }
+
+    input SortOption {
+        field: String!
+        arrange: ArrangeType!
+    }
+
     interface PaginatorResult {
         docs: [Node]
         paginator: Paginator
@@ -50,12 +66,13 @@ export default gql`
     }
 
     interface ErrorResult {
-        message: String
+        errorCode: ErrorCode!
+        message: String!
     }
 
     type InstanceNotExistError implements ErrorResult {
         errorCode: ErrorCode!
-        message: String
+        message: String!
     }
 
     type PermissionDeninedError implements ErrorResult {
@@ -63,8 +80,12 @@ export default gql`
         message: String!
     }
 
+    type UserNotAuthenticatedError implements ErrorResult {
+        errorCode: ErrorCode!
+        message: String!
+    }
+
     enum ErrorCode {
-        PERMISSION_DENINED
-        INSTANCE_NOT_EXIST
+        UNKNOWN_ERROR
     }
 `;

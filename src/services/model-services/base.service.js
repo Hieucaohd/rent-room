@@ -3,8 +3,8 @@ import { RequestContext } from '../../graphql/common/request-context';
 import { createOptions } from '../helpers/paginator.service';
 
 export class BaseService {
-    /** @type {Model} */
-    static model;
+    /** @type {import('../../common/types/common-types').MetaBaseService} */
+    static meta;
 
     /**
      * Get the instance by id.
@@ -18,15 +18,37 @@ export class BaseService {
 
     /**
      * @param {Object} query
-     * @param {Object} param1
-     * @param {Number} param1.page
-     * @param {Number} param1.limit
+     * @param {RequestContext} context
+     * @returns {Promise<Document>}
+     */
+    static async getInstance(query, context) {
+        let instance = await this.model.findOne(query);
+        return instance;
+    }
+
+    /**
+     * @param {Object} query
+     * @param {import('../../common/types/graphql-types').PaginatorOptionsInput} param1
      * @param {RequestContext} context
      * @returns {Promise<import("../../common/types/graphql-types").PaginatorResult>}
      */
     static async getListInstances(query, { page, limit, sort }, context) {
         let options = createOptions(page, limit);
-        options.sort = sort;
+
+        /**
+         * @param {Array<import('../../common/types/graphql-types').SortOption>} sort
+         */
+        function constructSortOptions(sort) {
+            let constructSort = {};
+            for (const item of sort) {
+                constructSort[item.field] = item.arrange === 'ASC' ? 1 : -1;
+            }
+            return constructSort;
+        }
+
+        options.sort = constructSortOptions(sort);
+
+        query = !!query ? query : {};
         let listInstances = await this.model.paginate(query, options);
         return listInstances;
     }
@@ -61,5 +83,9 @@ export class BaseService {
     static async deleteInstanceById(id, context, session) {
         let deletedInstance = await this.model.findByIdAndDelete(id, { session });
         return deletedInstance._id;
+    }
+
+    static get model() {
+        return this.meta.model;
     }
 }

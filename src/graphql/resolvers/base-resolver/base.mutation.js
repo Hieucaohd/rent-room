@@ -56,7 +56,7 @@ export class BaseMutation {
             await session.abortTransaction();
             session.endSession();
 
-            await this.handleError(err);
+            err = await this.handleError(err);
             return await this.errorResponse(err);
         }
     }
@@ -92,8 +92,7 @@ export class BaseMutation {
      * @returns {any}
      */
     static errorResponse(err) {
-        console.log(err);
-        return null;
+        return err;
     }
 
     /**
@@ -102,7 +101,7 @@ export class BaseMutation {
      * @param {Error} err error throws from {@link mutate} method.
      */
     static handleError(err) {
-        throw err;
+        return err;
     }
 
     /**
@@ -224,6 +223,7 @@ export class InstanceMutation extends BaseMutation {
 
     /**
      * Update instance from database.
+     * This method omit the {@link idField} from data.
      *
      * @param {any} data the result from {@link cleanInput}.
      * @param {RequestContext} context
@@ -231,7 +231,14 @@ export class InstanceMutation extends BaseMutation {
      * @returns the updated instance from database.
      */
     static async updateInstance(data, context, session) {
-        const instance = await this.modelService.updateInstance(data, context, session);
+        let id = data[this.idField];
+        let updateData = _.omit(data, [this.idField]);
+        const instance = await this.modelService.updateInstanceById(
+            updateData,
+            id,
+            context,
+            session
+        );
         return instance;
     }
 

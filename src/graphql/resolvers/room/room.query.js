@@ -4,7 +4,7 @@ import { InstanceQuery, ListQuery } from "../base-resolver/base.query";
 export class RoomById extends InstanceQuery {
 	/** @type {MetaInstanceQuery} */
 	static meta = {
-		idField: "roomId",
+		idField: "id",
 		modelService: RoomService,
 		permissions: [],
 		permissionsInstance: []

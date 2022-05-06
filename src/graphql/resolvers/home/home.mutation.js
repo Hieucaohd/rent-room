@@ -9,10 +9,9 @@ export class HomeCreate extends InstanceMutation {
         permissionsInstance: [],
     };
 
-    static cleanInput(args, context) {
-        let { newHome } = args;
-        newHome.owner = context.user._id;
-        return newHome;
+    static cleanInput({ input }, context) {
+        input.owner = context.user._id;
+        return input;
     }
 }
 
@@ -25,13 +24,8 @@ export class HomeUpdate extends InstanceMutation {
         idField: 'id',
     };
 
-    static cleanInput(args, context) {
-        const { updatedHome, id } = args;
-        const dataInput = {
-            ...updatedHome,
-            id,
-        };
-        return dataInput;
+    static cleanInput({ input }, context) {
+        return input;
     }
 }
 
