@@ -59,6 +59,7 @@ export function serializerUser(user) {
             'avatar',
             'createdAt',
             'updatedAt',
+            'userType'
         ]);
     } catch (err) {
         return user;
