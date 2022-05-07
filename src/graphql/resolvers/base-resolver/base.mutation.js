@@ -4,11 +4,9 @@ import { GraphQLResolveInfo } from 'graphql';
 import { RequestContext } from '../../common/request-context';
 import { ClientSession } from 'mongoose';
 import { InstanceNotExistError } from '../../../common/errors/graphql-errors';
-import util from 'util';
-
-function printObject(obj) {
-    return util.inspect(obj, false, null, true);
-}
+import { printObject } from '../../../common/utils';
+import { getPropertyHaveDefault } from './utils';
+import _ from 'lodash';
 
 class MutationSyntaxError extends Error {
     constructor(message) {
@@ -196,7 +194,9 @@ export class InstanceMutation extends BaseMutation {
         let { input } = args;
         if (!input) {
             throw new MutationSyntaxError(
-                `SyntaxError at class ${this.name}: you must defined input param in mutation typeDefs or provide in cleanInput method.
+                `SyntaxError at class ${
+                    this.name
+                }: you must defined input param in mutation typeDefs or provide in cleanInput method.
                 Receive:
                     ${printObject(args)}
                 `
@@ -233,7 +233,9 @@ export class InstanceMutation extends BaseMutation {
         const id = data[this.idField];
         if (!id) {
             throw new MutationSyntaxError(
-                `SyntaxError at class ${this.name}: you must provide ${this.idField} in input param to perform update action.
+                `SyntaxError at class ${this.name}: you must provide ${
+                    this.idField
+                } in input param to perform update action.
                 Receive:
                     ${printObject(data)}
                 Example: 
@@ -303,7 +305,7 @@ export class InstanceMutation extends BaseMutation {
     }
 
     static get idField() {
-        return this.meta.idField;
+        return getPropertyHaveDefault(this.meta, InstanceMutation.meta, 'idField');
     }
 
     static get modelService() {
@@ -363,8 +365,16 @@ export class DeleteMutation extends BaseMutation {
         return instance;
     }
 
+    static successResponse(id) {
+        let success = !!id;
+        return {
+            id,
+            success,
+        };
+    }
+
     static get idField() {
-        return this.meta.idField;
+        return getPropertyHaveDefault(this.meta, DeleteMutation.meta, 'idField');
     }
 
     static get modelService() {

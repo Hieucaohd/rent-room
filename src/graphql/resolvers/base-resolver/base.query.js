@@ -1,4 +1,17 @@
 import '../../../common/types/typedef';
+import { printObject } from '../../../common/utils';
+import { getPropertyHaveDefault } from './utils';
+
+class QuerySyntaxError extends Error {
+    constructor(message) {
+        if (!message) {
+            message = 'QuerySyntaxError';
+        }
+
+        super(message);
+        this.name = 'QuerySyntaxError';
+    }
+}
 
 /**
  * This class use template method pattern to control
@@ -22,6 +35,10 @@ export class BaseQuery {
             const response = await this.performQuery(resolverParams);
             return await this.successResponse(response);
         } catch (err) {
+            if (err instanceof QuerySyntaxError) {
+                throw err;
+            }
+
             err = await this.handleError(err);
             return await this.errorResponse(err);
         }
@@ -55,7 +72,9 @@ export class BaseQuery {
  */
 export class InstanceQuery extends BaseQuery {
     /** @type {MetaInstanceQuery} */
-    static meta;
+    static meta = {
+        idField: 'id',
+    };
 
     static async performQuery(resolverParams) {
         let { args, context } = resolverParams;
@@ -70,6 +89,21 @@ export class InstanceQuery extends BaseQuery {
 
     static async getInstance(data, context) {
         const id = data[this.idField];
+        if (!id) {
+            throw new QuerySyntaxError(
+                `SyntaxError at class ${this.name}: you must provide ${
+                    this.idField
+                } in param of typeDef to get instance or you must override getInstance method.
+                Receive:
+                    ${printObject(data)}
+                Example: 
+                    Query {
+                        getInstanceById(${this.idField}: ID!): Result
+                    }
+                `
+            );
+        }
+
         return await this.modelService.getInstanceById(id, context);
     }
 
@@ -94,7 +128,7 @@ export class InstanceQuery extends BaseQuery {
     }
 
     static get idField() {
-        return this.meta.idField;
+        return getPropertyHaveDefault(this.meta, InstanceQuery.meta, 'idField');
     }
 }
 
@@ -121,8 +155,19 @@ export class ListQuery extends BaseQuery {
         return instances;
     }
 
-    static cleanInput(args, context) {
-        return args;
+    static cleanInput({ query, paginatorOptions }, context) {
+        if (!query) {
+            query = {};
+        }
+
+        if (!paginatorOptions) {
+            paginatorOptions = {};
+        }
+
+        return {
+            query,
+            paginatorOptions,
+        };
     }
 
     static get modelService() {

@@ -151,6 +151,21 @@ export const errorOperationTypeResolvers = {
       return isGraphQLError(obj) ? obj.__typename : 'User';
     },
   },
+  GetHomeByIdResult: {
+    __resolveType(obj) {
+      return isGraphQLError(obj) ? obj.__typename : 'Home';
+    },
+  },
+  GetHomeCommentByIdResult: {
+    __resolveType(obj) {
+      return isGraphQLError(obj) ? obj.__typename : 'HomeComment';
+    },
+  },
+  GetRoomByIdResult: {
+    __resolveType(obj) {
+      return isGraphQLError(obj) ? obj.__typename : 'Room';
+    },
+  },
   NativeAuthResponse: {
     __resolveType(obj) {
       return isGraphQLError(obj) ? obj.__typename : 'User';

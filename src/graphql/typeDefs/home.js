@@ -3,7 +3,7 @@ import { gql } from 'apollo-server-express';
 export default gql`
     extend type Query {
         allHomes(paginatorOptions: PaginatorOptionsInput): HomePaginator
-        getHomeById(id: ID!): Home
+        getHomeById(id: ID!): GetHomeByIdResult
     }
 
     extend type Mutation {
@@ -103,4 +103,5 @@ export default gql`
     union HomeCreateResult = Home | PermissionDeninedError
     union HomeUpdateResult = Home | InstanceNotExistError | PermissionDeninedError
     union HomeDeleteResult = AfterDelete | InstanceNotExistError | PermissionDeninedError
+    union GetHomeByIdResult = Home | InstanceNotExistError
 `;

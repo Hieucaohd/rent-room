@@ -3,7 +3,7 @@ import { gql } from 'apollo-server-express';
 export default gql`
     extend type Query {
         allRooms(paginatorOptions: PaginatorOptionsInput): RoomPaginator
-        getRoomById(id: ID!): Room
+        getRoomById(id: ID!): GetRoomByIdResult
     }
 
     extend type Mutation {
@@ -65,4 +65,5 @@ export default gql`
     union RoomCreateResult = Room | PermissionDeninedError
     union RoomUpdateResult = Room | InstanceNotExistError | PermissionDeninedError
     union RoomDeleteResult = AfterDelete | InstanceNotExistError | PermissionDeninedError
+    union GetRoomByIdResult = Room | InstanceNotExistError
 `;

@@ -95,6 +95,12 @@ export type FloorConditionInput = {
   scope?: InputMaybe<Scope>;
 };
 
+export type GetHomeByIdResult = Home | InstanceNotExistError;
+
+export type GetHomeCommentByIdResult = HomeComment | InstanceNotExistError;
+
+export type GetRoomByIdResult = InstanceNotExistError | Room;
+
 export type Home = Node & Timestamps & {
   __typename?: 'Home';
   _id?: Maybe<Scalars['ID']>;
@@ -391,9 +397,9 @@ export type Query = {
   allHomes?: Maybe<HomePaginator>;
   allRooms?: Maybe<RoomPaginator>;
   filterRoom?: Maybe<RoomPaginator>;
-  getHomeById?: Maybe<Home>;
-  getHomeCommentById: DeleteHomeCommentResult;
-  getRoomById?: Maybe<Room>;
+  getHomeById?: Maybe<GetHomeByIdResult>;
+  getHomeCommentById?: Maybe<GetHomeCommentByIdResult>;
+  getRoomById?: Maybe<GetRoomByIdResult>;
   login: NativeAuthResponse;
   profile?: Maybe<Profile>;
 };

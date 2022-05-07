@@ -1,4 +1,5 @@
 import { Document, Model } from 'mongoose';
+import { InstanceNotExistError } from '../../common/errors/graphql-errors';
 import { RequestContext } from '../../graphql/common/request-context';
 import { createOptions } from '../helpers/paginator.service';
 
@@ -13,7 +14,11 @@ export class BaseService {
      * @returns {Promise<any>}
      */
     static async getInstanceById(id, context) {
-        return await this.model.findById(id);
+        const instance = await this.model.findById(id);
+        if (!instance) {
+            throw new InstanceNotExistError();
+        }
+        return instance;
     }
 
     /**
@@ -23,6 +28,9 @@ export class BaseService {
      */
     static async getInstance(query, context) {
         let instance = await this.model.findOne(query);
+        if (!instance) {
+            throw new InstanceNotExistError();
+        }
         return instance;
     }
 

@@ -2,14 +2,14 @@ import { gql } from 'apollo-server-express';
 
 export default gql`
     extend type Mutation {
-        createHomeComment(inputNow: HomeCommentCreateInput!): CreateHomeCommentResult!
+        createHomeComment(input: HomeCommentCreateInput!): CreateHomeCommentResult!
         updateHomeComment(input: HomeCommentUpdateInput!): UpdateHomeCommentResult!
         deleteHomeComment(id: ID!): DeleteHomeCommentResult!
     }
 
     extend type Query {
         allHomeCommentsInHome(query: AllHomeCommentsInHomeQuery!, paginatorOptions: PaginatorOptionsInput!): HomeCommentPaginator
-        getHomeCommentById(id: ID!): DeleteHomeCommentResult!
+        getHomeCommentById(id: ID!): GetHomeCommentByIdResult
     }
 
     input AllHomeCommentsInHomeQuery {
@@ -55,4 +55,5 @@ export default gql`
     union CreateHomeCommentResult = HomeComment | UserNotRentedHomeError
     union UpdateHomeCommentResult = HomeComment | InstanceNotExistError | PermissionDeninedError
     union DeleteHomeCommentResult = AfterDelete | InstanceNotExistError | PermissionDeninedError
+    union GetHomeCommentByIdResult = HomeComment | InstanceNotExistError
 `;
