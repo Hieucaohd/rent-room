@@ -5,6 +5,10 @@ export default gql`
         updateUser(updateInfo: UserUpdateInput!): User! @authRequire
     }
 
+    extend type Query {
+        getUserById(id: ID!): User
+    }
+
     input UserInput {
         email: String!
         password: String!

@@ -7,6 +7,7 @@ import {
     getProvinceNameByCode,
     getWardNameByCode,
 } from '../../../services/helpers/address.service';
+import User from '../../../models/User';
 
 export default {
     Mutation: {
@@ -15,6 +16,14 @@ export default {
             userUpdated = serializerUser(userUpdated);
 
             return userUpdated;
+        },
+    },
+
+    Query: {
+        getUserById: async (_, { id }) => {
+            let user = await User.findById(id);
+            user = serializerUser(user);
+            return user;
         },
     },
 
