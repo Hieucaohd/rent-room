@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "jest",
-    "start": "npm install @babel/cli @babel/core -g && babel ./src --out-dir dist && node ./dist/index.js",
+    "start": "npm install @babel/cli @babel/core @babel/node @babel/plugin-transform-runtime @babel/preset-env -g && babel ./src --out-dir dist && node ./dist/index.js",
     "dev": "nodemon --exec node_modules/.bin/babel-node index.js",
     "codegen": "node -r esm .\\scripts\\codegen\\generate-graphql-types.js",
     "build": "babel ./src --out-dir dist"
