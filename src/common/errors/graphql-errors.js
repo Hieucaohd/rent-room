@@ -1,7 +1,7 @@
 export class ErrorResult {
   __typename
   errorCode
- message;
+  message;
 }
 
 export class EmailDuplicateError extends ErrorResult {

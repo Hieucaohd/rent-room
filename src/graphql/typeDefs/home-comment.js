@@ -2,7 +2,7 @@ import { gql } from 'apollo-server-express';
 
 export default gql`
     extend type Mutation {
-        createHomeComment(input: HomeCommentCreateInput!): CreateHomeCommentResult!
+        createHomeComment(inputNow: HomeCommentCreateInput!): CreateHomeCommentResult!
         updateHomeComment(input: HomeCommentUpdateInput!): UpdateHomeCommentResult!
         deleteHomeComment(id: ID!): DeleteHomeCommentResult!
     }

@@ -3,10 +3,27 @@ import mongoose from 'mongoose';
 import { GraphQLResolveInfo } from 'graphql';
 import { RequestContext } from '../../common/request-context';
 import { ClientSession } from 'mongoose';
+import { InstanceNotExistError } from '../../../common/errors/graphql-errors';
+import util from 'util';
+
+function printObject(obj) {
+    return util.inspect(obj, false, null, true);
+}
+
+class MutationSyntaxError extends Error {
+    constructor(message) {
+        if (!message) {
+            message = 'MutationSyntaxError';
+        }
+
+        super(message);
+        this.name = 'MutationSyntaxError';
+    }
+}
 
 /**
  * This class use template method pattern to control the
- * mutation action. Every Mutation class must be extend 
+ * mutation action. Every Mutation class must be extend
  * {@link BaseMutation}.
  */
 export class BaseMutation {
@@ -55,6 +72,10 @@ export class BaseMutation {
         } catch (err) {
             await session.abortTransaction();
             session.endSession();
+
+            if (err instanceof MutationSyntaxError) {
+                throw err;
+            }
 
             err = await this.handleError(err);
             return await this.errorResponse(err);
@@ -172,7 +193,16 @@ export class InstanceMutation extends BaseMutation {
      * @returns {any} the data pass to {@link modelService}. Default return the {@link args} it self.
      */
     static cleanInput(args, context) {
-        return args;
+        let { input } = args;
+        if (!input) {
+            throw new MutationSyntaxError(
+                `SyntaxError at class ${this.name}: you must defined input param in mutation typeDefs or provide in cleanInput method.
+                Receive:
+                    ${printObject(args)}
+                `
+            );
+        }
+        return input;
     }
 
     /**
@@ -201,10 +231,28 @@ export class InstanceMutation extends BaseMutation {
      */
     static async getInstance(data, context) {
         const id = data[this.idField];
+        if (!id) {
+            throw new MutationSyntaxError(
+                `SyntaxError at class ${this.name}: you must provide ${this.idField} in input param to perform update action.
+                Receive:
+                    ${printObject(data)}
+                Example: 
+                    Mutation {
+                        updateMutation(input: UpdateTypeInput): Result
+                    }
+
+                    input UpdateTypeInput {
+                        ...
+                        ${this.idField}: ID!
+                    }
+                `
+            );
+        }
+
         const instance = await this.modelService.getInstanceById(id, context);
 
         if (!instance) {
-            throw new Error('Instance not found.');
+            throw new InstanceNotExistError();
         }
 
         return instance;
@@ -297,6 +345,20 @@ export class DeleteMutation extends BaseMutation {
     static checkPermissionsInstance(user, instance) {}
 
     static async getInstance(data, context) {
+        let id = data[this.idField];
+        if (!id) {
+            throw new MutationSyntaxError(
+                `SyntaxError at ${this.name}: you must provide ${this.idField} params in delete mutation typeDefs.
+                Receive:
+                    ${data}
+                Example:
+                    Mutation: {
+                        deleteInstance(${this.idField}: ID!): Result
+                    }
+                `
+            );
+        }
+
         const instance = await this.modelService.getInstanceById(data[this.idField], context);
         return instance;
     }

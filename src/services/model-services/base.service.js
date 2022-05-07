@@ -46,7 +46,9 @@ export class BaseService {
             return constructSort;
         }
 
-        options.sort = constructSortOptions(sort);
+        if (sort) {
+            options.sort = constructSortOptions(sort);
+        }
 
         query = !!query ? query : {};
         let listInstances = await this.model.paginate(query, options);

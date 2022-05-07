@@ -82,7 +82,7 @@ export default {
          * @param {HomeResult} source
          * @returns {Number}
          */
-        maxPrice: async (source) => {
+        maxPrice: async (source, args, context) => {
             if (!source.maxPrice) {
                 return await RoomService.getMaxPriceInHome(source._id, context);
             }
