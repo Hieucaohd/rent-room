@@ -1,9 +1,9 @@
 import express from 'express';
-import { FRONTEND_HOSTNAME, VERIFIED_PASSWORD_SECRET_KEY } from '../src/config/index';
+import { FRONTEND_HOSTNAME, VERIFIED_PASSWORD_SECRET_KEY } from '../config/index';
 import {
     sendResetPasswordMail,
     verifyResetPasswordMail,
-} from '../src/services/helpers/reset-password.service';
+} from '../services/helpers/reset-password.service';
 import jwt from 'jsonwebtoken';
 
 const router = express.Router();
