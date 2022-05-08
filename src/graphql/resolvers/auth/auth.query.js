@@ -29,9 +29,7 @@ export class Login extends InstanceQuery {
      * @returns {AuthResponse}
      */
     static successResponse(user) {
-        return {
-            user,
-        };
+        return user;
     }
 
     static async performQuery(resolverParams) {
