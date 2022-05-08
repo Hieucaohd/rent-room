@@ -16,7 +16,7 @@ let {
     VERIFIED_PASSWORD_SECRET_KEY,
     MAIL_PASSWORD,
     MAIL_USER
-} = parsed;
+} = process.env;
 
 /** @type {Number} */
 PORT = parseInt(PORT);

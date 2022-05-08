@@ -1,6 +1,6 @@
 import express from "express";
-import { FRONTEND_HOSTNAME, VERIFIED_PASSWORD_SECRET_KEY } from "../src/config/index";
-import { sendResetPasswordMail, verifyResetPasswordMail } from "../src/services/helpers/reset-password.service";
+import { FRONTEND_HOSTNAME, VERIFIED_PASSWORD_SECRET_KEY } from "../config/index";
+import { sendResetPasswordMail, verifyResetPasswordMail } from "../services/helpers/reset-password.service";
 
 const router = express.Router();
 
