@@ -5,14 +5,20 @@
   "main": "index.js",
   "scripts": {
     "test": "jest",
-    "start": "node -r esm .",
-    "dev": "nodemon -r esm",
-    "codegen": "node -r esm .\\scripts\\codegen\\generate-graphql-types.js"
+    "start": "./node_modules/.bin/babel-node ./src",
+    "dev": "nodemon --exec node_modules/.bin/babel-node index.js",
+    "codegen": "node -r esm .\\scripts\\codegen\\generate-graphql-types.js",
+    "build": "yarn --version"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@babel/cli": "^7.17.10",
+    "@babel/core": "^7.17.10",
+    "@babel/plugin-transform-runtime": "^7.17.10",
+    "@babel/preset-env": "^7.17.10",
+    "@babel/node": "^7.17.10",
     "@babel/runtime": "^7.17.2",
     "@graphql-tools/schema": "^8.3.2",
     "@graphql-tools/utils": "^8.6.2",
@@ -39,20 +45,20 @@
     "nodemailer": "^6.7.4",
     "nodemon": "^2.0.15",
     "uuid": "^8.3.2",
-    "yup": "^0.32.11"
+    "yup": "^0.32.11",
+    "mongodb": "^4.4.1",
+    "promise-fs": "^2.1.1"
   },
   "devDependencies": {
-    "@babel/plugin-transform-runtime": "^7.17.0",
-    "@babel/preset-env": "^7.16.11",
     "@graphql-codegen/add": "^3.1.1",
     "@graphql-codegen/cli": "^2.6.2",
+    "@graphql-codegen/plugin-helpers": "^2.4.2",
     "@graphql-codegen/typescript": "^2.4.8",
     "@graphql-codegen/typescript-compatibility": "^2.1.5",
     "@graphql-codegen/typescript-operations": "^2.3.5",
+    "@graphql-codegen/visitor-plugin-common": "^2.7.6",
     "@shelf/jest-mongodb": "^2.2.1",
     "babel-jest": "^27.5.1",
-    "jest": "^27.5.1",
-    "mongodb": "^4.4.1",
-    "promise-fs": "^2.1.1"
+    "jest": "^27.5.1"
   }
 }

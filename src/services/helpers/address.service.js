@@ -8,9 +8,9 @@ import '../../common/types/typedef';
  * @typedef {Array<Ward>} Wards
  */
 
-const pathToProvincesFile = path.join(__dirname, '../../address-json/provinces-in-vietnam.json');
-const pathToDistrictsFile = path.join(__dirname, '../../address-json/districts-in-vietnam.json');
-const pathToWardsFile = path.join(__dirname, '../../address-json/wards-in-vietnam.json');
+const pathToProvincesFile = path.join(__dirname, '../../../address-json/provinces-in-vietnam.json');
+const pathToDistrictsFile = path.join(__dirname, '../../../address-json/districts-in-vietnam.json');
+const pathToWardsFile = path.join(__dirname, '../../../address-json/wards-in-vietnam.json');
 
 /** @type {Provinces} */
 const provinces = JSON.parse(readFileSync(pathToProvincesFile, 'utf8'));
