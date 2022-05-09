@@ -6,13 +6,11 @@ import { hash } from 'bcryptjs';
 import User from "../../models/User";
 
 export const sendResetPasswordMail = async (hostName, email) => {
-    const user = await findUserByEmail(email);
-    if(!user) throw new Error("Tài khoản này không tồn tại");
+    const {_id} = await findUserByEmail(email);
+    if(!_id) throw new Error("Tài khoản này không tồn tại");
 
     const verifyToken = await jwt.sign(
-        {
-            email
-        },
+        { email, _id },
         VERIFIED_PASSWORD_SECRET_KEY,
         { expiresIn: TIME_VERIFIED_TOKEN_EXPIRED }
     );
@@ -25,7 +23,9 @@ export const sendResetPasswordMail = async (hostName, email) => {
         html: `<b>Bấm link dưới đây để đổi mật khẩu <br> ${resetPasswordLink} </b>`,
     });
 
-    return email;
+    return {
+        email, _id
+    };
 };
 
 export const verifyResetPasswordMail = async (email, newPassword) => {
