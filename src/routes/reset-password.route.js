@@ -11,8 +11,8 @@ const router = express.Router();
 router.post('/send', async (req, res) => {
     try {
         const { email } = req.body;
-        await sendResetPasswordMail(FRONTEND_HOSTNAME, email);
-        res.json({ email });
+        const { _id } = await sendResetPasswordMail(FRONTEND_HOSTNAME, email);
+        res.json({ email, _id });
     } catch (e) {
         res.status(400).json({ error: e.message });
     }
@@ -21,10 +21,10 @@ router.post('/send', async (req, res) => {
 router.post('/', async (req, res) => {
     try {
         const token = req.headers.authorization;
-        const { email } = jwt.verify(token, VERIFIED_PASSWORD_SECRET_KEY);
+        const { email, _id } = jwt.verify(token, VERIFIED_PASSWORD_SECRET_KEY);
         const { password } = req.body;
         await verifyResetPasswordMail(email, password);
-        res.json({ email });
+        res.json({ email, _id });
     } catch (e) {
         res.status(400).json({ error: e.message });
     }
