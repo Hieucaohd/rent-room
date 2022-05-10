@@ -14,10 +14,10 @@ export class EmailDuplicateError extends ErrorResult {
   }
 }
 
-export class EmailIncorrectError extends ErrorResult {
-  __typename = 'EmailIncorrectError';
-  errorCode = 'EMAIL_INCORRECT_ERROR';
-  message = 'EMAIL_INCORRECT_ERROR';
+export class EmailNotRegisterError extends ErrorResult {
+  __typename = 'EmailNotRegisterError';
+  errorCode = 'EMAIL_NOT_REGISTER_ERROR';
+  message = 'EMAIL_NOT_REGISTER_ERROR';
   constructor(
   ) {
     super();
@@ -85,7 +85,7 @@ export class UserNotRentedHomeError extends ErrorResult {
 }
 
 
-const errorTypeNames = new Set(['EmailDuplicateError', 'EmailIncorrectError', 'InstanceNotExistError', 'PasswordIncorrectError', 'PasswordInvalidError', 'PermissionDeninedError', 'UserNotAuthenticatedError', 'UserNotRentedHomeError']);
+const errorTypeNames = new Set(['EmailDuplicateError', 'EmailNotRegisterError', 'InstanceNotExistError', 'PasswordIncorrectError', 'PasswordInvalidError', 'PermissionDeninedError', 'UserNotAuthenticatedError', 'UserNotRentedHomeError']);
 function isGraphQLError(input) {
   return input instanceof ErrorResult || errorTypeNames.has(input.__typename);
 }

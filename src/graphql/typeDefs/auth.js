@@ -25,7 +25,7 @@ export default gql`
 
 
     union NativeRegisterResponse = User | EmailDuplicateError | PasswordInvalidError
-    union NativeAuthResponse = User | EmailIncorrectError | PasswordIncorrectError
+    union NativeAuthResponse = User | EmailNotRegisterError | PasswordIncorrectError
     union LogoutResponse = UserNotAuthenticatedError | LogoutStatus
 
     type EmailDuplicateError implements ErrorResult {
@@ -38,7 +38,7 @@ export default gql`
         message: String!
     }
 
-    type EmailIncorrectError implements ErrorResult {
+    type EmailNotRegisterError implements ErrorResult {
         errorCode: ErrorCode!
         message: String!
     }

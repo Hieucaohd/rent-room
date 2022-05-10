@@ -57,15 +57,15 @@ export type EmailDuplicateError = ErrorResult & {
   message: Scalars['String'];
 };
 
-export type EmailIncorrectError = ErrorResult & {
-  __typename?: 'EmailIncorrectError';
+export type EmailNotRegisterError = ErrorResult & {
+  __typename?: 'EmailNotRegisterError';
   errorCode: ErrorCode;
   message: Scalars['String'];
 };
 
 export enum ErrorCode {
   EmailDuplicateError = 'EMAIL_DUPLICATE_ERROR',
-  EmailIncorrectError = 'EMAIL_INCORRECT_ERROR',
+  EmailNotRegisterError = 'EMAIL_NOT_REGISTER_ERROR',
   InstanceNotExistError = 'INSTANCE_NOT_EXIST_ERROR',
   PasswordIncorrectError = 'PASSWORD_INCORRECT_ERROR',
   PasswordInvalidError = 'PASSWORD_INVALID_ERROR',
@@ -314,7 +314,7 @@ export type MutationUpdateUserArgs = {
   input: UserUpdateInput;
 };
 
-export type NativeAuthResponse = EmailIncorrectError | PasswordIncorrectError | User;
+export type NativeAuthResponse = EmailNotRegisterError | PasswordIncorrectError | User;
 
 export type NativeRegisterResponse = EmailDuplicateError | PasswordInvalidError | User;
 
