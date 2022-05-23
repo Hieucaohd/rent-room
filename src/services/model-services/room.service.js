@@ -141,6 +141,11 @@ export class RoomService extends BaseService {
      * @returns {Promise<Number>}
      */
     static async getMinPriceInHome(homeId, context) {
+        let numberRooms = await this.countRoomInHome(homeId, context);
+        if (!numberRooms) {
+            return 0;
+        }
+
         let room = await Room.find({ home: homeId }).sort({ price: 1 }).limit(1);
         room = room[0]
         return room.price;
@@ -152,6 +157,11 @@ export class RoomService extends BaseService {
      * @returns {Promise<Number>}
      */
     static async getMaxPriceInHome(homeId, context) {
+        let numberRooms = await this.countRoomInHome(homeId, context);
+        if (!numberRooms) {
+            return 0;
+        }
+
         let room = await Room.find({ home: homeId }).sort({ price: -1 }).limit(1);
         room = room[0];
         return room.price;
