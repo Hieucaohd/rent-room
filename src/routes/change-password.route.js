@@ -19,6 +19,7 @@ router.post('/change', async (req, res) => {
             throw new Error('missing field to change password!');
         }
         const user = req.user;
+        console.log(req);
         const canChangePassword = compareSync(password, user.password);
         if (canChangePassword) {
             await verifyResetPasswordMail(user.email, newPassword)

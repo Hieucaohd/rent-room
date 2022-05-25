@@ -6,7 +6,7 @@
   "scripts": {
     "test": "jest",
     "start": "./node_modules/.bin/babel-node ./src",
-    "dev": "nodemon --exec node_modules/.bin/babel-node index.js",
+    "dev": "nodemon --exec node_modules/.bin/babel-node --inspect index.js",
     "codegen": "node -r esm .\\scripts\\codegen\\generate-graphql-types.js",
     "build": "yarn --version"
   },
