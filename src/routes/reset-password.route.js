@@ -5,12 +5,9 @@ import {
     verifyResetPasswordMail,
 } from '../services/helpers/reset-password.service';
 import jwt from 'jsonwebtoken';
-import cors from 'cors';
 
 const router = express.Router();
 
-//middleware
-router.use(cors())
 
 router.post('/send', async (req, res) => {
     try {
@@ -34,4 +31,4 @@ router.post('/', async (req, res) => {
     }
 });
 
-export default router;
+export { router as resetPasswordRouter };
