@@ -3,7 +3,7 @@ import { User } from '../../models';
 import '../../common/types/typedef';
 import { ObjectId } from 'mongodb';
 import { BaseService } from './base.service';
-import { EmailIncorrectError, PasswordIncorrectError } from '../../common/errors/graphql-errors';
+import { EmailNotRegisterError, PasswordIncorrectError } from '../../common/errors/graphql-errors';
 
 
 /**
@@ -77,7 +77,7 @@ export class UserService extends BaseService {
     static async getUserByEmailAndPassword(email, password, context) {
         let user = await findUserByEmail(email);
         if (!user) {
-            throw new EmailIncorrectError();
+            throw new EmailNotRegisterError();
         }
 
         let isMatch = await compare(password, user.password);
