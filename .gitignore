@@ -10,3 +10,4 @@ jspm.json
 dist
 db export
 lib
+public
