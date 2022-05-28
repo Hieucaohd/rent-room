@@ -384,7 +384,7 @@ query GetHomeById($getHomeByIdId: ID!) {
 
 ```
 {
-  "getHomeByIdId": "kdsfajlsfdja"
+  "getHomeByIdId": "id"
 }
 ```
 
@@ -420,7 +420,7 @@ query GetRoomById($getRoomByIdId: ID!) {
 
 ```
 {
-  "getRoomByIdId": "jflafjdlakfj"
+  "getRoomByIdId": "id"
 }
 ```
 
