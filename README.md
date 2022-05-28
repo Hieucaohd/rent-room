@@ -1,29 +1,3 @@
-# Table of content
-
-- [Getting started](#getting-started)
-  - [What this graph is all about ?](#what-this-graph-is-all-about)
-  - [Accessing the graph](#accessing-the-graph)
-- [Authentication](#authentication)
-  - [How to register to this graph ?](#how-to-register-to-this-graph)
-  - [How to authenticate to this graph ?](#how-to-authenticate-to-this-graph)
-  - [How to logout ?](#how-to-logout)
-  - [Get profile](#get-profile)
-- [Running operations](#running-operations)
-  - [Get the list](#get-the-list)
-    - [List homes](#)
-    - [List rooms](#)
-  - [Get the item](#get-the-item)
-  - [Basic CRUD for home and room](#basic-CRUD-for-home-and-room)
-    - [Home](#home)
-    - [Room](#room)
-- [For developer in this project (developer only)](#for-developer-in-this-project)
-  - [Needfully schemas for this project](#needfully-schemas-for-this-project)
-  - [Common feature](#common-feature)
-  - [Front-end developer](#front-end-developer)
-  - [Back-end developer](#back-end-developer)
-- [Report for teacher](#report-for-teacher)
-- [Getting help with this graph](#getting-help-with-this-graph)
-
 # Getting started
 
 Welcome to the **rent-room-connect** API! 🎉 Get familiar with available objects in the [Schema Reference](https://studio.apollographql.com/graph/rent-room-connect/schema/reference?variant=current), or try querying this graph using [Explorer](https://studio.apollographql.com/graph/rent-room-connect/explorer?variant=current).
@@ -911,7 +885,7 @@ II) Schema of cookie httponly authentication at [here](https://drive.google.com/
 - File env: [.env](https://docs.google.com/document/d/175Povc8vTWOlZBUQwN5SzCnV-kqmHoKNGVygVBE3Ygw/edit?usp=sharing)
 
 # Report
-- Link: [report](https://docs.google.com/document/d/17GPlCqnUj4FLPXBfp7nBh2zXkbWliAGDcJ11gczWbEQ/edit?usp=sharing)
+- Link: [report](https://docs.google.com/document/d/12CulRqyRkyUyxH4miCjrD89NyYfUqAgRoK-ev88MVh0/edit?usp=sharing)
 
 # Getting help with this graph
 

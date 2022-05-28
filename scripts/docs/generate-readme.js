@@ -60,7 +60,7 @@ let variable = {
         'https://docs.google.com/document/d/175Povc8vTWOlZBUQwN5SzCnV-kqmHoKNGVygVBE3Ygw/edit?usp=sharing',
 
     '{{ report.url }}':
-        'https://docs.google.com/document/d/17GPlCqnUj4FLPXBfp7nBh2zXkbWliAGDcJ11gczWbEQ/edit?usp=sharing',
+        'https://docs.google.com/document/d/12CulRqyRkyUyxH4miCjrD89NyYfUqAgRoK-ev88MVh0/edit?usp=sharing',
 };
 
 async function main() {

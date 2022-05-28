@@ -1,29 +1,3 @@
-# Table of content
-
-- [Getting started](#getting-started)
-  - [What this graph is all about ?](#what-this-graph-is-all-about)
-  - [Accessing the graph](#accessing-the-graph)
-- [Authentication](#authentication)
-  - [How to register to this graph ?](#how-to-register-to-this-graph)
-  - [How to authenticate to this graph ?](#how-to-authenticate-to-this-graph)
-  - [How to logout ?](#how-to-logout)
-  - [Get profile](#get-profile)
-- [Running operations](#running-operations)
-  - [Get the list](#get-the-list)
-    - [List homes](#)
-    - [List rooms](#)
-  - [Get the item](#get-the-item)
-  - [Basic CRUD for home and room](#basic-CRUD-for-home-and-room)
-    - [Home](#home)
-    - [Room](#room)
-- [For developer in this project (developer only)](#for-developer-in-this-project)
-  - [Needfully schemas for this project](#needfully-schemas-for-this-project)
-  - [Common feature](#common-feature)
-  - [Front-end developer](#front-end-developer)
-  - [Back-end developer](#back-end-developer)
-- [Report for teacher](#report-for-teacher)
-- [Getting help with this graph](#getting-help-with-this-graph)
-
 # Getting started
 
 Welcome to the **{{ graph.name }}** API! 🎉 Get familiar with available objects in the [Schema Reference]({{ graph.url.reference }}), or try querying this graph using [Explorer]({{ graph.url.explorer }}).
