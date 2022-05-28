@@ -75,7 +75,7 @@ async function main() {
         }
     }
     // console.log(readmeFileContent);
-    writeFileSync(pathToReadmeFile, readmeFileContent, { encoding: 'utf-8', flag: 'a+' });
+    writeFileSync(pathToReadmeFile, readmeFileContent, { encoding: 'utf-8', flag: 'w+' });
 }
 
 main();
