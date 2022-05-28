@@ -50,17 +50,50 @@ You can find the schema of database [here](https://app.diagrams.net/#G1HPKnnqHcs
 Go to [Explorer](https://studio.apollographql.com/graph/rent-room-connect/explorer?variant=current) and type.🔐 👀
 
 ```gql
-mutation REGISTER {
-    register(newUser: {
-        email: "your email here",
-        password: "your password here",
-        fullname: "your fullname"
-    }) {
-        user {
-            _id
-            email
-        }
+mutation Register($input: UserCreateInput!) {
+  register(input: $input) {
+    ... on User {
+      _id
+      email
+      fullname
+      numberPhone
+      province
+      district
+      ward
+      provinceName
+      districtName
+      wardName
+      avatar
+      userType
+      role
+      createdAt
+      updatedAt
     }
+    ... on EmailDuplicateError {
+      errorCode
+      message
+    }
+    ... on PasswordInvalidError {
+      errorCode
+      message
+    }
+  }
+}
+```
+
+```
+{
+  "input": {
+    "email": "test2@gmail.com",
+    "password": "1234",
+    "fullname": "Cao Trung Hiếu",
+    "numberPhone": "0977157490",
+    "province": 1,
+    "district": 2,
+    "ward": 3,
+    "avatar": null,
+    "userType": "TENANT"
+  }
 }
 ```
 
@@ -69,13 +102,41 @@ mutation REGISTER {
 Go to [Explorer](https://studio.apollographql.com/graph/rent-room-connect/explorer?variant=current) and type.🔐 👀
 
 ```gql
-query LOGIN {
-    login(email: "your email here", password: "your password here") {
-        user {
-            _id
-            email
-        }
+query Login($email: String!, $password: String!) {
+  login(email: $email, password: $password) {
+    ... on User {
+      _id
+      email
+      fullname
+      numberPhone
+      province
+      district
+      ward
+      provinceName
+      districtName
+      wardName
+      avatar
+      userType
+      role
+      createdAt
+      updatedAt
     }
+    ... on EmailNotRegisterError {
+      errorCode
+      message
+    }
+    ... on PasswordIncorrectError {
+      errorCode
+      message
+    }
+  }
+}
+```
+
+```
+{  
+  "email": "test21@gmail.com",
+  "password": "1234"
 }
 ```
 
@@ -84,9 +145,15 @@ query LOGIN {
 Go to [Postman](https://chrome.google.com/webstore/detail/postman/fhbjgbiflinjbdggehcddcbncdddomop?hl=vi) app or app that support cookie (not the [Explorer](https://studio.apollographql.com/graph/rent-room-connect/explorer?variant=current) because it doesn't not support cookie) and type.🔐 👀
 
 ```gql
-mutation LOGOUT {
+mutation Logout {
   logout {
-    status
+    ... on UserNotAuthenticatedError {
+      errorCode
+      message
+    }
+    ... on LogoutStatus {
+      success
+    }
   }
 }
 ```
@@ -96,7 +163,7 @@ mutation LOGOUT {
 This operator will check tokens in cookies of req to get user.
 
 ```gql
-query PROFILE{
+query Profile {
   profile {
     user {
       _id
@@ -106,6 +173,9 @@ query PROFILE{
       province
       district
       ward
+      provinceName
+      districtName
+      wardName
       avatar
       userType
       role
@@ -129,27 +199,43 @@ Some basic operations you can try:
 > Get all homes information:
 
 ```gql
-query GET_ALL_HOME {
-  allHomes(page: 1, limit: 1) {
+query AllHomes($paginatorOptions: PaginatorOptionsInput) {
+  allHomes(paginatorOptions: $paginatorOptions) {
     docs {
       _id
       owner {
         email
-        fullname
+        _id
       }
       province
       district
       ward
+      provinceName
+      districtName
+      wardName
       liveWithOwner
       electricityPrice
       waterPrice
+      internetPrice
+      cleaningPrice
       images
       totalRooms
-      listRooms(page: 1, limit: 1) {
+      listRooms {
         docs {
-          price
+          _id
         }
       }
+      position {
+        x
+        y
+        lng
+        lat
+      }
+      description
+      detailAddress
+      title
+      minPrice
+      maxPrice
       createdAt
       updatedAt
     }
@@ -164,6 +250,21 @@ query GET_ALL_HOME {
       hasPrevPage
       hasNextPage
     }
+  }
+}
+```
+
+```
+{
+  "paginatorOptions": {
+    "page": 1,
+    "limit": 10,
+    "sort": [
+      {
+        "field": "createdAt",
+        "arrange": "ASC"
+      }
+    ]
   }
 }
 ```
@@ -171,19 +272,22 @@ query GET_ALL_HOME {
 > Get all rooms information:
 
 ```gql
-query GET_ALL_ROOM{
-  allRooms(page: 1, limit: 1) {
+query AllRooms($paginatorOptions: PaginatorOptionsInput) {
+  allRooms(paginatorOptions: $paginatorOptions) {
     docs {
       _id
       home {
-        province
-        district
+        _id
       }
       price
       square
       isRented
       floor
       images
+      description
+      roomNumber
+      title
+      amenities
       createdAt
       updatedAt
     }
@@ -201,6 +305,22 @@ query GET_ALL_ROOM{
   }
 }
 ```
+
+```
+{
+  "paginatorOptions": {
+    "page": 1,
+    "limit": 10,
+    "sort": [
+      {
+        "field": "createdAt",
+        "arrange": "ASC"
+      }
+    ]
+  }
+}
+```
+
 Basically, homes_list and rooms_list implement interface PaginatorResult that have two fields: docs and paginator, that for pagination.
 
 ```gql
@@ -215,51 +335,92 @@ interface PaginatorResult {
 > Get a home by home_id:
 
 ```gql
-query HOME_BY_ID{
-  getHomeById(homeId: "62485bdfb12a18b6f25cefba") {
-    _id
-    owner {
+query GetHomeById($getHomeByIdId: ID!) {
+  getHomeById(id: $getHomeByIdId) {
+    ... on Home {
       _id
-      email
-      fullname
-      numberPhone
+      owner {
+        _id
+      }
       province
       district
       ward
-      avatar
-      userType
-      role
+      provinceName
+      districtName
+      wardName
+      liveWithOwner
+      electricityPrice
+      waterPrice
+      internetPrice
+      cleaningPrice
+      images
+      totalRooms
+      listRooms {
+        docs {
+          _id
+        }
+      }
+      description
+      detailAddress
+      title
+      minPrice
+      maxPrice
       createdAt
       updatedAt
+      position {
+        x
+        y
+        lng
+        lat
+      }
     }
-    province
-    district
-    ward
-    liveWithOwner
-    electricityPrice
-    waterPrice
-    images
-    totalRooms
-    createdAt
-    updatedAt
+    ... on InstanceNotExistError {
+      errorCode
+      message
+    }
   }
+}
+```
+
+```
+{
+  "getHomeByIdId": "kdsfajlsfdja"
 }
 ```
 
 > Get a room by room_id:
 
 ```gql
-query ROOM_BY_ID{
-  getRoomById(roomId: "") {
-    _id
-    price
-    square
-    isRented
-    floor
-    images
-    createdAt
-    updatedAt
+query GetRoomById($getRoomByIdId: ID!) {
+  getRoomById(id: $getRoomByIdId) {
+    ... on Room {
+      _id
+      home {
+        _id
+      }
+      price
+      square
+      isRented
+      floor
+      images
+      description
+      roomNumber
+      title
+      amenities
+      createdAt
+      updatedAt
+    }
+    ... on InstanceNotExistError {
+      errorCode
+      message
+    }
   }
+}
+```
+
+```
+{
+  "getRoomByIdId": "jflafjdlakfj"
 }
 ```
 
@@ -272,97 +433,183 @@ query ROOM_BY_ID{
 > Create a home:
 
 ```gql
-mutation CREATE_HOME($homeInput: HomeInput!){
-  createNewHome(newHome: $homeInput) {
-    _id
-    owner {
+mutation CreateHome($input: HomeCreateInput!) {
+  createHome(input: $input) {
+    ... on Home {
       _id
-      email
-      fullname
-      numberPhone
+      owner {
+        _id
+      }
       province
       district
       ward
-      avatar
+      provinceName
+      districtName
+      wardName
+      liveWithOwner
+      electricityPrice
+      waterPrice
+      internetPrice
+      cleaningPrice
+      images
+      totalRooms
+      listRooms {
+        docs {
+          _id
+        }
+      }
+      position {
+        x
+        y
+        lng
+        lat
+      }
+      description
+      detailAddress
+      title
+      minPrice
+      maxPrice
       createdAt
       updatedAt
     }
-    province
-    district
-    ward
-    liveWithOwner
-    electricityPrice
-    waterPrice
-    images
-    totalRooms
-    createdAt
-    updatedAt
+    ... on PermissionDeninedError {
+      errorCode
+      message
+    }
   }
 }
 ```
 
 ```
-"homeInput": {
-    "province": 1,
-    "district": 2,
-    "ward": -1,
-    "liveWithOwner": false,
-    "electricityPrice": 200,
-    "waterPrice": 300,
-    "images": ["http://"],
-    "totalRooms": 3,
+{
+  "input": {
+    "province": null,
+    "district": null,
+    "ward": null,
+    "liveWithOwner": null,
+    "electricityPrice": null,
+    "waterPrice": null,
+    "internetPrice": null,
+    "cleaningPrice": null,
+    "images": null,
+    "totalRooms": null,
     "position": {
-      "x": "12",
-      "y": "12"
-    }
-},
+      "x": null,
+      "y": null,
+      "lng": null,
+      "lat": null
+    },
+    "detailAddress": null,
+    "description": null,
+    "title": null,
+    "minPrice": null,
+    "maxPrice": null
+  }
+}
 ```
 
 > Update a home:
 
 ```gql
-mutation UPDATE_HOME($homeUpdate: HomeInput!){
-  updateHome(updatedHome: $homeUpdate, id: "622c95e15db86357d50220e0") {
-    _id
-    owner {
+mutation UpdateHome($input: HomeUpdateInput!) {
+  updateHome(input: $input) {
+    ... on Home {
+      _id
+      owner {
         _id
-        email
-        fullname
-        numberPhone
-        province
-        district
-        ward
-        avatar
-        userType
-        role
-        createdAt
-        updatedAt
+      }
+      province
+      district
+      ward
+      provinceName
+      districtName
+      wardName
+      liveWithOwner
+      electricityPrice
+      waterPrice
+      internetPrice
+      cleaningPrice
+      images
+      totalRooms
+      position {
+        x
+        y
+        lng
+        lat
+      }
+      description
+      detailAddress
+      title
+      minPrice
+      maxPrice
+      createdAt
+      updatedAt
     }
-    province
-    district
-    ward
-    liveWithOwner
-    electricityPrice
-    waterPrice
-    images
-    totalRooms
-    createdAt
-    updatedAt
+    ... on InstanceNotExistError {
+      errorCode
+      message
+    }
+    ... on PermissionDeninedError {
+      errorCode
+      message
+    }
   }
-}, 
+}
 ```
 
 ```
-"homeUpdate": {
-    "ward": 5
+{
+  "input": {
+    "id": null,
+    "province": null,
+    "district": null,
+    "ward": null,
+    "liveWithOwner": null,
+    "electricityPrice": null,
+    "waterPrice": null,
+    "internetPrice": null,
+    "cleaningPrice": null,
+    "images": null,
+    "totalRooms": null,
+    "position": {
+      "x": null,
+      "y": null,
+      "lng": null,
+      "lat": null
+    },
+    "detailAddress": null,
+    "description": null,
+    "title": null,
+    "minPrice": null,
+    "maxPrice": null
+  }
 }
 ```
 
 > Delete a home:
 
 ```gql
-mutation DELETE_HOME{
-  deleteHome(id: "622c95e15db86357d50220e0")
+mutation DeleteHome($deleteHomeId: ID!) {
+  deleteHome(id: $deleteHomeId) {
+    ... on AfterDelete {
+      id
+      success
+    }
+    ... on InstanceNotExistError {
+      errorCode
+      message
+    }
+    ... on PermissionDeninedError {
+      errorCode
+      message
+    }
+  }
+}
+```
+
+```
+{
+  "deleteHomeId": "id"
 }
 ```
 
@@ -371,87 +618,125 @@ mutation DELETE_HOME{
 > Create a room:
 
 ```gql
-mutation CREATE_ROOM($roomInput: RoomInput!){
-  createNewRoom(newRoom: $roomInput, homeId: "622c963c5db86357d50220ea") {
-    _id
-    home {
+mutation CreateRoom($input: RoomCreateInput!) {
+  createRoom(input: $input) {
+    ... on Room {
       _id
-      province
-      district
-      ward
-      liveWithOwner
-      electricityPrice
-      waterPrice
+      home {
+        _id
+      }
+      price
+      square
+      isRented
+      floor
       images
-      totalRooms
+      description
+      roomNumber
+      title
+      amenities
       createdAt
       updatedAt
-      owner {
-        email
-      }
     }
-    price
-    square
-    isRented
-    floor
-    images
-    createdAt
-    updatedAt
+    ... on PermissionDeninedError {
+      errorCode
+      message
+    }
   }
 }
 ```
 
 ```
-"roomInput": {
-    "price": 200,
-    "square": 200,
-    "isRented": false,
-    "floor": 4,
-    "images": ["http://"]
+{
+  "input": {
+    "home": null,
+    "price": null,
+    "square": null,
+    "isRented": null,
+    "floor": null,
+    "images": null,
+    "description": null,
+    "roomNumber": null,
+    "title": null,
+    "amenities": null
+  }
 }
 ```
 
 > Update a room:
 
 ```gql
-mutation UPDATE_ROOM($roomUpdate: RoomInput!){
-  updateRoom(updatedRoom: $roomUpdate, id: "622c6200c6e7cc673f23af7e") {
-    _id
-    home {
+mutation UpdateRoom($input: RoomUpdateInput!) {
+  updateRoom(input: $input) {
+    ... on Room {
       _id
-      province
-      district
-      ward
-      liveWithOwner
-      electricityPrice
-      waterPrice
+      home {
+        _id
+      }
+      price
+      square
+      isRented
+      floor
       images
-      totalRooms
+      description
+      roomNumber
+      title
+      amenities
       createdAt
       updatedAt
     }
-    price
-    square
-    isRented
-    floor
-    images
-    createdAt
-    updatedAt
+    ... on InstanceNotExistError {
+      errorCode
+      message
+    }
+    ... on PermissionDeninedError {
+      errorCode
+      message
+    }
   }
 }
 ```
 
 ```
-"roomUpdate": {
-    "floor": 5
+{
+  "input": {
+    "id": null,
+    "price": null,
+    "square": null,
+    "isRented": null,
+    "floor": null,
+    "images": null,
+    "description": null,
+    "roomNumber": null,
+    "title": null,
+    "amenities": null
+  }
 }
 ```
 
 > Delete a room
 
 ```gql
-mutation DELETE_ROOM{
-    deleteRoom(id: "622c6200c6e7cc673f23af7e") 
+mutation DeleteRoom($deleteRoomId: ID!) {
+  deleteRoom(id: $deleteRoomId) {
+    ... on AfterDelete {
+      id
+      success
+    }
+    ... on InstanceNotExistError {
+      errorCode
+      message
+    }
+    ... on PermissionDeninedError {
+      errorCode
+      message
+    }
+  }
+}
+```
+
+```
+{
+  "deleteRoomId": "id"
 }
 ```
 
@@ -620,7 +905,6 @@ II) Schema of cookie httponly authentication at [here](https://drive.google.com/
 
 - Thiết kế: [figma](https://www.figma.com/file/3svxQsJdXgbaEBdHJ5OgIO/Trang-Chu?node-id=0%3A1)
 - File env: [.env.local](https://docs.google.com/document/d/175Povc8vTWOlZBUQwN5SzCnV-kqmHoKNGVygVBE3Ygw/edit?usp=sharing)
-- Báo lỗi: [Danh sách lỗi](https://docs.google.com/document/d/1geb0kVDhw4U78e2GOcpCNYf6Wrr1rePWKoVRaf5T114/edit?usp=sharing)
 
 ## Back-end developer:
 

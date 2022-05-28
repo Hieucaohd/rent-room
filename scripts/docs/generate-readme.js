@@ -66,7 +66,7 @@ let variable = {
 async function main() {
     let pathToReadmeTestFile = path.join(__dirname, './README.test.md');
     let pathToReadmeFile = path.join(__dirname, '../../README.md');
-    let readmeFileContent = readFileSync(pathToReadmeFile, { encoding: 'utf-8' });
+    let readmeFileContent = readFileSync(pathToReadmeTestFile, { encoding: 'utf-8' });
 
     for (const key in variable) {
         if (Object.hasOwnProperty.call(variable, key)) {
@@ -74,8 +74,8 @@ async function main() {
             readmeFileContent = readmeFileContent.replaceAll(key, value);
         }
     }
-
-    writeFileSync(pathToReadmeFile, readmeFileContent);
+    // console.log(readmeFileContent);
+    writeFileSync(pathToReadmeFile, readmeFileContent, { encoding: 'utf-8', flag: 'a+' });
 }
 
 main();
