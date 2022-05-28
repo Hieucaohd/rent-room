@@ -4,8 +4,8 @@ import { DB, PORT } from "./config";
 import apolloServer from "./graphql";
 import { success, error } from "consola";
 import applyMiddleware from "./middlewares";
+import applyRouter from "./routes/index";
 import mongoose from "mongoose";
-import resetPasswordRouter from "./routes/reset-password.route";
 
 const app = express();
 const port = process.env.PORT || PORT;
@@ -14,6 +14,7 @@ const port = process.env.PORT || PORT;
 const startApp = async () => {
     try {
         await applyMiddleware(app);
+        applyRouter(app);
 
         // connect to mongodb
         await mongoose.connect(DB);
@@ -31,7 +32,6 @@ const startApp = async () => {
         // connect apollo server with express app
         apolloServer.applyMiddleware({ app });
 
-        app.use("/forgot", resetPasswordRouter)
         app.listen(PORT, () => {
             success({ message: `Server started on PORT ${port}`, badge: true });
         });
