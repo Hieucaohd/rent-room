@@ -21,7 +21,7 @@ You can find the schema of database [here]({{ database.url.schema }}).
 
 ## How to register to this graph
 
-Go to [Explorer]({{ graph.url.explorer }}) and type.🔐 👀
+Go to [Postman]({{ postman.url.download }}) app or app that support cookie (not the [Explorer]({{ graph.url.explorer }}) because it doesn't not support cookie) and type. Server will generate a cookie that save access token and refresh token in http-only cookie.
 
 ```gql
 mutation Register($input: UserCreateInput!) {
@@ -73,7 +73,7 @@ mutation Register($input: UserCreateInput!) {
 
 ## How to authenticate to this graph
 
-Go to [Explorer]({{ graph.url.explorer }}) and type.🔐 👀
+Go to [Postman]({{ postman.url.download }}) app or app that support cookie (not the [Explorer]({{ graph.url.explorer }}) because it doesn't not support cookie) and type. Server will generate a cookie that save access token and refresh token in http-only cookie.
 
 ```gql
 query Login($email: String!, $password: String!) {
@@ -116,7 +116,7 @@ query Login($email: String!, $password: String!) {
 
 ## How to logout
 
-Go to [Postman]({{ postman.url.download }}) app or app that support cookie (not the [Explorer]({{ graph.url.explorer }}) because it doesn't not support cookie) and type.🔐 👀
+Go to [Postman]({{ postman.url.download }}) app or app that support cookie (not the [Explorer]({{ graph.url.explorer }}) because it doesn't not support cookie) and type. Server will delete cookie in http-only cookie.
 
 ```gql
 mutation Logout {
@@ -134,7 +134,7 @@ mutation Logout {
 
 ## Get profile
 
-This operator will check tokens in cookies of req to get user.
+This operator will check access token and refresh token in cookies of request to get current user.
 
 ```gql
 query Profile {
@@ -166,7 +166,7 @@ query Profile {
 
 Some basic operations you can try:
 
-*(Note: try this query in [Explorer]({{ graph.url.explorer }}), [Altair]({{ altair.url.download }}) or [Postman]({{ postman.url.download }}))*
+*(Note: try this query in [Postman]({{ postman.url.download }}) because it support cookie)*
 
 ## Get the list
 
