@@ -63,7 +63,21 @@ let variable = {
         'https://docs.google.com/document/d/12CulRqyRkyUyxH4miCjrD89NyYfUqAgRoK-ev88MVh0/edit?usp=sharing',
 };
 
-async function main() {
+function generateGraphDoc() {
+    let pathToGraphDocTestFile = path.join(__dirname, './GRAPH.pre.md');
+    let pathToGraphDocFile = path.join(__dirname, '../../GRAPH.md');
+    let graphDocFileContent = readFileSync(pathToGraphDocTestFile, { encoding: 'utf-8' });
+
+    for (const key in variable) {
+        if (Object.hasOwnProperty.call(variable, key)) {
+            const value = variable[key];
+            graphDocFileContent = graphDocFileContent.replaceAll(key, value);
+        }
+    }
+    writeFileSync(pathToGraphDocFile, graphDocFileContent, { encoding: 'utf-8', flag: 'w+' });
+}
+
+function generateReadmeFile() {
     let pathToReadmeTestFile = path.join(__dirname, './README.test.md');
     let pathToReadmeFile = path.join(__dirname, '../../README.md');
     let readmeFileContent = readFileSync(pathToReadmeTestFile, { encoding: 'utf-8' });
@@ -74,8 +88,12 @@ async function main() {
             readmeFileContent = readmeFileContent.replaceAll(key, value);
         }
     }
-    // console.log(readmeFileContent);
     writeFileSync(pathToReadmeFile, readmeFileContent, { encoding: 'utf-8', flag: 'w+' });
+}
+
+async function main() {
+    generateGraphDoc();
+    generateReadmeFile();
 }
 
 main();
