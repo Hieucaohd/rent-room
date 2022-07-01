@@ -5,10 +5,10 @@ const { parsed } = config();
 
 let {
     PORT,
-    DB_DOCKER_URL,
+    DB_LOCAL_URL,
     DB_ATLAS_URL,
     MODE,
-    DB = MODE === 'production' ? DB_ATLAS_URL : DB_DOCKER_URL,
+    DB = MODE === 'production' ? DB_ATLAS_URL : DB_LOCAL_URL,
     BASE_URL,
     ACCESS_TOKEN_SECRET_KEY,
     REFRESH_TOKEN_SECRET_KEY,

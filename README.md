@@ -1,25 +1,101 @@
-# Getting started
+# Rent-room backend
+
+## Structure
+
+```
+rent-room/
+├── scripts/
+	├── address-in-vietnam/		# Scripts used to generate address in Vietnam
+	├── codegen/				# Scripts used to generate TypeScript code from the GraphQL APIs
+	├── docs/					# Scripts used to generate documentation markdown
+	├── filter-database/		# Scripts used to filter the fields in database
+├── src/
+	├── common/
+	├── config/
+	├── firebase/
+	├── graphql/
+	├── middlewares/
+	├── models/
+	├── routes/
+	├── services/
+	├── index.js
+├── index.js
+├── .env
+```
+
+## Development
+
+### 1. Install top-level dependencies
+
+`yarn`
+
+The root directory has a `package.json` which contains build-related dependencies for tasks including:
+
+* Building & deploying the docs 
+* Generating TypeScript types from the GraphQL schema
+
+### 2. Set up the server
+
+The server requires MongoDB database to be avaiable. The simplest option is to use MongoDB Atlas, but if you have docker avaiable, you can start a MongoDB database with this command:
+
+`docker run -d -p 27017:27017 --name rent-room-db mongo:latest`
+
+With **rent-room-db** is database's name.
+
+Or you can download MongoDB to run in local here.
+
+### 3. Create .env file
+
+The root directory has a `.env` which contain environment variables for connect to database or some sensitive information.
+Default when you pull code to your local, it will not have `.env` file. 
+
+Create `.env` file with this content:
+
+```
+PORT=4001
+MODE=dev
+BASE_URL=http://localhost
+ACCESS_TOKEN_SECRET_KEY=123
+REFRESH_TOKEN_SECRET_KEY=456
+DB_LOCAL_URL=mongodb://localhost:27017/
+```
+
+There are six environment variables here: `PORT`, `MODE`, `BASE_URL`, `ACCESS_TOKEN_SECRET_KEY`, `REFRESH_TOKEN_SECRET_KEY`, `DB_LOCAL_URL`.
+
+You can change value of `ACCESS_TOKEN_SECRET_KEY`, `REFRESH_TOKEN_SECRET_KEY` to whatever you want.
+
+`DB_LOCAL_URL` is MongoDB connection's url, you can change its value to connect to your database.
+
+### 4. Run the dev server
+
+`yarn dev`
+
+This command will connect to database and run the server.
+
+## About graphQL api
+
+### Getting started
 
 Welcome to the **rent-room-connect** API! 🎉 Get familiar with available objects in the [Schema Reference](https://studio.apollographql.com/graph/rent-room-connect/schema/reference?variant=current), or try querying this graph using [Explorer](https://studio.apollographql.com/graph/rent-room-connect/explorer?variant=current).
 
 Note: beside [Explorer](https://studio.apollographql.com/graph/rent-room-connect/explorer?variant=current) which not support upload file, you can use Altair app for test api, this app support test upload file to server: download app for chrome [here](https://chrome.google.com/webstore/detail/altair-graphql-client/flnheeellpciglgpaodhkhmapeljopja).
 
-# What this graph is all about
+### What this graph is all about
 
 Describle how to implement api of rent-room backend app🦄🌌✨.
 
-You can find the schema of database [here](https://app.diagrams.net/#G1HPKnnqHcs13XUuZdTuJdzJj2-0pGCA00).
+You can find the schema of database [here](https://app.diagrams.net/###G1HPKnnqHcs13XUuZdTuJdzJj2-0pGCA00).
 
-# Accessing the graph
+### Accessing the graph
 
 🛰 You can send operations to this graph at `https://rent-room.vercel.app/graphql` by using whatever app like [postman](https://chrome.google.com/webstore/detail/postman/fhbjgbiflinjbdggehcddcbncdddomop?hl=vi), [altair](https://chrome.google.com/webstore/detail/altair-graphql-client/flnheeellpciglgpaodhkhmapeljopja) or default [Explorer](https://studio.apollographql.com/graph/rent-room-connect/explorer?variant=current) .
 📇 The Apollo Registry holds the canonical location of your schema. In the registry, this graph is referred to by its “graph ref”, which is: **rent-room-connect@current**.
 
 *(Note: you can [download Rover](https://www.apollographql.com/docs/rover/getting-started/), the Apollo CLI tool for working with your schema locally.)*
 
-# Authentication
+### Authentication
 
-## How to register to this graph
+###### How to register to this graph
 
 Go to [Postman](https://chrome.google.com/webstore/detail/postman/fhbjgbiflinjbdggehcddcbncdddomop?hl=vi) app or app that support cookie (not the [Explorer](https://studio.apollographql.com/graph/rent-room-connect/explorer?variant=current) because it doesn't not support cookie) and type. Server will generate a cookie that save access token and refresh token in http-only cookie.
 
@@ -71,7 +147,7 @@ mutation Register($input: UserCreateInput!) {
 }
 ```
 
-## How to authenticate to this graph
+###### How to authenticate to this graph
 
 Go to [Postman](https://chrome.google.com/webstore/detail/postman/fhbjgbiflinjbdggehcddcbncdddomop?hl=vi) app or app that support cookie (not the [Explorer](https://studio.apollographql.com/graph/rent-room-connect/explorer?variant=current) because it doesn't not support cookie) and type. Server will generate a cookie that save access token and refresh token in http-only cookie.
 
@@ -114,7 +190,7 @@ query Login($email: String!, $password: String!) {
 }
 ```
 
-## How to logout
+###### How to logout
 
 Go to [Postman](https://chrome.google.com/webstore/detail/postman/fhbjgbiflinjbdggehcddcbncdddomop?hl=vi) app or app that support cookie (not the [Explorer](https://studio.apollographql.com/graph/rent-room-connect/explorer?variant=current) because it doesn't not support cookie) and type. Server will delete cookie in http-only cookie.
 
@@ -132,7 +208,7 @@ mutation Logout {
 }
 ```
 
-## Get profile
+###### Get profile
 
 This operator will check access token and refresh token in cookies of request to get current user.
 
@@ -162,13 +238,13 @@ query Profile {
 ```
 
 
-# Running operations
+### Running operations
 
 Some basic operations you can try:
 
 *(Note: try this query in [Postman](https://chrome.google.com/webstore/detail/postman/fhbjgbiflinjbdggehcddcbncdddomop?hl=vi) because it support cookie)*
 
-## Get the list
+###### Get the list
 
 > Get all homes information:
 
@@ -304,7 +380,7 @@ interface PaginatorResult {
 }
 ```
 
-## Get the item:
+###### Get the item:
 
 > Get a home by home_id:
 
@@ -398,11 +474,12 @@ query GetRoomById($getRoomByIdId: ID!) {
 }
 ```
 
-## Basic CRUD for home and room:
+###### Basic CRUD for home and room:
 
-*(Note: some varibale that has '$' prefix is a variable of input. In [Explorer](https://studio.apollographql.com/graph/rent-room-connect/explorer?variant=current) you must pass this varibale to variable-part)*
+*(Note: some varibale that has '
+ prefix is a variable of input. In [Explorer](https://studio.apollographql.com/graph/rent-room-connect/explorer?variant=current) you must pass this varibale to variable-part)*
 
-### Home
+####### Home
 
 > Create a home:
 
@@ -587,7 +664,7 @@ mutation DeleteHome($deleteHomeId: ID!) {
 }
 ```
 
-### Room
+####### Room
 
 > Create a room:
 
@@ -714,179 +791,12 @@ mutation DeleteRoom($deleteRoomId: ID!) {
 }
 ```
 
-# For developer in this project
-
-## Needfully schemas for this project
-
-I) Schema of database at [here](https://app.diagrams.net/#G1HPKnnqHcs13XUuZdTuJdzJj2-0pGCA00).
-
-II) Schema of cookie httponly authentication at [here](https://drive.google.com/file/d/198nPjzB9y_PctgxzDojZeUZOPvG1F0w7/view?usp=sharing). 
-
-## Common feature:
-
-### 1) Phần xác thực người dùng:
-
-- [x] Đăng nhập, đăng kí bằng email.
-- [ ] Gửi email xác nhận đăng kí.
-- [ ] Đăng nhập, đăng kí bằng tài khoản facebook.
-- [ ] Đăng nhập, đăng kí bằng tài khoản google.
-- [ ] Đăng nhập, đăng kí bằng số điện thoại.
-- [ ] Gửi mã kích hoạt khi đăng kí bằng số điện thoại.
-- [ ] Đăng nhập, đăng kí bằng tài khoản zalo.
-- [x] Xác thực user bằng jsonwebtoken được lưu trong cookie httponly.
-- [x] Đăng xuất.
-- [ ] Lấy lại mật khẩu bằng email.
-- [ ] Gửi email xác nhận lấy lại mật khẩu.
-
-### 2) Phần tính năng chính: 
-
-- CRUD:
-
-  - [x] Thêm, sửa, xóa home.
-  - [x] Thêm, sửa, xóa room.
-
-- Map:
-
-  - [x] Hiển thị vị trí của các home trên maps.
-  - [x] Hiển thị vị trí của các room trên maps.
-  - [ ] Hiển thị vị trí của bạn bè trên maps. 
-  - [ ] Hiển thị ví trí của các tiện ích trên maps như: siêu thị, chợ, xe bus,...
-
-- Tìm kiếm:
-
-  - **Lọc theo giá tiền:**
-    - [x] Sắp xếp theo giá tiền tăng
-    - [x] Sắp xếp theo giá tiền giảm
-    - [x] Lấy các phòng trong một khoảng giá
-
-  - **Lọc theo diện tích của phòng:**
-    - [x] Sắp xếp theo diện tích tăng, giảm
-    - [x] Lấy các phòng trong một khoảng diện tích
-    
-  - **Lọc theo vị trí:**
-    - [x] Lọc theo tỉnh (quận), huyện (thị xã), xã (phường), ...
-
-  - **Lọc theo cấu tạo của phòng:**
-    - [ ] phòng khách
-    - [ ] gác xếp
-    - [ ] phòng ngủ
-    - [ ] Lọc theo số lượng phòng ngủ
-    - [ ] nhà bếp
-    - [ ] nhà vệ sinh
-    - [ ] Nhà vệ sinh khép kín 
-    - [ ] Nhà vệ sinh dùng chung với phòng khác
-  
-  - **Lọc theo đặc điểm của phòng:**
-    - [x] Lấy các phòng từ tầng này đến tầng kia.
-  
-  - **Lọc theo đặc điểm của home:**
-    - [x] Có sống với chủ trọ không?
-
-  - **Lọc theo quy định của home:**
-    - [ ] Giờ đóng cổng
-    - [ ] Giờ mở cổng
-  
-  - **Lọc theo an ninh của home:**
-    - [ ] Có camera an ninh không?
-    - [ ] Có bảo vệ không?
-    - [ ] Có khóa vân tay cửa ra vào home hay không?
-
-  - **Lọc theo tiện ích:**
-    - *Đồ đạc có sẵn trong của phòng:* 
-      - [ ] điều hòa
-      - [ ] nóng lạnh
-      - [ ] bếp
-      - [ ] giường
-      - [ ] bàn ghế làm việc
-      - [ ] tủ quần áo
-      - [ ] quạt trần
-      - [ ] máy giặt
-      - [ ] kệ treo đồ
-      - [ ] tủ giày
-      
-    - *Tiện ích chung:*
-      - [ ] máy giặt chung
-      - [ ] thang máy
-      - [ ] chỗ để xe
-      - [ ] người dọn vệ sinh
-      - [ ] khu phơi quần áo
-
-  - **Tiện ích bên ngoài home:**
-      - [ ] Có gần bến xe bus không?
-      - [ ] Có gần chợ không?
-      - [ ] Có gần siêu thị không?
-  
-  - **Lọc theo loại nước sinh hoạt:**
-    - [ ] Nước máy
-    - [ ] Nước giếng khoan
-    - [ ] Nước bình
-
-  - **Lọc theo phụ giá:**
-    - [ ] Tiền nước tính theo khối.
-    - [ ] Tiền nước tính cố định theo đầu người trên tháng.
-    - [ ] Tiền điện giá nhà nước.
-    - [ ] internet
-    - [x] Lọc theo tiền điện giảm dần, tăng dần, trong một khoảng.
-    - [x] Lọc theo tiền nước giảm dần, tăng dần, trong một khoảng.
-    - [x] Lọc theo tiền internet giảm dần, tăng dần, trong một khoảng.
-    - [x] Lọc theo tiền vệ sinh giảm dần, tăng dần, trong một khoảng.
-  
-  - **Lọc theo phương thức thanh toán:**
-    - [ ] Đưa tiền mặt
-    - [ ] Chuyển khoản ngân hàng
-    - [ ] Trả dần trong tháng
-
-- Đánh giá:
-
-  - [ ] Đánh giá về home của user từng ở home đó.
-  - [ ] Đánh giá về room của user từng ở room đó.
-
-- Thanh toán:
-
-  Tùy lựa chọn của người dùng hoặc thỏa thuận với chủ nhà, có thể thanh toán qua app hoặc trực tiếp, phần thanh toán có chức năng chính ghi lại giao dịch và đảm bảo hợp đồng thuê nhà.
-
-  - [ ] Thanh toán qua các ngân hàng.
-  - [ ] Thanh toán qua zalo pay.
-  - [ ] Thanh toán qua ví momo.
-
-### 3) Gợi ý:
-
-- [ ] Cho người dùng chọn các vị trí và hiển thị các home gần vị trí đó.
-- [ ] Hiển thị vị trí của bạn bè.
-
-### 4) Tính năng khác:
-
-- [ ] Kết bạn.
-- [ ] Thêm các phòng quan tâm.
-
-### 5) Tính năng nâng cao;
-
-- [ ] Xem hình ảnh 3D phòng.
-
-### 6) Thông báo:
-
-- [ ] Thông báo có phòng tại khu vực quan tâm.
-- [ ] Thông báo qua email các thông tin quan tâm.
-
-### 7) Quảng cáo:
-
-- [ ] Quảng cáo trên facebook.
-- [ ] Quảng cáo trên zalo.
-- [ ] Quảng cáo trên youtube.
-- [ ] Quảng cáo trên tiktok.
-
-## Front-end developer:
-
-- Thiết kế: [figma](https://www.figma.com/file/3svxQsJdXgbaEBdHJ5OgIO/Trang-Chu?node-id=0%3A1)
-- File env: [.env.local](https://docs.google.com/document/d/175Povc8vTWOlZBUQwN5SzCnV-kqmHoKNGVygVBE3Ygw/edit?usp=sharing)
-
-## Back-end developer:
-
-- File env: [.env](https://docs.google.com/document/d/175Povc8vTWOlZBUQwN5SzCnV-kqmHoKNGVygVBE3Ygw/edit?usp=sharing)
-
-# Report
+### Report
 - Link: [report](https://docs.google.com/document/d/12CulRqyRkyUyxH4miCjrD89NyYfUqAgRoK-ev88MVh0/edit?usp=sharing)
 
-# Getting help with this graph
+### Getting help with this graph
 
 For support working with this graph, contact the Graph Admin via [gmail](mailto:hieucaohd@gmail.com) or [messenger](https://www.messenger.com/t/100057157604437/).
+
+
+
