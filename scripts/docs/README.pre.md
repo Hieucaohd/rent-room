@@ -72,6 +72,9 @@ You can change value of `ACCESS_TOKEN_SECRET_KEY`, `REFRESH_TOKEN_SECRET_KEY` to
 
 This command will connect to database and run the server.
 
-## About graphQL api
+
+# About graphQL api
+
+This is where avaiable api you can test in server. If you want more control please contact [Hieucao]({{ admin.gmail }}) to access Apollo Studio of this project
 
 {{ graph.docs.content }}

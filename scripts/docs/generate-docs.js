@@ -2,7 +2,7 @@ import { readFileSync, writeFileSync } from 'fs';
 import path from 'path';
 
 let variableReadmeDoc = {
-
+    '{{ admin.gmail }}': 'mailto:hieucaohd@gmail.com',
 }
 
 let variableGraphDoc = {
@@ -96,16 +96,6 @@ function generateReadmeFile() {
     }
 
     let graphDocFileContent = generateGraphDoc();
-    graphDocFileContent = graphDocFileContent.replaceAll("###", "3#");
-    graphDocFileContent = graphDocFileContent.replaceAll("##", "2#");
-    graphDocFileContent = graphDocFileContent.replaceAll("#", "1#");
-
-    graphDocFileContent = graphDocFileContent.replaceAll("1#", "###");
-    graphDocFileContent = graphDocFileContent.replaceAll("2#", "####");
-    graphDocFileContent = graphDocFileContent.replaceAll("3#", "#####");
-
-
-
     readmeFileContent = readmeFileContent.replace("{{ graph.docs.content }}", graphDocFileContent);
 
     writeFileSync(pathToReadmeFile, readmeFileContent, { encoding: 'utf-8', flag: 'w+' });

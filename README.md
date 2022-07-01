@@ -72,30 +72,33 @@ You can change value of `ACCESS_TOKEN_SECRET_KEY`, `REFRESH_TOKEN_SECRET_KEY` to
 
 This command will connect to database and run the server.
 
-## About graphQL api
 
-### Getting started
+# About graphQL api
+
+This is where avaiable api you can test in server. If you want more control please contact [Hieucao](mailto:hieucaohd@gmail.com) to access Apollo Studio of this project
+
+# Getting started
 
 Welcome to the **rent-room-connect** API! 🎉 Get familiar with available objects in the [Schema Reference](https://studio.apollographql.com/graph/rent-room-connect/schema/reference?variant=current), or try querying this graph using [Explorer](https://studio.apollographql.com/graph/rent-room-connect/explorer?variant=current).
 
 Note: beside [Explorer](https://studio.apollographql.com/graph/rent-room-connect/explorer?variant=current) which not support upload file, you can use Altair app for test api, this app support test upload file to server: download app for chrome [here](https://chrome.google.com/webstore/detail/altair-graphql-client/flnheeellpciglgpaodhkhmapeljopja).
 
-### What this graph is all about
+# What this graph is all about
 
 Describle how to implement api of rent-room backend app🦄🌌✨.
 
-You can find the schema of database [here](https://app.diagrams.net/###G1HPKnnqHcs13XUuZdTuJdzJj2-0pGCA00).
+You can find the schema of database [here](https://app.diagrams.net/#G1HPKnnqHcs13XUuZdTuJdzJj2-0pGCA00).
 
-### Accessing the graph
+# Accessing the graph
 
 🛰 You can send operations to this graph at `https://rent-room.vercel.app/graphql` by using whatever app like [postman](https://chrome.google.com/webstore/detail/postman/fhbjgbiflinjbdggehcddcbncdddomop?hl=vi), [altair](https://chrome.google.com/webstore/detail/altair-graphql-client/flnheeellpciglgpaodhkhmapeljopja) or default [Explorer](https://studio.apollographql.com/graph/rent-room-connect/explorer?variant=current) .
 📇 The Apollo Registry holds the canonical location of your schema. In the registry, this graph is referred to by its “graph ref”, which is: **rent-room-connect@current**.
 
 *(Note: you can [download Rover](https://www.apollographql.com/docs/rover/getting-started/), the Apollo CLI tool for working with your schema locally.)*
 
-### Authentication
+# Authentication
 
-###### How to register to this graph
+## How to register to this graph
 
 Go to [Postman](https://chrome.google.com/webstore/detail/postman/fhbjgbiflinjbdggehcddcbncdddomop?hl=vi) app or app that support cookie (not the [Explorer](https://studio.apollographql.com/graph/rent-room-connect/explorer?variant=current) because it doesn't not support cookie) and type. Server will generate a cookie that save access token and refresh token in http-only cookie.
 
@@ -147,7 +150,7 @@ mutation Register($input: UserCreateInput!) {
 }
 ```
 
-###### How to authenticate to this graph
+## How to authenticate to this graph
 
 Go to [Postman](https://chrome.google.com/webstore/detail/postman/fhbjgbiflinjbdggehcddcbncdddomop?hl=vi) app or app that support cookie (not the [Explorer](https://studio.apollographql.com/graph/rent-room-connect/explorer?variant=current) because it doesn't not support cookie) and type. Server will generate a cookie that save access token and refresh token in http-only cookie.
 
@@ -190,7 +193,7 @@ query Login($email: String!, $password: String!) {
 }
 ```
 
-###### How to logout
+## How to logout
 
 Go to [Postman](https://chrome.google.com/webstore/detail/postman/fhbjgbiflinjbdggehcddcbncdddomop?hl=vi) app or app that support cookie (not the [Explorer](https://studio.apollographql.com/graph/rent-room-connect/explorer?variant=current) because it doesn't not support cookie) and type. Server will delete cookie in http-only cookie.
 
@@ -208,7 +211,7 @@ mutation Logout {
 }
 ```
 
-###### Get profile
+## Get profile
 
 This operator will check access token and refresh token in cookies of request to get current user.
 
@@ -238,13 +241,13 @@ query Profile {
 ```
 
 
-### Running operations
+# Running operations
 
 Some basic operations you can try:
 
 *(Note: try this query in [Postman](https://chrome.google.com/webstore/detail/postman/fhbjgbiflinjbdggehcddcbncdddomop?hl=vi) because it support cookie)*
 
-###### Get the list
+## Get the list
 
 > Get all homes information:
 
@@ -380,7 +383,7 @@ interface PaginatorResult {
 }
 ```
 
-###### Get the item:
+## Get the item:
 
 > Get a home by home_id:
 
@@ -474,12 +477,12 @@ query GetRoomById($getRoomByIdId: ID!) {
 }
 ```
 
-###### Basic CRUD for home and room:
+## Basic CRUD for home and room:
 
 *(Note: some varibale that has '
  prefix is a variable of input. In [Explorer](https://studio.apollographql.com/graph/rent-room-connect/explorer?variant=current) you must pass this varibale to variable-part)*
 
-####### Home
+### Home
 
 > Create a home:
 
@@ -664,7 +667,7 @@ mutation DeleteHome($deleteHomeId: ID!) {
 }
 ```
 
-####### Room
+### Room
 
 > Create a room:
 
@@ -791,10 +794,10 @@ mutation DeleteRoom($deleteRoomId: ID!) {
 }
 ```
 
-### Report
+# Report
 - Link: [report](https://docs.google.com/document/d/12CulRqyRkyUyxH4miCjrD89NyYfUqAgRoK-ev88MVh0/edit?usp=sharing)
 
-### Getting help with this graph
+# Getting help with this graph
 
 For support working with this graph, contact the Graph Admin via [gmail](mailto:hieucaohd@gmail.com) or [messenger](https://www.messenger.com/t/100057157604437/).
 
