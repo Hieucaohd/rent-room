@@ -189,8 +189,8 @@ export class ResponseService {
      */
     setTokenInCookie(cookieKey, token, timeCookieExpired) {
         let options = {
-            secure: false,
-            httpOnly: false,
+            secure: process.env.NODE_ENV === 'production',
+            httpOnly: true,
             expires: timeCookieExpired,
         };
 
