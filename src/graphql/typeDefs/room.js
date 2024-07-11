@@ -2,21 +2,14 @@ import { gql } from 'apollo-server-express';
 
 export default gql`
     extend type Query {
-        allRooms(page: Int, limit: Int): RoomPaginator
-
-        getRoomById(roomId: ID!): Room
-
-        getListRoomByIds(listIds: [ID!]!, page: Int, limit: Int): RoomPaginator
+        allRooms(paginatorOptions: PaginatorOptionsInput): RoomPaginator
+        getRoomById(id: ID!): GetRoomByIdResult
     }
 
     extend type Mutation {
-        createNewRoom(newRoom: RoomInput!, homeId: ID!): Room! @authRequire
-
-        createNewRoomWithHome(newRoom: RoomInput!, newHome: HomeInput!): Room!
-
-        updateRoom(updatedRoom: RoomUpdateInput!, id: ID!): Room! @authRequire
-
-        deleteRoom(id: ID!): ID! @authRequire
+        createRoom(input: RoomCreateInput!): RoomCreateResult!
+        updateRoom(input: RoomUpdateInput!): RoomUpdateResult!
+        deleteRoom(id: ID!): RoomDeleteResult!
     }
 
     input RoomCreateInput {

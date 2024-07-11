@@ -8,7 +8,6 @@ import {
     getWardNameByCode,
 } from '../../../services/helpers/address.service';
 import { RequestContext } from '../../common/request-context';
-import User from '../../../models/User';
 
 export default {
     Mutation: {
@@ -17,14 +16,6 @@ export default {
             userUpdated = serializerUser(userUpdated);
 
             return userUpdated;
-        },
-    },
-
-    Query: {
-        getUserById: async (_, { id }) => {
-            let user = await User.findById(id);
-            user = serializerUser(user);
-            return user;
         },
     },
 
