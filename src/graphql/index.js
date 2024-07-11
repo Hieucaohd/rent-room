@@ -25,6 +25,7 @@ const server = new ApolloServer({
 
         return new RequestContext(user, isAuth, req, res);
     },
+    introspection: true
 });
 
 export default server;
