@@ -11,4 +11,4 @@ dist
 db export
 lib
 public
-.vscode
+.vscode/
