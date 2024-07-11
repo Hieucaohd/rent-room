@@ -79,9 +79,9 @@ This is where avaiable api you can test in server. If you want more control plea
 
 # Getting started
 
-Welcome to the **rent-room-connect** API! 🎉 Get familiar with available objects in the [Schema Reference](https://studio.apollographql.com/graph/rent-room-connect/schema/reference?variant=current), or try querying this graph using [Explorer](https://studio.apollographql.com/graph/rent-room-connect/explorer?variant=current).
+Welcome to the **rent-room-connect** API! 🎉 Get familiar with available objects in the [Schema Reference](https://studio.apollographql.com/graph/My-Graph-1h2a6l/variant/current/schema/reference), or try querying this graph using [Explorer](https://studio.apollographql.com/graph/My-Graph-1h2a6l/variant/current/explorer).
 
-Note: beside [Explorer](https://studio.apollographql.com/graph/rent-room-connect/explorer?variant=current) which not support upload file, you can use Altair app for test api, this app support test upload file to server: download app for chrome [here](https://chrome.google.com/webstore/detail/altair-graphql-client/flnheeellpciglgpaodhkhmapeljopja).
+Note: beside [Explorer](https://studio.apollographql.com/graph/My-Graph-1h2a6l/variant/current/explorer) which not support upload file, you can use Altair app for test api, this app support test upload file to server: download app for chrome [here](https://chrome.google.com/webstore/detail/altair-graphql-client/flnheeellpciglgpaodhkhmapeljopja).
 
 # What this graph is all about
 
@@ -91,7 +91,7 @@ You can find the schema of database [here](https://app.diagrams.net/#G1HPKnnqHcs
 
 # Accessing the graph
 
-🛰 You can send operations to this graph at `https://rent-room.vercel.app/graphql` by using whatever app like [postman](https://chrome.google.com/webstore/detail/postman/fhbjgbiflinjbdggehcddcbncdddomop?hl=vi), [altair](https://chrome.google.com/webstore/detail/altair-graphql-client/flnheeellpciglgpaodhkhmapeljopja) or default [Explorer](https://studio.apollographql.com/graph/rent-room-connect/explorer?variant=current) .
+🛰 You can send operations to this graph at `https://rent-room.vercel.app/graphql` by using whatever app like [postman](https://chrome.google.com/webstore/detail/postman/fhbjgbiflinjbdggehcddcbncdddomop?hl=vi), [altair](https://chrome.google.com/webstore/detail/altair-graphql-client/flnheeellpciglgpaodhkhmapeljopja) or default [Explorer](https://studio.apollographql.com/graph/My-Graph-1h2a6l/variant/current/explorer) .
 📇 The Apollo Registry holds the canonical location of your schema. In the registry, this graph is referred to by its “graph ref”, which is: **rent-room-connect@current**.
 
 *(Note: you can [download Rover](https://www.apollographql.com/docs/rover/getting-started/), the Apollo CLI tool for working with your schema locally.)*
@@ -100,7 +100,7 @@ You can find the schema of database [here](https://app.diagrams.net/#G1HPKnnqHcs
 
 ## How to register to this graph
 
-Go to [Postman](https://chrome.google.com/webstore/detail/postman/fhbjgbiflinjbdggehcddcbncdddomop?hl=vi) app or app that support cookie (not the [Explorer](https://studio.apollographql.com/graph/rent-room-connect/explorer?variant=current) because it doesn't not support cookie) and type. Server will generate a cookie that save access token and refresh token in http-only cookie.
+Go to [Postman](https://chrome.google.com/webstore/detail/postman/fhbjgbiflinjbdggehcddcbncdddomop?hl=vi) app or app that support cookie (not the [Explorer](https://studio.apollographql.com/graph/My-Graph-1h2a6l/variant/current/explorer) because it doesn't not support cookie) and type. Server will generate a cookie that save access token and refresh token in http-only cookie.
 
 ```gql
 mutation Register($input: UserCreateInput!) {
@@ -152,7 +152,7 @@ mutation Register($input: UserCreateInput!) {
 
 ## How to authenticate to this graph
 
-Go to [Postman](https://chrome.google.com/webstore/detail/postman/fhbjgbiflinjbdggehcddcbncdddomop?hl=vi) app or app that support cookie (not the [Explorer](https://studio.apollographql.com/graph/rent-room-connect/explorer?variant=current) because it doesn't not support cookie) and type. Server will generate a cookie that save access token and refresh token in http-only cookie.
+Go to [Postman](https://chrome.google.com/webstore/detail/postman/fhbjgbiflinjbdggehcddcbncdddomop?hl=vi) app or app that support cookie (not the [Explorer](https://studio.apollographql.com/graph/My-Graph-1h2a6l/variant/current/explorer) because it doesn't not support cookie) and type. Server will generate a cookie that save access token and refresh token in http-only cookie.
 
 ```gql
 query Login($email: String!, $password: String!) {
@@ -195,7 +195,7 @@ query Login($email: String!, $password: String!) {
 
 ## How to logout
 
-Go to [Postman](https://chrome.google.com/webstore/detail/postman/fhbjgbiflinjbdggehcddcbncdddomop?hl=vi) app or app that support cookie (not the [Explorer](https://studio.apollographql.com/graph/rent-room-connect/explorer?variant=current) because it doesn't not support cookie) and type. Server will delete cookie in http-only cookie.
+Go to [Postman](https://chrome.google.com/webstore/detail/postman/fhbjgbiflinjbdggehcddcbncdddomop?hl=vi) app or app that support cookie (not the [Explorer](https://studio.apollographql.com/graph/My-Graph-1h2a6l/variant/current/explorer) because it doesn't not support cookie) and type. Server will delete cookie in http-only cookie.
 
 ```gql
 mutation Logout {
@@ -480,7 +480,7 @@ query GetRoomById($getRoomByIdId: ID!) {
 ## Basic CRUD for home and room:
 
 *(Note: some varibale that has '
- prefix is a variable of input. In [Explorer](https://studio.apollographql.com/graph/rent-room-connect/explorer?variant=current) you must pass this varibale to variable-part)*
+ prefix is a variable of input. In [Explorer](https://studio.apollographql.com/graph/My-Graph-1h2a6l/variant/current/explorer) you must pass this varibale to variable-part)*
 
 ### Home
 
