@@ -2,7 +2,23 @@ import { gql } from "apollo-server-express";
 
 export default gql`
     extend type Mutation {
-        updateUser(input: UserUpdateInput!): UserUpdateResult!
+        updateUser(updateInfo: UserUpdateInput!): User! @authRequire
+    }
+
+    extend type Query {
+        getUserById(id: ID!): User
+    }
+
+    input UserInput {
+        email: String!
+        password: String!
+        fullname: String!
+        numberPhone: String
+        province: Int
+        district: Int
+        ward: Int
+        avatar: String
+        userType: UserType
     }
 
     input UserUpdateInput {
@@ -12,6 +28,7 @@ export default gql`
         district: Int
         ward: Int
         avatar: String
+        userType: UserType
     }
 
     type User implements Node & Timestamps {
@@ -28,7 +45,7 @@ export default gql`
         wardName: String
         avatar: String
         defaultHome: Home
-        userType: String
+        userType: UserType
         role: [String]
 
         listHomes(paginatorOptions: PaginatorOptionsInput): HomePaginator

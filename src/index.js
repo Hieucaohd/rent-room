@@ -1,11 +1,12 @@
-import express from 'express';
-import { graphqlUploadExpress } from 'graphql-upload';
-import { DB, PORT } from './config';
-import apolloServer from './graphql';
-import { success, error } from 'consola';
-import applyMiddleware from './middlewares';
-import applyRouter from './routes/index';
-import mongoose from 'mongoose';
+import express from "express";
+import { graphqlUploadExpress } from "graphql-upload";
+import { DB, PORT } from "./config";
+import apolloServer from "./graphql";
+import { success, error } from "consola";
+import applyMiddleware from "./middlewares";
+import mongoose from "mongoose";
+import router from "./routes";
+import applyRouter from "./routes/index";
 
 const app = express();
 const port = process.env.PORT || PORT;
@@ -40,6 +41,7 @@ const startApp = async () => {
         // connect apollo server with express app
         apolloServer.applyMiddleware({ app });
 
+        app.use("/forgot", resetPasswordRouter)
         app.listen(PORT, () => {
             success({ message: `Server started on PORT ${port}`, badge: true });
         });

@@ -245,18 +245,15 @@ export type LogoutStatus = {
 export type Mutation = {
   __typename?: 'Mutation';
   _?: Maybe<Scalars['String']>;
-  createHome: HomeCreateResult;
-  createHomeComment: CreateHomeCommentResult;
-  createRoom: RoomCreateResult;
-  deleteHome: HomeDeleteResult;
-  deleteHomeComment: DeleteHomeCommentResult;
-  deleteRoom: RoomDeleteResult;
-  logout: LogoutResponse;
-  register: NativeRegisterResponse;
-  updateHome: HomeUpdateResult;
-  updateHomeComment: UpdateHomeCommentResult;
-  updateRoom: RoomUpdateResult;
-  updateUser: UserUpdateResult;
+  createNewHome?: Maybe<Home>;
+  createNewRoom: Room;
+  deleteHome: Scalars['ID'];
+  deleteRoom: Scalars['ID'];
+  logout: LogoutStatus;
+  register: AuthResponse;
+  updateHome?: Maybe<Home>;
+  updateRoom: Room;
+  updateUser: User;
 };
 
 
@@ -272,6 +269,12 @@ export type MutationCreateHomeCommentArgs = {
 
 export type MutationCreateRoomArgs = {
   input: RoomCreateInput;
+};
+
+
+export type MutationCreateNewRoomWithHomeArgs = {
+  newHome: HomeInput;
+  newRoom: RoomInput;
 };
 
 
@@ -551,7 +554,7 @@ export type User = Node & Timestamps & {
   provinceName?: Maybe<Scalars['String']>;
   role?: Maybe<Array<Maybe<Scalars['String']>>>;
   updatedAt?: Maybe<Scalars['Date']>;
-  userType?: Maybe<Scalars['String']>;
+  userType?: Maybe<UserType>;
   ward?: Maybe<Scalars['Int']>;
   wardName?: Maybe<Scalars['String']>;
 };
@@ -596,6 +599,7 @@ export type UserUpdateInput = {
   fullname?: InputMaybe<Scalars['String']>;
   numberPhone?: InputMaybe<Scalars['String']>;
   province?: InputMaybe<Scalars['Int']>;
+  userType?: InputMaybe<UserType>;
   ward?: InputMaybe<Scalars['Int']>;
 };
 
