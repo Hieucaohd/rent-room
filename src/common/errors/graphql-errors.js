@@ -166,6 +166,11 @@ export const errorOperationTypeResolvers = {
       return isGraphQLError(obj) ? obj.__typename : 'Room';
     },
   },
+  GetUserByIdResult: {
+    __resolveType(obj) {
+      return isGraphQLError(obj) ? obj.__typename : 'User';
+    },
+  },
   NativeAuthResponse: {
     __resolveType(obj) {
       return isGraphQLError(obj) ? obj.__typename : 'User';

@@ -5,6 +5,10 @@ export default gql`
         updateUser(input: UserUpdateInput!): UserUpdateResult!
     }
 
+    extend type Query {
+        getUserById(id: ID!): GetUserByIdResult!
+    }
+
     input UserUpdateInput {
         fullname: String
         numberPhone: String
@@ -48,4 +52,5 @@ export default gql`
     }
 
     union UserUpdateResult = User | InstanceNotExistError | PermissionDeninedError | UserNotAuthenticatedError
+    union GetUserByIdResult = User | InstanceNotExistError
 `;

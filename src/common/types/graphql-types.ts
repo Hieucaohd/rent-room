@@ -32,6 +32,12 @@ export type AllHomeCommentsInHomeQuery = {
   home: Scalars['ID'];
 };
 
+export type Amentity = {
+  __typename?: 'Amentity';
+  _id?: Maybe<Scalars['ID']>;
+  title?: Maybe<Scalars['String']>;
+};
+
 export enum ArrangeType {
   Asc = 'ASC',
   Desc = 'DESC'
@@ -100,6 +106,8 @@ export type GetHomeByIdResult = Home | InstanceNotExistError;
 export type GetHomeCommentByIdResult = HomeComment | InstanceNotExistError;
 
 export type GetRoomByIdResult = InstanceNotExistError | Room;
+
+export type GetUserByIdResult = InstanceNotExistError | User;
 
 export type Home = Node & Timestamps & {
   __typename?: 'Home';
@@ -399,7 +407,9 @@ export type Query = {
   filterRoom?: Maybe<RoomPaginator>;
   getHomeById?: Maybe<GetHomeByIdResult>;
   getHomeCommentById?: Maybe<GetHomeCommentByIdResult>;
+  getListRoomByIds?: Maybe<RoomPaginator>;
   getRoomById?: Maybe<GetRoomByIdResult>;
+  getUserById: GetUserByIdResult;
   login: NativeAuthResponse;
   profile?: Maybe<Profile>;
 };
@@ -438,7 +448,18 @@ export type QueryGetHomeCommentByIdArgs = {
 };
 
 
+export type QueryGetListRoomByIdsArgs = {
+  paginatorOptions?: InputMaybe<PaginatorOptionsInput>;
+  query: QueryListRoomByIdsInput;
+};
+
+
 export type QueryGetRoomByIdArgs = {
+  id: Scalars['ID'];
+};
+
+
+export type QueryGetUserByIdArgs = {
   id: Scalars['ID'];
 };
 
@@ -446,6 +467,10 @@ export type QueryGetRoomByIdArgs = {
 export type QueryLoginArgs = {
   email: Scalars['String'];
   password: Scalars['String'];
+};
+
+export type QueryListRoomByIdsInput = {
+  ids: Array<Scalars['ID']>;
 };
 
 export enum Role {
@@ -456,7 +481,7 @@ export enum Role {
 export type Room = Node & Timestamps & {
   __typename?: 'Room';
   _id?: Maybe<Scalars['ID']>;
-  amenities?: Maybe<Array<Maybe<Scalars['Int']>>>;
+  amenities?: Maybe<Array<Maybe<Amentity>>>;
   createdAt?: Maybe<Scalars['Date']>;
   description?: Maybe<Scalars['String']>;
   floor?: Maybe<Scalars['Int']>;
@@ -509,8 +534,8 @@ export type RoomUpdateInput = {
 export type RoomUpdateResult = InstanceNotExistError | PermissionDeninedError | Room;
 
 export type Scope = {
-  max: Scalars['Float'];
-  min: Scalars['Float'];
+  max?: InputMaybe<Scalars['Float']>;
+  min?: InputMaybe<Scalars['Float']>;
 };
 
 export type SortOption = {
@@ -599,7 +624,7 @@ export type UserUpdateInput = {
   ward?: InputMaybe<Scalars['Int']>;
 };
 
-export type UserUpdateResult = InstanceNotExistError | PermissionDeninedError | User;
+export type UserUpdateResult = InstanceNotExistError | PermissionDeninedError | User | UserNotAuthenticatedError;
 
 export type WaterPriceConditionInput = {
   arrange?: InputMaybe<ArrangeType>;

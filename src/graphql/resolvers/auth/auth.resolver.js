@@ -12,7 +12,7 @@ export default {
             responseService.clearAccessTokenInCookie();
             responseService.clearRefreshTokenInCookie();
             return {
-                status,
+                success: status,
             };
         },
     },
