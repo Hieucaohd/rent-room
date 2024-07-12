@@ -1,6 +1,9 @@
 /**
  * @typedef { import('./graphql-types').Scalars } Scalars
  * 
+ * @typedef { import('./common-types').ProvinceName } ProvinceName
+ * @typedef { import('./common-types').DistrictName } DistrictName
+ * @typedef { import('./common-types').WardName } WardName
  * @typedef { import('./common-types').Province } Province
  * @typedef { import('./common-types').District } District
  * @typedef { import('./common-types').Ward } Ward

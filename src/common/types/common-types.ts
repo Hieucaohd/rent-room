@@ -3,20 +3,47 @@ import { Model } from "mongoose";
 import { RequestContext } from '../../graphql/common/request-context';
 import { BaseService } from "../../services/model-services/base.service";
 
-export type Province = {
+export type ProvinceName = {
 	name: String,
 	code: Number,
 }
 
-export type District = {
+export type DistrictName = {
+	name: String,
+	code: Number,
+}
+
+export type WardName = {
 	name: String,
 	code: Number,
 }
 
 export type Ward = {
-	name: String,
-	code: Number,
-}
+	name: string;
+	code: number;
+	codename: string;
+	division_type: string;
+	short_codename: string;
+};
+
+export type District = {
+	name: string;
+	code: number;
+	codename: string;
+	division_type: string;
+	short_codename: string;
+	wards?: Ward[];
+};
+
+export type Province = {
+	name: string;
+	code: number;
+	codename: string;
+	division_type: string;
+	phone_code: string;
+	districts?: District[];
+};
+
 
 export type MetaBaseService = {
 	model: Model<any>,

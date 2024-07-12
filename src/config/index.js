@@ -15,7 +15,7 @@ let {
     FRONTEND_HOSTNAME,
     VERIFIED_PASSWORD_SECRET_KEY,
     MAIL_PASSWORD,
-    MAIL_USER
+    MAIL_USER,
 } = process.env;
 
 /** @type {Number} */
@@ -33,6 +33,11 @@ const ACCESS_TOKEN_COOKIE_KEY = 'access_token';
 const REFRESH_TOKEN_COOKIE_KEY = 'refresh_token';
 
 const TIME_VERIFIED_TOKEN_EXPIRED = 10 * 60; //minute
+
+const CORS_OPTIONS = {
+    origin: '*', // Allow all origins
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS', 'PATCH', 'HEAD'],
+};
 
 export {
     PORT,
@@ -52,5 +57,6 @@ export {
     MAIL_USER,
     MAIL_PASSWORD,
     FRONTEND_HOSTNAME,
-    VERIFIED_PASSWORD_SECRET_KEY
+    VERIFIED_PASSWORD_SECRET_KEY,
+    CORS_OPTIONS,
 };
