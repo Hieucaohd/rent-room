@@ -53,14 +53,14 @@ export class BaseMutation {
         const session = await mongoose.startSession();
         session.startTransaction();
         try {
-            await this.checkPermissions(context.user);
-
+            
             const resolverQLParams = {
                 source,
                 args,
                 context,
                 info,
             };
+            await this.checkPermissions(resolverQLParams);
             let response = await this.performMutation(resolverQLParams, session);
 
             await session.commitTransaction();
@@ -86,7 +86,7 @@ export class BaseMutation {
      *
      * @param {UserModel} user
      */
-    static async checkPermissions(user) {
+    static async checkPermissions(resolverQLParams) {
         for (const permission of this.permissions) {
         }
     }

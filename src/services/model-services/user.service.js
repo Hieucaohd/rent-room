@@ -3,7 +3,7 @@ import { User } from '../../models';
 import '../../common/types/typedef';
 import { ObjectId } from 'mongodb';
 import { BaseService } from './base.service';
-import { EmailNotRegisterError, PasswordIncorrectError } from '../../common/errors/graphql-errors';
+import { EmailNotRegisterError, InstanceNotExistError, PasswordIncorrectError, PermissionDeninedError } from '../../common/errors/graphql-errors';
 
 
 /**
@@ -26,7 +26,7 @@ export const updateUserInDatabase = async (updateInfo, user) => {
     );
 
     if (!userUpdated) {
-        throw new Error('User item does not exist!');
+        throw new PermissionDeninedError();
     }
 
     return userUpdated;

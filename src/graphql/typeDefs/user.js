@@ -47,5 +47,5 @@ export default gql`
         HOST
     }
 
-    union UserUpdateResult = User | InstanceNotExistError | PermissionDeninedError
+    union UserUpdateResult = User | InstanceNotExistError | PermissionDeninedError | UserNotAuthenticatedError
 `;

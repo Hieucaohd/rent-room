@@ -8,15 +8,11 @@ import {
     getWardNameByCode,
 } from '../../../services/helpers/address.service';
 import { RequestContext } from '../../common/request-context';
+import { UserUpdate } from './user.mutation';
 
 export default {
     Mutation: {
-        updateUser: async (_, { input }, { user }) => {
-            let userUpdated = await updateUserInDatabase(input, user);
-            userUpdated = serializerUser(userUpdated);
-
-            return userUpdated;
-        },
+        updateUser: UserUpdate.mutate.bind(UserUpdate),
     },
 
     User: {
