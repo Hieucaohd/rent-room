@@ -11,4 +11,5 @@ dist
 db export
 lib
 public
-.vscode/
+.vscode/launch.json
+.vscode/settings.json
