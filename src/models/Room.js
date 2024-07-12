@@ -2,6 +2,12 @@ import { Schema, model } from 'mongoose';
 import mongoosePaginate from 'mongoose-paginate-v2';
 import aggregatePaginate from 'mongoose-aggregate-paginate-v2';
 
+const AmentitySchema = new Schema({
+    title: {
+        type: String,
+    }
+})
+
 const RoomSchema = new Schema(
     {
         home: {
@@ -34,7 +40,7 @@ const RoomSchema = new Schema(
         title: {
             type: String,
         },
-        amenities: [Number],
+        amenities: [AmentitySchema],
     },
     {
         timestamps: true,

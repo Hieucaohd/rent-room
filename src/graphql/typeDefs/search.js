@@ -7,8 +7,8 @@ export default gql`
 
 
     input Scope {
-        min: Float!
-        max: Float!
+        min: Float
+        max: Float
     }
 
     input PriceConditionInput {

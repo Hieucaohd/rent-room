@@ -4,6 +4,7 @@ export default gql`
     extend type Query {
         allRooms(paginatorOptions: PaginatorOptionsInput): RoomPaginator
         getRoomById(id: ID!): GetRoomByIdResult
+        getListRoomByIds(query: QueryListRoomByIdsInput!, paginatorOptions: PaginatorOptionsInput): RoomPaginator
     }
 
     extend type Mutation {
@@ -38,6 +39,15 @@ export default gql`
         amenities: [Int]
     }
 
+    input QueryListRoomByIdsInput {
+        ids: [ID!]! 
+    }
+
+    type Amentity {
+        _id: ID
+        title: String
+    }
+
     type Room implements Node & Timestamps {
         _id: ID
 
@@ -51,7 +61,7 @@ export default gql`
         description: String
         roomNumber: Int
         title: String
-        amenities: [Int]
+        amenities: [Amentity]
 
         createdAt: Date
         updatedAt: Date
