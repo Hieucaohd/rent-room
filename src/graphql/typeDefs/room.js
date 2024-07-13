@@ -23,7 +23,7 @@ export default gql`
         description: String
         roomNumber: Int
         title: String
-        amenities: [Int]
+        amenities: [AmentityCreateInput]
     }
 
     input RoomUpdateInput {
@@ -36,7 +36,7 @@ export default gql`
         description: String
         roomNumber: Int
         title: String
-        amenities: [Int]
+        amenities: [AmentityUpdateInput]
     }
 
     input QueryListRoomByIdsInput {
@@ -45,6 +45,14 @@ export default gql`
 
     type Amentity {
         _id: ID
+        title: String
+    }
+
+    input AmentityCreateInput {
+        title: String
+    }
+
+    input AmentityUpdateInput {
         title: String
     }
 

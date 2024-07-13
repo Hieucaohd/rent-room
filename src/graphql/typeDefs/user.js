@@ -16,6 +16,7 @@ export default gql`
         district: Int
         ward: Int
         avatar: String
+        userType: UserType
     }
 
     type User implements Node & Timestamps {
