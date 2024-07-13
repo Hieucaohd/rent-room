@@ -13,3 +13,4 @@ lib
 public
 .vscode/launch.json
 .vscode/settings.json
+scripts/filter-database/config-run-dummy.json

@@ -1,0 +1,7 @@
+{
+	"createAmentiesForRoom": true,
+	"createImagesForHome": true,
+	"createImagesForRoom": true,
+	"createDescriptionForRoom": true,
+	"createDescriptionForHome": true
+}
