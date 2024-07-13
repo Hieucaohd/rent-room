@@ -1,9 +1,10 @@
 import mongoose from 'mongoose';
 import Room from '../../src/models/Room';
+import { DB } from '../../src/config/index';
 
 async function start() {
     await mongoose.connect(
-        'mongodb+srv://hieucao192:helloworld123@authenticationtest.6lh8w.mongodb.net/rentroomdb?retryWrites=true&w=majority'
+        DB
     );
     const roomDeleted = await Room.deleteMany({ images: [] });
     console.log('ok');

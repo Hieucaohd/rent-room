@@ -7,13 +7,13 @@ import { readFileSync } from 'promise-fs';
 import path from 'path';
 import { result } from 'lodash';
 
-const pathToListImagesFile = path.join(__dirname, './list-images.json');
+const pathToListImagesFile = path.join(__dirname, './data/list-images.json');
 const IMAGES = JSON.parse(readFileSync(pathToListImagesFile));
 
-const pathToDescriptionFile = path.join(__dirname, './description.txt');
+const pathToDescriptionFile = path.join(__dirname, './data/description.txt');
 const DESCRIPTION = readFileSync(pathToDescriptionFile, 'utf-8');
 
-const pathToConfigRunFile = path.join(__dirname, 'config-run-dummy.json');
+const pathToConfigRunFile = path.join(__dirname, './config/config-run-dummy.json');
 const CONFIG_RUN = JSON.parse(readFileSync(pathToConfigRunFile));
 
 async function checkImageUrl(url) {

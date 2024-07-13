@@ -1,10 +1,11 @@
 import mongoose from 'mongoose';
 import Home from '../../src/models/Home';
 import User from '../../src/models/User';
+import { DB } from '../../src/config/index';
 
 async function start() {
     await mongoose.connect(
-        'mongodb+srv://hieucao192:helloworld123@authenticationtest.6lh8w.mongodb.net/rentroomdb?retryWrites=true&w=majority'
+        DB
     );
 
     let users = await User.aggregate([
