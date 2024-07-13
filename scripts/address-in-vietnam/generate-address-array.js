@@ -84,7 +84,7 @@ function generateUnitAddressFile(pathToFile, data) {
 }
 
 async function main() {
-    const pathToAddressFile = path.join(__dirname, '../src/address-json/address-in-vietnam.json');
+    const pathToAddressFile = path.join(__dirname, '../../address-json/address-in-vietnam.json');
     const addressData = JSON.parse(await readFile(pathToAddressFile));
 
     const provinces = getProvinces(addressData);
