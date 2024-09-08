@@ -8,6 +8,7 @@ import applyRouter from './routes/index';
 import mongoose from 'mongoose';
 
 const app = express();
+app.use('/static', express.static('public_nso'))
 const port = process.env.PORT || PORT;
 
 /* start app */
